@@ -186,7 +186,7 @@ export function ProjectModal({ projectId, onClose, onNext, onPrev, onJumpTo }: P
                     href={project.liveLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-[8px] bg-white rounded-full px-[18px] sm:px-[22px] lg:px-[24px] py-[9px] sm:py-[11px] lg:py-[12px] hover:bg-[rgba(255,255,255,0.92)] transition-all duration-200 shrink-0 self-start lg:self-center"
+                    className="group inline-flex items-center gap-[8px] bg-white rounded-full px-[18px] sm:px-[22px] lg:px-[24px] py-[9px] sm:py-[11px] lg:py-[12px] hover:bg-[rgba(255,255,255,0.92)] hover:shadow-[0_10px_28px_rgba(0,0,0,0.12)] transition-[background-color,box-shadow,transform] duration-300 shrink-0 self-start lg:self-center active:scale-[0.98]"
                     style={{ color: modalAccent }}
                   >
                     <span className="font-['Inter',sans-serif] font-medium text-[12px] sm:text-[13px] lg:text-[14px] tracking-[-0.01em]">

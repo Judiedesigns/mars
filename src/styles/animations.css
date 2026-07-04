@@ -145,18 +145,27 @@
   transform: translateX(0) translateY(0);
 }
 
+.work-filter-scroll {
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.work-filter-scroll::-webkit-scrollbar {
+  display: none;
+}
+
 /* ─── Project Card ─── */
 .project-card {
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
 }
 
 .project-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
 }
 
 /* ─── Modal Animations ─── */
 .project-modal {
-  animation: modalFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: modalFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .project-modal.closing {
@@ -174,7 +183,7 @@
 }
 
 .modal-backdrop {
-  animation: backdropFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: backdropFadeIn 0.32s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .modal-backdrop.closing {
@@ -204,7 +213,7 @@
 }
 
 .modal-content {
-  animation: modalSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: modalSlideUp 0.42s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .modal-content.closing {
@@ -214,7 +223,7 @@
 @keyframes modalSlideUp {
   from {
     opacity: 0;
-    transform: translateY(40px) scale(0.97);
+    transform: translateY(18px) scale(0.985);
   }
   to {
     opacity: 1;
@@ -229,7 +238,7 @@
   }
   to {
     opacity: 0;
-    transform: translateY(24px) scale(0.98);
+    transform: translateY(14px) scale(0.985);
   }
 }
 

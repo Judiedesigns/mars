@@ -28,7 +28,7 @@ import mapinduziDemo from "../../../assets/mapinduzi/mapinduzi.mp4";
 import caterShopCover from "../../../assets/cater-shop/cover.png";
 import caterShopDemo from "../../../assets/cater-shop/PMa.mp4";
 
-export type ProjectCategory = "Case Studies" | "Design" | "No-code" | "AI Prototypes";
+export type ProjectCategory = "Case Studies" | "Design" | "Framer/Webflow" | "AI Prototypes";
 
 export type ProjectMedia = {
   type: "image" | "video";
@@ -48,7 +48,7 @@ export type Project = {
   liveLink: string;
 };
 
-export const workFilters = ["All", "Case Studies", "Design", "No-code", "AI Prototypes"] as const;
+export const workFilters = ["All", "Case Studies", "Design", "Framer/Webflow", "AI Prototypes"] as const;
 
 export const projects: Project[] = [
   {
@@ -63,37 +63,37 @@ export const projects: Project[] = [
     liveLink: "https://www.behance.net/gallery/193734369/ShopEasy-Fashion-made-effortless",
   },
   {
-    id: 2,
-    title: "Alors",
-    role: "Creative Direction & Copy",
-    year: "2026",
-    category: "Design",
-    description: "A visual website direction for a lifestyle brand, focused on tone, layout, and launch-ready storytelling.",
-    cover: { type: "image", src: alorsCover, alt: "Alors website cover" },
-    media: [{ type: "video", src: alorsDemo, alt: "Alors website demo" }],
-    liveLink: "https://alors.framer.website/",
-  },
-  {
     id: 1,
-    title: "Virtual",
+    title: "Virtual Conference",
     role: "Framer Development",
     year: "2025",
-    category: "No-code",
+    category: "Framer/Webflow",
     description: "A Framer-built virtual conference site with structured event content and responsive marketing pages.",
     cover: { type: "image", src: virtualCover, alt: "Virtual website cover" },
     media: [{ type: "video", src: virtualDemo, alt: "Virtual website demo" }],
     liveLink: "https://virtual-conference.framer.website/",
   },
   {
-    id: 7,
-    title: "Letters",
-    role: "Design, UX & Research",
-    year: "2024",
-    category: "Case Studies",
-    description: "A design case study exploring written communication, interface clarity, and user-centered product decisions.",
-    cover: { type: "image", src: lettersCover, alt: "Letters case study cover" },
-    media: [{ type: "video", src: lettersDemo, alt: "Letters case study demo" }],
-    liveLink: "https://www.behance.net/gallery/208405475/Letters",
+    id: 16,
+    title: "Paletta",
+    role: "AI Color Tool",
+    year: "2026",
+    category: "AI Prototypes",
+    description: "A color exploration tool for testing palettes, comparing combinations, and speeding up visual decisions.",
+    cover: { type: "video", src: colorsDemo, alt: "Paletta prototype preview" },
+    media: [{ type: "video", src: colorsDemo, alt: "Paletta prototype demo" }],
+    liveLink: "https://co-lors.vercel.app",
+  },
+  {
+    id: 15,
+    title: "Random Notes",
+    role: "AI Notes Tool",
+    year: "2026",
+    category: "AI Prototypes",
+    description: "A lightweight planning tool for capturing notes, organizing tasks, and turning ideas into action.",
+    cover: { type: "video", src: plannerDemo, alt: "Random Notes prototype preview" },
+    media: [{ type: "video", src: plannerDemo, alt: "Random Notes prototype demo" }],
+    liveLink: "https://note-ss.vercel.app",
   },
   {
     id: 4,
@@ -107,6 +107,17 @@ export const projects: Project[] = [
     liveLink: "https://tothebrim.studio/",
   },
   {
+    id: 7,
+    title: "Letters",
+    role: "Design, UX & Research",
+    year: "2024",
+    category: "Case Studies",
+    description: "A design case study exploring written communication, interface clarity, and user-centered product decisions.",
+    cover: { type: "image", src: lettersCover, alt: "Letters case study cover" },
+    media: [{ type: "video", src: lettersDemo, alt: "Letters case study demo" }],
+    liveLink: "https://www.behance.net/gallery/208405475/Letters",
+  },
+  {
     id: 18,
     title: "Cater Shop",
     role: "Web Design & AI Development",
@@ -118,11 +129,22 @@ export const projects: Project[] = [
     liveLink: "https://retina-mute-33834276.figma.site",
   },
   {
+    id: 2,
+    title: "Alors",
+    role: "Creative Direction & Copy",
+    year: "2026",
+    category: "Design",
+    description: "A visual website direction for a lifestyle brand, focused on tone, layout, and launch-ready storytelling.",
+    cover: { type: "image", src: alorsCover, alt: "Alors website cover" },
+    media: [{ type: "video", src: alorsDemo, alt: "Alors website demo" }],
+    liveLink: "https://alors.framer.website/",
+  },
+  {
     id: 3,
     title: "Portfolio v.1",
     role: "Design & Development",
     year: "2025",
-    category: "No-code",
+    category: "Framer/Webflow",
     description: "A previous personal portfolio exploring visual structure, project presentation, and responsive Framer delivery.",
     cover: { type: "image", src: portfolioCover, alt: "Portfolio v.1 cover" },
     media: [{ type: "video", src: portfolioDemo, alt: "Portfolio v.1 demo" }],
@@ -133,7 +155,7 @@ export const projects: Project[] = [
     title: "Radio",
     role: "Framer Development",
     year: "2025",
-    category: "No-code",
+    category: "Framer/Webflow",
     description: "A podcast website built in Framer with clean content hierarchy and responsive listening touchpoints.",
     cover: { type: "image", src: radioCover, alt: "Radio website cover" },
     media: [{ type: "video", src: radioDemo, alt: "Radio website demo" }],
@@ -154,7 +176,7 @@ export const projects: Project[] = [
     title: "Bistro",
     role: "Webflow Development",
     year: "2025",
-    category: "No-code",
+    category: "Framer/Webflow",
     description: "A restaurant website built in Webflow with menu storytelling, service details, and responsive page structure.",
     cover: { type: "image", src: bistroCover, alt: "Bistro website cover" },
     media: [{ type: "video", src: bistroDemo, alt: "Bistro website demo" }],
@@ -165,7 +187,7 @@ export const projects: Project[] = [
     title: "Candi",
     role: "Framer Development",
     year: "2026",
-    category: "No-code",
+    category: "Framer/Webflow",
     description: "A Framer website with bold product presentation, structured sections, and launch-ready responsive pages.",
     cover: { type: "image", src: candiCover, alt: "Candi website cover" },
     media: [{ type: "video", src: candiDemo, alt: "Candi website demo" }],
@@ -176,7 +198,7 @@ export const projects: Project[] = [
     title: "Energy",
     role: "Design & Development",
     year: "2026",
-    category: "No-code",
+    category: "Framer/Webflow",
     description: "A Framer website design and build for an energy brand with motion-led product storytelling.",
     cover: { type: "video", src: energyDemo, alt: "Energy website preview" },
     media: [{ type: "video", src: energyDemo, alt: "Energy website demo" }],
@@ -214,28 +236,6 @@ export const projects: Project[] = [
     cover: { type: "video", src: photoWallDemo, alt: "Photo Wall prototype preview" },
     media: [{ type: "video", src: photoWallDemo, alt: "Photo Wall prototype demo" }],
     liveLink: "https://photo-wall-teal.vercel.app/",
-  },
-  {
-    id: 15,
-    title: "Notes Planner",
-    role: "Research Tool & AI",
-    year: "2026",
-    category: "AI Prototypes",
-    description: "A lightweight planning tool for capturing notes, organizing tasks, and turning ideas into action.",
-    cover: { type: "video", src: plannerDemo, alt: "Notes Planner prototype preview" },
-    media: [{ type: "video", src: plannerDemo, alt: "Notes Planner prototype demo" }],
-    liveLink: "https://note-ss.vercel.app",
-  },
-  {
-    id: 16,
-    title: "Colors",
-    role: "Research Tool & AI",
-    year: "2026",
-    category: "AI Prototypes",
-    description: "A color exploration tool for testing palettes, comparing combinations, and speeding up visual decisions.",
-    cover: { type: "video", src: colorsDemo, alt: "Colors prototype preview" },
-    media: [{ type: "video", src: colorsDemo, alt: "Colors prototype demo" }],
-    liveLink: "https://co-lors.vercel.app",
   },
   {
     id: 17,

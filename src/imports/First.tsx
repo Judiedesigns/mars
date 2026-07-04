@@ -20,7 +20,7 @@ function ProjectPreviewMedia({ media, title }: { media: ProjectMedia; title: str
     return (
       <video
         aria-label={media.alt ?? `${title} preview`}
-        className="object-cover pointer-events-none size-full transition-transform duration-500 group-hover:scale-[1.03]"
+        className="object-cover pointer-events-none size-full transition-transform duration-[650ms] ease-out group-hover:scale-[1.035]"
         src={media.src}
         autoPlay
         muted
@@ -34,7 +34,7 @@ function ProjectPreviewMedia({ media, title }: { media: ProjectMedia; title: str
   return (
     <img
       alt={media.alt ?? title}
-      className="object-cover pointer-events-none size-full transition-transform duration-500 group-hover:scale-[1.03]"
+      className="object-cover pointer-events-none size-full transition-transform duration-[650ms] ease-out group-hover:scale-[1.035]"
       src={media.src}
     />
   );
@@ -99,8 +99,8 @@ export default function First({ onProjectClick }: FirstProps) {
   };
 
   return (
-    <div className="bg-[#fafafa] min-h-screen" data-name="first">
-      <div className="max-w-[660px] mx-auto px-[24px] md:px-[32px] lg:px-[0]">
+    <div className="bg-[#fafafa] min-h-screen overflow-x-hidden" data-name="first">
+      <div className="max-w-[660px] w-full mx-auto px-[20px] sm:px-[24px] md:px-[32px] lg:px-[0]">
 
         {/* ─── Navigation ─── */}
         <nav className="flex items-center justify-between py-[24px] lg:py-[32px] animate-fade-in-down">
@@ -126,13 +126,16 @@ export default function First({ onProjectClick }: FirstProps) {
             </div>
           </div>
 
-          {/* Identity — the most important thing */}
-          <div className="mb-[48px] lg:mb-[56px] animate-fade-in stagger-2">
-            <h1 className="font-['DM_Mono',sans-serif] font-medium text-[#1a1a1a] text-[24px] lg:text-[28px] leading-[1.2] tracking-[-0.03em] mb-[8px]">
+          {/* Role — direct signal without changing the quiet rhythm */}
+          <div className="mb-[44px] lg:mb-[56px] animate-fade-in stagger-2">
+            <p className="font-['DM_Mono',sans-serif] font-medium text-[#1a1a1a] text-[11px] lg:text-[12px] leading-[1.4] tracking-[0.08em] uppercase mb-[14px] opacity-40">
               Florence Eze
+            </p>
+            <h1 className="font-['Inter',sans-serif] font-medium text-[#1a1a1a] text-[27px] sm:text-[32px] lg:text-[36px] leading-[1.12] tracking-[-0.04em] max-w-[620px]">
+              Designing interfaces, websites, and AI prototypes.
             </h1>
-            <p className="font-['Inter',sans-serif] font-normal text-[15px] lg:text-[16px] text-[rgba(0,0,0,0.4)] leading-[1.5]">
-              Product Designer & Web Builder
+            <p className="font-['Inter',sans-serif] font-normal text-[15px] lg:text-[16px] text-[rgba(0,0,0,0.4)] leading-[1.5] mt-[12px]">
+              Product & Visual Designer · Web Builder
             </p>
           </div>
 
@@ -143,8 +146,8 @@ export default function First({ onProjectClick }: FirstProps) {
                 <p className="font-['DM_Mono',sans-serif] font-medium text-[#1a1a1a] text-[11px] lg:text-[12px] tracking-[0.08em] uppercase mb-[16px] opacity-40">
                   About
                 </p>
-                <p className="font-['Inter',sans-serif] font-normal text-[15px] lg:text-[16px] text-[rgba(0,0,0,0.55)] leading-[1.7]">
-                  {`I'm a product designer focused on UX, interface design, and responsive web experiences. I've worked across agency and product environments, turning requirements into clear flows, polished interfaces, and production-ready work alongside developers and cross-functional teams. I'm drawn to complex problems, simplifying systems, and interfaces that feel effortless to use.`}
+                <p className="max-w-full font-['Inter',sans-serif] font-normal text-[15px] lg:text-[16px] text-[rgba(0,0,0,0.55)] leading-[1.7] break-words [overflow-wrap:anywhere]">
+                  {`I'm a product and visual designer, and a web builder creating clear interfaces, responsive websites, and AI-assisted prototypes. I turn early ideas and product requirements into polished flows, usable screens, and launch-ready digital experiences. I'm drawn to complex problems, simplifying systems, and interfaces that feel effortless to use.`}
                 </p>
               </div>
             </div>
@@ -159,38 +162,41 @@ export default function First({ onProjectClick }: FirstProps) {
             </p>
           </div>
 
-          <div
-            className="flex max-w-full gap-[6px] mb-[32px] lg:mb-[40px] overflow-x-auto"
-            role="tablist"
-            aria-label="Selected work filters"
-          >
-            {workFilters.map((filter) => {
-              const isActive = filter === activeFilter;
+          <div className="relative mb-[32px] lg:mb-[40px]">
+            <div
+              className="flex max-w-full gap-[6px] overflow-x-auto pb-[6px] pr-[28px] touch-pan-x snap-x work-filter-scroll"
+              role="tablist"
+              aria-label="Selected work filters"
+            >
+              {workFilters.map((filter) => {
+                const isActive = filter === activeFilter;
 
-              return (
-                <button
-                  key={filter}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  onClick={() => setActiveFilter(filter)}
-                  className={`relative font-['Inter',sans-serif] text-[13px] lg:text-[14px] tracking-[-0.01em] px-[11px] lg:px-[13px] py-[6px] rounded-full transition-colors duration-200 whitespace-nowrap ${
-                    isActive
-                      ? "text-[#1a1a1a]"
-                      : "text-[rgba(0,0,0,0.42)] bg-transparent hover:text-[#1a1a1a] hover:bg-[rgba(0,0,0,0.035)]"
-                  }`}
-                >
-                  {isActive && (
-                    <motion.span
-                      layoutId="active-work-filter"
-                      className="absolute inset-0 rounded-full bg-[rgba(0,0,0,0.055)]"
-                      transition={{ type: "spring", stiffness: 320, damping: 30, mass: 0.7 }}
-                    />
-                  )}
-                  <span className="relative z-10">{filter}</span>
-                </button>
-              );
-            })}
+                return (
+                  <button
+                    key={filter}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    onClick={() => setActiveFilter(filter)}
+                    className={`relative shrink-0 snap-start font-['Inter',sans-serif] text-[13px] lg:text-[14px] tracking-[-0.01em] px-[11px] lg:px-[13px] py-[6px] rounded-full transition-colors duration-200 whitespace-nowrap ${
+                      isActive
+                        ? "text-[#1a1a1a]"
+                        : "text-[rgba(0,0,0,0.42)] bg-transparent hover:text-[#1a1a1a] hover:bg-[rgba(0,0,0,0.035)]"
+                    }`}
+                  >
+                    {isActive && (
+                      <motion.span
+                        layoutId="active-work-filter"
+                        className="absolute inset-0 rounded-full bg-[rgba(0,0,0,0.055)]"
+                        transition={{ type: "spring", stiffness: 320, damping: 30, mass: 0.7 }}
+                      />
+                    )}
+                    <span className="relative z-10">{filter}</span>
+                  </button>
+                );
+              })}
+            </div>
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-[34px] bg-gradient-to-l from-[#fafafa] to-transparent" />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-[16px] gap-y-[40px] sm:gap-y-[48px]">
@@ -207,17 +213,17 @@ export default function First({ onProjectClick }: FirstProps) {
                   className="flex flex-col items-start project-card cursor-pointer group"
                 >
                   {/* Thumbnail with background fill and padding */}
-                  <div className="bg-[#F2F2F2] w-full p-[12px] rounded-[8px] mb-[16px] sm:mb-[18px]">
+                  <div className="bg-[#F2F2F2] w-full p-[12px] rounded-[8px] mb-[16px] sm:mb-[18px] transition-[background-color,box-shadow,transform] duration-[450ms] ease-out group-hover:bg-[#eeeeee] group-hover:shadow-[0_16px_36px_rgba(0,0,0,0.055)]">
                     <div className="bg-[#efefef] w-full aspect-[3/2] overflow-hidden rounded-[6px]">
                       <ProjectPreviewMedia media={proj.cover} title={proj.title} />
                     </div>
                   </div>
 
                   {/* Project info — title leads, meta supports */}
-                  <p className="font-['Inter',sans-serif] font-medium text-[15px] text-[#1a1a1a] tracking-[-0.02em] leading-[1.3] mb-[4px]">
+                  <p className="font-['Inter',sans-serif] font-medium text-[15px] text-[#1a1a1a] tracking-[-0.02em] leading-[1.3] mb-[4px] transition-colors duration-300 group-hover:text-[#000]">
                     {proj.title}
                   </p>
-                  <p className="font-['Inter',sans-serif] font-normal text-[13px] text-[rgba(0,0,0,0.35)] tracking-[-0.01em] leading-[1.4]">
+                  <p className="font-['Inter',sans-serif] font-normal text-[13px] text-[rgba(0,0,0,0.35)] tracking-[-0.01em] leading-[1.4] transition-colors duration-300 group-hover:text-[rgba(0,0,0,0.48)]">
                     {proj.role} · {proj.year}
                   </p>
                 </motion.div>
@@ -230,7 +236,7 @@ export default function First({ onProjectClick }: FirstProps) {
               <button
                 type="button"
                 onClick={() => setVisibleProjectCount((count) => count + projectRevealStep)}
-                className="group rounded-full border border-[rgba(0,0,0,0.18)] px-[34px] sm:px-[44px] py-[17px] sm:py-[20px] font-['Inter',sans-serif] text-[16px] sm:text-[18px] font-medium tracking-[-0.03em] text-[#1a1a1a] transition-all duration-300 hover:border-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-[#fafafa] active:scale-[0.98]"
+                className="group rounded-full border border-[rgba(0,0,0,0.18)] px-[34px] sm:px-[44px] py-[17px] sm:py-[20px] font-['Inter',sans-serif] text-[16px] sm:text-[18px] font-medium tracking-[-0.03em] text-[#1a1a1a] transition-[background-color,border-color,color,box-shadow,transform] duration-300 hover:border-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-[#fafafa] hover:shadow-[0_14px_30px_rgba(0,0,0,0.08)] active:scale-[0.98]"
               >
                 <span className="inline-block transition-transform duration-300 group-hover:translate-y-[-1px]">
                   See More Projects ({remainingProjectCount})
@@ -255,13 +261,13 @@ export default function First({ onProjectClick }: FirstProps) {
               href="https://medium.com/@juddblck2/visual-design-principles-for-web-design-b43c3fe23268"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-[14px] sm:gap-[16px] py-[14px] sm:py-[16px] rounded-[8px] px-[4px] -mx-[4px] hover:bg-[rgba(0,0,0,0.03)] transition-colors duration-200 group"
+              className="flex items-center gap-[14px] sm:gap-[16px] py-[14px] sm:py-[16px] rounded-[8px] px-[4px] -mx-[4px] hover:bg-[rgba(0,0,0,0.03)] transition-[background-color,transform] duration-[250ms] group"
             >
               <div className="h-[48px] sm:h-[52px] w-[68px] sm:w-[76px] shrink-0 rounded-[4px] overflow-hidden">
                 <img alt="Visual Hierarchy" className="object-cover size-full" src={imgImage100} />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-['Inter',sans-serif] font-medium text-[14px] sm:text-[15px] text-[#1a1a1a] tracking-[-0.02em] leading-[1.3] mb-[3px] truncate">
+                <p className="font-['Inter',sans-serif] font-medium text-[14px] sm:text-[15px] text-[#1a1a1a] tracking-[-0.02em] leading-[1.3] mb-[3px] truncate transition-transform duration-300 group-hover:translate-x-[2px]">
                   Visual Hierarchy
                 </p>
                 <p className="font-['Inter',sans-serif] font-normal text-[13px] text-[rgba(0,0,0,0.35)] tracking-[-0.01em] leading-[1.4] truncate">
@@ -286,13 +292,13 @@ export default function First({ onProjectClick }: FirstProps) {
               href="https://medium.com/@juddblck2/what-are-variables-ab89fb4f43ba"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-[14px] sm:gap-[16px] py-[14px] sm:py-[16px] rounded-[8px] px-[4px] -mx-[4px] hover:bg-[rgba(0,0,0,0.03)] transition-colors duration-200 group"
+              className="flex items-center gap-[14px] sm:gap-[16px] py-[14px] sm:py-[16px] rounded-[8px] px-[4px] -mx-[4px] hover:bg-[rgba(0,0,0,0.03)] transition-[background-color,transform] duration-[250ms] group"
             >
               <div className="h-[48px] sm:h-[52px] w-[68px] sm:w-[76px] shrink-0 rounded-[4px] overflow-hidden">
                 <img alt="Figma Color Variables" className="object-cover size-full" src={imgImage99} />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-['Inter',sans-serif] font-medium text-[14px] sm:text-[15px] text-[#1a1a1a] tracking-[-0.02em] leading-[1.3] mb-[3px] truncate">
+                <p className="font-['Inter',sans-serif] font-medium text-[14px] sm:text-[15px] text-[#1a1a1a] tracking-[-0.02em] leading-[1.3] mb-[3px] truncate transition-transform duration-300 group-hover:translate-x-[2px]">
                   Color Variables in Figma
                 </p>
                 <p className="font-['Inter',sans-serif] font-normal text-[13px] text-[rgba(0,0,0,0.35)] tracking-[-0.01em] leading-[1.4] truncate">
@@ -323,12 +329,26 @@ export default function First({ onProjectClick }: FirstProps) {
               <p className="font-['DM_Mono',sans-serif] text-[11px] lg:text-[12px] tracking-[0.08em] uppercase text-[rgba(0,0,0,0.3)] mb-[8px]">
                 Email
               </p>
-              <p
-                className="font-['Inter',sans-serif] font-normal text-[15px] lg:text-[16px] text-[#1a1a1a] tracking-[-0.01em] hover-underline cursor-pointer inline-block"
+              <button
+                type="button"
+                className="group relative inline-flex items-center gap-[10px] font-['Inter',sans-serif] font-normal text-[15px] lg:text-[16px] text-[#1a1a1a] tracking-[-0.01em] cursor-pointer transition-[color,transform] duration-300 active:scale-[0.98]"
                 onClick={handleCopyEmail}
               >
-                {emailCopied ? 'Copied!' : 'florencekey22@gmail.com'}
-              </p>
+                <span className="hover-underline">florencekey22@gmail.com</span>
+                <AnimatePresence>
+                  {emailCopied && (
+                    <motion.span
+                      initial={{ opacity: 0, y: 4, scale: 0.96 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -4, scale: 0.96 }}
+                      transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+                      className="rounded-full bg-[rgba(0,0,0,0.06)] px-[8px] py-[3px] text-[11px] text-[rgba(0,0,0,0.55)]"
+                    >
+                      Copied
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </button>
             </div>
 
             {/* Social */}
@@ -336,7 +356,7 @@ export default function First({ onProjectClick }: FirstProps) {
               <p className="font-['DM_Mono',sans-serif] text-[11px] lg:text-[12px] tracking-[0.08em] uppercase text-[rgba(0,0,0,0.3)] sm:mr-[24px]">
                 Elsewhere
               </p>
-              <div className="flex items-center gap-[6px] sm:gap-[10px]">
+              <div className="flex flex-wrap items-center gap-x-[10px] gap-y-[8px]">
                 <a
                   href="https://drive.google.com/file/d/16Ks4iwFGGpb4rLKmwYSJe02dyxFDNkQQ/view?usp=sharing"
                   target="_blank"
@@ -353,6 +373,15 @@ export default function First({ onProjectClick }: FirstProps) {
                   className="font-['Inter',sans-serif] text-[14px] lg:text-[15px] text-[#1a1a1a] tracking-[-0.01em] social-link rainbow-hover cursor-pointer"
                 >
                   LinkedIn
+                </a>
+                <span className="text-[rgba(0,0,0,0.2)] text-[8px]">●</span>
+                <a
+                  href="https://github.com/Judiedesigns"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-['Inter',sans-serif] text-[14px] lg:text-[15px] text-[#1a1a1a] tracking-[-0.01em] social-link rainbow-hover cursor-pointer"
+                >
+                  GitHub
                 </a>
                 <span className="text-[rgba(0,0,0,0.2)] text-[8px]">●</span>
                 <a

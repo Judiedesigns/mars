@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import img1 from "../../imports/img1.png";
 import img2 from "../../imports/img2.png";
 import img3 from "../../imports/img3.png";
@@ -27,6 +28,20 @@ const reelImages = [
 const doubled = [...reelImages, ...reelImages];
 
 export function ExplorationsCanvas() {
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [hoverPauseEnabled, setHoverPauseEnabled] = useState(true);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelectedIndex(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   return (
     <section className="pb-[44px] lg:pb-[56px] animate-fade-in stagger-6">
       <div className="border-t border-[rgba(0,0,0,0.06)] pt-[44px] lg:pt-[56px]">
@@ -41,6 +56,11 @@ export function ExplorationsCanvas() {
         <div
           className="relative -mx-[24px] md:-mx-[32px] lg:mx-[-120px] overflow-hidden"
           style={{ height: "clamp(245px, 29vw, 330px)" }}
+          onClick={() => {
+            setSelectedIndex(null);
+            setHoverPauseEnabled(false);
+          }}
+          onMouseLeave={() => setHoverPauseEnabled(true)}
         >
           <div
             className="absolute inset-y-0 left-0 w-[44px] sm:w-[72px] z-10 pointer-events-none"
@@ -51,26 +71,41 @@ export function ExplorationsCanvas() {
             style={{ background: "linear-gradient(to left, #fafafa 6%, rgba(250,250,250,0))" }}
           />
 
-          <div className="scattered-track flex items-start gap-[62px] pl-[54px]">
-            {doubled.map((img, index) => (
-              <div
-                key={`${img.alt}-${index}`}
-                className="flex-shrink-0 transition-transform duration-500 ease-out hover:scale-[1.05]"
-                style={{
-                  width: img.w,
-                  transform: `translateY(${img.ty}px) rotate(${img.rot}deg)`,
-                }}
-              >
-                <div className="rounded-[10px] overflow-hidden shadow-[0_12px_36px_rgba(0,0,0,0.13)] ring-1 ring-black/[0.025]">
-                  <img
-                    src={img.src}
-                    alt={img.alt}
-                    className="w-full h-auto block"
-                    draggable={false}
-                  />
-                </div>
-              </div>
-            ))}
+          <div className={`scattered-track flex items-start gap-[62px] pl-[54px] ${hoverPauseEnabled ? "hover-pause-enabled" : ""} ${selectedIndex !== null ? "spotlight-active" : ""}`}>
+            {doubled.map((img, index) => {
+              const isSelected = selectedIndex === index;
+              const isDimmed = selectedIndex !== null && !isSelected;
+
+              return (
+                <button
+                  key={`${img.alt}-${index}`}
+                  type="button"
+                  aria-pressed={isSelected}
+                  aria-label={`Spotlight ${img.alt}`}
+                  className={`exploration-item relative flex-shrink-0 appearance-none border-0 bg-transparent p-0 text-left transition-[opacity,transform,filter] duration-500 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4a72b8]/50 focus-visible:ring-offset-4 focus-visible:ring-offset-[#fafafa] ${
+                    isSelected ? "z-20" : "z-0 hover:scale-[1.05]"
+                  } ${isDimmed ? "opacity-50" : "opacity-100"}`}
+                  style={{
+                    width: img.w,
+                    transform: `translateY(${img.ty}px) rotate(${isSelected ? 0 : img.rot}deg) scale(${isSelected ? 1.16 : 1})`,
+                  }}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    setHoverPauseEnabled(true);
+                    setSelectedIndex(isSelected ? null : index);
+                  }}
+                >
+                  <span className="block rounded-[10px] overflow-hidden shadow-[0_12px_36px_rgba(0,0,0,0.13)] ring-1 ring-black/[0.025]">
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      className="w-full h-auto block"
+                      draggable={false}
+                    />
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
@@ -85,7 +120,11 @@ export function ExplorationsCanvas() {
             animation: scattered-scroll 60s linear infinite;
           }
 
-          .scattered-track:hover {
+          .scattered-track.hover-pause-enabled:hover {
+            animation-play-state: paused;
+          }
+
+          .scattered-track.spotlight-active {
             animation-play-state: paused;
           }
 
