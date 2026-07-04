@@ -126,15 +126,12 @@ export default function First({ onProjectClick }: FirstProps) {
             </div>
           </div>
 
-          {/* Role — direct signal without changing the quiet rhythm */}
-          <div className="mb-[44px] lg:mb-[56px] animate-fade-in stagger-2">
-            <p className="font-['DM_Mono',sans-serif] font-medium text-[#1a1a1a] text-[11px] lg:text-[12px] leading-[1.4] tracking-[0.08em] uppercase mb-[14px] opacity-40">
+          {/* Identity — quiet, clear, and direct */}
+          <div className="mb-[48px] lg:mb-[56px] animate-fade-in stagger-2">
+            <h1 className="font-['DM_Mono',sans-serif] font-medium text-[#1a1a1a] text-[24px] lg:text-[28px] leading-[1.2] tracking-[-0.03em] mb-[8px]">
               Florence Eze
-            </p>
-            <h1 className="font-['Inter',sans-serif] font-medium text-[#1a1a1a] text-[27px] sm:text-[32px] lg:text-[36px] leading-[1.12] tracking-[-0.04em] max-w-[620px]">
-              Designing interfaces, websites, and AI prototypes.
             </h1>
-            <p className="font-['Inter',sans-serif] font-normal text-[15px] lg:text-[16px] text-[rgba(0,0,0,0.4)] leading-[1.5] mt-[12px]">
+            <p className="font-['Inter',sans-serif] font-normal text-[15px] lg:text-[16px] text-[rgba(0,0,0,0.46)] leading-[1.5]">
               Product & Visual Designer · Web Builder
             </p>
           </div>
@@ -147,7 +144,7 @@ export default function First({ onProjectClick }: FirstProps) {
                   About
                 </p>
                 <p className="max-w-full font-['Inter',sans-serif] font-normal text-[15px] lg:text-[16px] text-[rgba(0,0,0,0.55)] leading-[1.7] break-words [overflow-wrap:anywhere]">
-                  {`I'm a product and visual designer, and a web builder creating clear interfaces, responsive websites, and AI-assisted prototypes. I turn early ideas and product requirements into polished flows, usable screens, and launch-ready digital experiences. I'm drawn to complex problems, simplifying systems, and interfaces that feel effortless to use.`}
+                  {`I'm a product designer focused on UX, interface design, and responsive web experiences. I've worked across agency and product environments, turning requirements into clear flows, polished interfaces, and production-ready work alongside developers and cross-functional teams. I'm drawn to complex problems, simplifying systems, and interfaces that feel effortless to use.`}
                 </p>
               </div>
             </div>
