@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explorations Mockup</title>
+    <style>
+      :root {
+        --bg: #f7f7f6;
+        --ink: #1f1f1f;
+        --muted: #9a9a9a;
+        --line: #e5e5e3;
+        --soft: #efefed;
+        --blue: #4d73c9;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Courier New", Courier, monospace;
+      }
+
+      main {
+        width: min(1220px, calc(100vw - 72px));
+        margin: 0 auto;
+        padding: 72px 0 96px;
+      }
+
+      .label {
+        color: var(--muted);
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .selected-placeholder {
+        min-height: 380px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .selected-placeholder h1 {
+        margin: 76px 0 0;
+        max-width: 760px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: clamp(44px, 5vw, 84px);
+        line-height: 0.95;
+        letter-spacing: 0;
+      }
+
+      .selected-placeholder p {
+        margin: 28px 0 0;
+        max-width: 680px;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #777;
+        font-size: 24px;
+        line-height: 1.45;
+      }
+
+      .explorations {
+        padding: 96px 0 0;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 32px;
+        margin-bottom: 34px;
+      }
+
+      .section-head p {
+        width: min(520px, 100%);
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #777;
+        font-size: 20px;
+        line-height: 1.45;
+      }
+
+      .rail {
+        display: grid;
+        grid-auto-columns: minmax(260px, 360px);
+        grid-auto-flow: column;
+        gap: 18px;
+        margin: 0 -36px;
+        padding: 0 36px 26px;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: thin;
+      }
+
+      .tile {
+        scroll-snap-align: start;
+      }
+
+      .thumb {
+        position: relative;
+        aspect-ratio: 1.22 / 1;
+        overflow: hidden;
+        border-radius: 10px;
+        background: var(--soft);
+      }
+
+      .visual {
+        position: absolute;
+        inset: 14px;
+        border-radius: 7px;
+        background:
+          linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.08)),
+          var(--accent);
+      }
+
+      .visual::before,
+      .visual::after {
+        content: "";
+        position: absolute;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.72);
+      }
+
+      .visual::before {
+        width: 42%;
+        height: 12px;
+        left: 18px;
+        top: 22px;
+      }
+
+      .visual::after {
+        width: 56px;
+        height: 56px;
+        right: 20px;
+        bottom: 18px;
+      }
+
+      .type-ui .visual {
+        background:
+          repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.48) 0 1px, transparent 1px 24px),
+          var(--accent);
+      }
+
+      .motion-ui .visual {
+        background:
+          radial-gradient(circle at 72% 28%, rgba(255, 255, 255, 0.78) 0 34px, transparent 35px),
+          radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.52) 0 58px, transparent 59px),
+          var(--accent);
+      }
+
+      .mobile-ui .visual {
+        display: grid;
+        place-items: center;
+      }
+
+      .mobile-ui .visual::before {
+        width: 38%;
+        height: 68%;
+        inset: auto;
+        border-radius: 28px;
+        border: 8px solid rgba(255, 255, 255, 0.72);
+        background: transparent;
+      }
+
+      .mobile-ui .visual::after {
+        display: none;
+      }
+
+      .tag {
+        position: absolute;
+        left: 18px;
+        bottom: 16px;
+        z-index: 1;
+        padding: 8px 11px;
+        border-radius: 999px;
+        background: rgba(247, 247, 246, 0.72);
+        color: #333;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .tile h3 {
+        margin: 18px 0 6px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 22px;
+        line-height: 1.1;
+        letter-spacing: 0;
+      }
+
+      .tile p {
+        margin: 0;
+        color: var(--muted);
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 17px;
+        line-height: 1.35;
+      }
+
+      .note {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-top: 30px;
+        color: var(--muted);
+        font-size: 16px;
+      }
+
+      .dot {
+        width: 28px;
+        height: 28px;
+        border-radius: 999px;
+        background: var(--blue);
+      }
+
+      @media (max-width: 720px) {
+        main {
+          width: min(100vw - 32px, 1220px);
+          padding-top: 38px;
+        }
+
+        .section-head {
+          display: block;
+        }
+
+        .section-head p {
+          margin-top: 18px;
+          font-size: 18px;
+        }
+
+        .rail {
+          grid-auto-columns: minmax(235px, 78vw);
+          margin: 0 -16px;
+          padding: 0 16px 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="selected-placeholder">
+        <div class="label">Selected Work</div>
+        <h1>Main project grid ends here.</h1>
+        <p>
+          This is only context. The explorations section would come after your serious case studies
+          and client/build work.
+        </p>
+      </section>
+
+      <section class="explorations" aria-labelledby="explorations-title">
+        <div class="section-head">
+          <div>
+            <div class="label" id="explorations-title">Explorations</div>
+          </div>
+          <p>
+            Smaller experiments, visual studies, motion tests, and quick prototypes. They show range,
+            but they do not compete with the main portfolio pieces.
+          </p>
+        </div>
+
+        <div class="rail" id="exploration-rail"></div>
+
+        <div class="note">
+          <span class="dot" aria-hidden="true"></span>
+          <span>Mockup only: fake items, no app wiring, no real portfolio data.</span>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const explorations = [
+        {
+          title: "Checkout Motion",
+          meta: "Interaction study",
+          tag: "Motion",
+          accent: "#dfe9ff",
+          style: "motion-ui",
+        },
+        {
+          title: "Type System Tests",
+          meta: "Visual direction",
+          tag: "Typography",
+          accent: "#ece8de",
+          style: "type-ui",
+        },
+        {
+          title: "Mobile Upload Flow",
+          meta: "Prototype",
+          tag: "Mobile",
+          accent: "#e9eef0",
+          style: "mobile-ui",
+        },
+        {
+          title: "Dashboard States",
+          meta: "Interface exploration",
+          tag: "UI",
+          accent: "#e8e2f3",
+          style: "type-ui",
+        },
+        {
+          title: "Color Study",
+          meta: "Design system test",
+          tag: "System",
+          accent: "#f1e1d6",
+          style: "motion-ui",
+        },
+        {
+          title: "Micro Tool Concept",
+          meta: "AI prototype",
+          tag: "Tool",
+          accent: "#deeadf",
+          style: "",
+        },
+      ];
+
+      const rail = document.querySelector("#exploration-rail");
+
+      rail.innerHTML = explorations
+        .map(
+          (item) => `
+            <article class="tile ${item.style}">
+              <div class="thumb">
+                <div class="visual" style="--accent: ${item.accent}"></div>
+                <span class="tag">${item.tag}</span>
+              </div>
+              <h3>${item.title}</h3>
+              <p>${item.meta}</p>
+            </article>
+          `
+        )
+        .join("");
+    </script>
+  </body>
+</html>
