@@ -233,7 +233,7 @@ export default function First({ onProjectClick }: FirstProps) {
               <button
                 type="button"
                 onClick={() => setVisibleProjectCount((count) => count + projectRevealStep)}
-                className="group rounded-full border border-[rgba(0,0,0,0.18)] px-[34px] sm:px-[44px] py-[17px] sm:py-[20px] font-['Inter',sans-serif] text-[16px] sm:text-[18px] font-medium tracking-[-0.03em] text-[#1a1a1a] transition-[background-color,border-color,color,box-shadow,transform] duration-300 hover:border-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-[#fafafa] hover:shadow-[0_14px_30px_rgba(0,0,0,0.08)] active:scale-[0.98]"
+                className="group rounded-full border border-[rgba(0,0,0,0.18)] px-[30px] sm:px-[38px] py-[15px] sm:py-[17px] font-['Inter',sans-serif] text-[15px] sm:text-[17px] font-medium tracking-[-0.03em] text-[#1a1a1a] transition-[background-color,border-color,color,box-shadow,transform] duration-300 hover:border-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-[#fafafa] hover:shadow-[0_14px_30px_rgba(0,0,0,0.08)] active:scale-[0.98]"
               >
                 <span className="inline-block transition-transform duration-300 group-hover:translate-y-[-1px]">
                   See More Projects ({remainingProjectCount})
