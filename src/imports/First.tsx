@@ -44,6 +44,7 @@ export default function First({ onProjectClick }: FirstProps) {
   const [emailCopied, setEmailCopied] = useState(false);
   const [activeFilter, setActiveFilter] = useState<(typeof workFilters)[number]>("Selected Work");
   const [visibleProjectCount, setVisibleProjectCount] = useState(initialProjectCount);
+  const [siteNoteOpen, setSiteNoteOpen] = useState(false);
   const filteredProjects = activeFilter === "Play"
     ? projects.filter((project) => project.category === "AI Prototypes")
     : projects.filter((project) => project.category !== "AI Prototypes");
@@ -325,6 +326,38 @@ export default function First({ onProjectClick }: FirstProps) {
         </section>
 
         <ExplorationsCanvas />
+
+        {/* ─── Site Note ─── */}
+        <section className="pb-[48px] lg:pb-[56px] animate-fade-in stagger-6">
+          <button
+            type="button"
+            aria-expanded={siteNoteOpen}
+            onClick={() => setSiteNoteOpen((open) => !open)}
+            className="group flex w-full items-center gap-[10px] py-[4px] text-left"
+          >
+            <span className="font-['DM_Mono',sans-serif] text-[14px] text-[rgba(0,0,0,0.45)] transition-colors duration-200 group-hover:text-[#1a1a1a]">
+              {siteNoteOpen ? "-" : "+"}
+            </span>
+            <span className="font-['DM_Mono',sans-serif] font-medium text-[#1a1a1a] text-[11px] lg:text-[12px] tracking-[0.08em] uppercase opacity-40 transition-opacity duration-200 group-hover:opacity-70">
+              A note about this site
+            </span>
+          </button>
+          <AnimatePresence initial={false}>
+            {siteNoteOpen && (
+              <motion.div
+                initial={{ height: 0, opacity: 0, y: -4 }}
+                animate={{ height: "auto", opacity: 1, y: 0 }}
+                exit={{ height: 0, opacity: 0, y: -4 }}
+                transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+                className="overflow-hidden"
+              >
+                <p className="pt-[14px] font-['Inter',sans-serif] font-normal text-[14px] lg:text-[15px] text-[rgba(0,0,0,0.52)] leading-[1.7]">
+                  This portfolio is temporary by design. It brings together current work, older portfolio versions, and experiments from different stages of my practice. I keep them here because the work is always changing, and the older pieces still show how I think, build, and evolve.
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </section>
 
         {/* ─── Contact / Footer ─── */}
         <footer id="contact" className="pb-[48px] lg:pb-[64px] animate-fade-in stagger-6 scroll-mt-[80px]">
