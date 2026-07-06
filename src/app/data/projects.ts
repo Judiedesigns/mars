@@ -48,7 +48,7 @@ export type Project = {
   liveLink: string;
 };
 
-export const workFilters = ["All", "Case Studies", "Design", "Framer/Webflow", "AI Prototypes"] as const;
+export const workFilters = ["Selected Work", "Play"] as const;
 
 export const projects: Project[] = [
   {

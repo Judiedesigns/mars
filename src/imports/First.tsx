@@ -42,11 +42,11 @@ function ProjectPreviewMedia({ media, title }: { media: ProjectMedia; title: str
 
 export default function First({ onProjectClick }: FirstProps) {
   const [emailCopied, setEmailCopied] = useState(false);
-  const [activeFilter, setActiveFilter] = useState("All");
+  const [activeFilter, setActiveFilter] = useState<(typeof workFilters)[number]>("Selected Work");
   const [visibleProjectCount, setVisibleProjectCount] = useState(initialProjectCount);
-  const filteredProjects = activeFilter === "All"
-    ? projects
-    : projects.filter((project) => project.category === activeFilter);
+  const filteredProjects = activeFilter === "Play"
+    ? projects.filter((project) => project.category === "AI Prototypes")
+    : projects.filter((project) => project.category !== "AI Prototypes");
   const visibleProjects = filteredProjects.slice(0, visibleProjectCount);
   const remainingProjectCount = Math.max(filteredProjects.length - visibleProjectCount, 0);
 
@@ -155,7 +155,7 @@ export default function First({ onProjectClick }: FirstProps) {
         <section id="projects" className="pb-[72px] lg:pb-[96px] scroll-mt-[80px] animate-fade-in stagger-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-[16px]">
             <p className="font-['DM_Mono',sans-serif] font-medium text-[#1a1a1a] text-[11px] lg:text-[12px] tracking-[0.08em] uppercase mb-[18px] opacity-40 sm:col-span-2">
-              Selected work
+              Work
             </p>
           </div>
 
@@ -163,7 +163,7 @@ export default function First({ onProjectClick }: FirstProps) {
             <div
               className="flex max-w-full gap-[6px] overflow-x-auto pb-[6px] pr-[28px] touch-pan-x snap-x work-filter-scroll"
               role="tablist"
-              aria-label="Selected work filters"
+              aria-label="Work filters"
             >
               {workFilters.map((filter) => {
                 const isActive = filter === activeFilter;
