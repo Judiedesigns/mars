@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import img1 from "../../imports/img1.png";
 import img2 from "../../imports/img2.png";
 import img3 from "../../imports/img3.png";
@@ -45,46 +45,64 @@ function playExplorationFocusSound() {
 
   const output = context.createGain();
   const filter = context.createBiquadFilter();
+  const body = context.createOscillator();
   const tap = context.createOscillator();
   const air = context.createOscillator();
+  const bodyGain = context.createGain();
   const tapGain = context.createGain();
   const airGain = context.createGain();
 
   filter.type = "highpass";
-  filter.frequency.setValueAtTime(520, now);
+  filter.frequency.setValueAtTime(160, now);
 
   output.gain.setValueAtTime(0.0001, now);
-  output.gain.exponentialRampToValueAtTime(0.13, now + 0.012);
-  output.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
+  output.gain.exponentialRampToValueAtTime(0.2, now + 0.014);
+  output.gain.exponentialRampToValueAtTime(0.0001, now + 0.18);
+
+  body.type = "sine";
+  body.frequency.setValueAtTime(315, now);
+  body.frequency.exponentialRampToValueAtTime(230, now + 0.11);
+  bodyGain.gain.setValueAtTime(0.18, now);
+  bodyGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.16);
 
   tap.type = "sine";
-  tap.frequency.setValueAtTime(980, now);
-  tap.frequency.exponentialRampToValueAtTime(620, now + 0.07);
-  tapGain.gain.setValueAtTime(0.34, now);
-  tapGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.075);
+  tap.frequency.setValueAtTime(1040, now + 0.008);
+  tap.frequency.exponentialRampToValueAtTime(710, now + 0.09);
+  tapGain.gain.setValueAtTime(0.26, now + 0.008);
+  tapGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.1);
 
   air.type = "triangle";
-  air.frequency.setValueAtTime(1720, now);
-  air.frequency.exponentialRampToValueAtTime(1380, now + 0.1);
-  airGain.gain.setValueAtTime(0.055, now + 0.006);
-  airGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.13);
+  air.frequency.setValueAtTime(1880, now + 0.018);
+  air.frequency.exponentialRampToValueAtTime(1320, now + 0.15);
+  airGain.gain.setValueAtTime(0.08, now + 0.018);
+  airGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.18);
 
+  body.connect(bodyGain);
   tap.connect(tapGain);
   air.connect(airGain);
+  bodyGain.connect(filter);
   tapGain.connect(filter);
   airGain.connect(filter);
   filter.connect(output);
   output.connect(context.destination);
 
-  tap.start(now);
-  air.start(now + 0.006);
-  tap.stop(now + 0.09);
-  air.stop(now + 0.14);
+  body.start(now);
+  tap.start(now + 0.008);
+  air.start(now + 0.018);
+  body.stop(now + 0.18);
+  tap.stop(now + 0.12);
+  air.stop(now + 0.2);
 }
 
 export function ExplorationsCanvas() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [hoverPauseEnabled, setHoverPauseEnabled] = useState(true);
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const offsetRef = useRef(0);
+  const speedRef = useRef(0);
+  const targetSpeedRef = useRef(0);
+  const baseSpeedRef = useRef(0);
+  const hoverPausedRef = useRef(false);
+  const spotlightPausedRef = useRef(false);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -96,6 +114,67 @@ export function ExplorationsCanvas() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
+
+  useEffect(() => {
+    spotlightPausedRef.current = selectedIndex !== null;
+    targetSpeedRef.current = hoverPausedRef.current || spotlightPausedRef.current ? 0 : baseSpeedRef.current;
+  }, [selectedIndex]);
+
+  useEffect(() => {
+    let animationFrame = 0;
+    let lastTime = performance.now();
+
+    const updateMetrics = () => {
+      const track = trackRef.current;
+      if (!track) return;
+
+      const halfTrackWidth = track.scrollWidth / 2;
+      baseSpeedRef.current = halfTrackWidth / 60;
+      if (!hoverPausedRef.current && !spotlightPausedRef.current) {
+        targetSpeedRef.current = baseSpeedRef.current;
+      }
+    };
+
+    const tick = (time: number) => {
+      const track = trackRef.current;
+      const delta = Math.min((time - lastTime) / 1000, 0.05);
+      lastTime = time;
+
+      if (track) {
+        const halfTrackWidth = track.scrollWidth / 2;
+        if (halfTrackWidth > 0) {
+          const ease = targetSpeedRef.current === 0 ? 0.12 : 0.08;
+          speedRef.current += (targetSpeedRef.current - speedRef.current) * ease;
+          offsetRef.current = (offsetRef.current + speedRef.current * delta) % halfTrackWidth;
+          track.style.transform = `translate3d(${-offsetRef.current}px, 0, 0)`;
+        }
+      }
+
+      animationFrame = requestAnimationFrame(tick);
+    };
+
+    updateMetrics();
+    speedRef.current = baseSpeedRef.current;
+    targetSpeedRef.current = baseSpeedRef.current;
+    animationFrame = requestAnimationFrame(tick);
+    window.addEventListener("resize", updateMetrics);
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      window.removeEventListener("resize", updateMetrics);
+    };
+  }, []);
+
+  const resumeReel = () => {
+    hoverPausedRef.current = false;
+    spotlightPausedRef.current = false;
+    targetSpeedRef.current = baseSpeedRef.current;
+  };
+
+  const pauseReel = () => {
+    hoverPausedRef.current = true;
+    targetSpeedRef.current = 0;
+  };
 
   return (
     <section className="pb-[44px] lg:pb-[56px] animate-fade-in stagger-6">
@@ -111,13 +190,14 @@ export function ExplorationsCanvas() {
         <div
           className="relative -mx-[24px] md:-mx-[32px] lg:mx-[-120px] overflow-hidden"
           style={{ height: "clamp(245px, 29vw, 330px)" }}
+          onMouseEnter={pauseReel}
           onClick={() => {
             setSelectedIndex(null);
-            setHoverPauseEnabled(false);
+            resumeReel();
           }}
           onMouseLeave={() => {
             setSelectedIndex(null);
-            setHoverPauseEnabled(true);
+            resumeReel();
           }}
         >
           <div
@@ -129,7 +209,7 @@ export function ExplorationsCanvas() {
             style={{ background: "linear-gradient(to left, #fafafa 6%, rgba(250,250,250,0))" }}
           />
 
-          <div className={`scattered-track flex items-start gap-[62px] pl-[54px] ${hoverPauseEnabled ? "hover-pause-enabled" : ""} ${selectedIndex !== null ? "spotlight-active" : ""}`}>
+          <div ref={trackRef} className="scattered-track flex items-start gap-[62px] pl-[54px]">
             {doubled.map((img, index) => {
               const isSelected = selectedIndex === index;
               const isDimmed = selectedIndex !== null && !isSelected;
@@ -150,7 +230,9 @@ export function ExplorationsCanvas() {
                   onClick={(event) => {
                     event.stopPropagation();
                     playExplorationFocusSound();
-                    setHoverPauseEnabled(true);
+                    hoverPausedRef.current = false;
+                    spotlightPausedRef.current = !isSelected;
+                    targetSpeedRef.current = isSelected ? baseSpeedRef.current : 0;
                     setSelectedIndex(isSelected ? null : index);
                   }}
                 >
@@ -169,27 +251,14 @@ export function ExplorationsCanvas() {
         </div>
 
         <style>{`
-          @keyframes scattered-scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-          }
-
           .scattered-track {
             width: max-content;
-            animation: scattered-scroll 60s linear infinite;
-          }
-
-          .scattered-track.hover-pause-enabled:hover {
-            animation-play-state: paused;
-          }
-
-          .scattered-track.spotlight-active {
-            animation-play-state: paused;
+            will-change: transform;
           }
 
           @media (prefers-reduced-motion: reduce) {
             .scattered-track {
-              animation: none;
+              transform: none !important;
             }
           }
         `}</style>
