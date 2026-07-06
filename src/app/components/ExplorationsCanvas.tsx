@@ -27,6 +27,61 @@ const reelImages = [
 
 const doubled = [...reelImages, ...reelImages];
 
+let explorationAudioContext: AudioContext | null = null;
+
+function playExplorationFocusSound() {
+  if (typeof window === "undefined") return;
+
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextClass) return;
+
+  explorationAudioContext ??= new AudioContextClass();
+  const context = explorationAudioContext;
+  const now = context.currentTime;
+
+  if (context.state === "suspended") {
+    void context.resume();
+  }
+
+  const output = context.createGain();
+  const filter = context.createBiquadFilter();
+  const tap = context.createOscillator();
+  const air = context.createOscillator();
+  const tapGain = context.createGain();
+  const airGain = context.createGain();
+
+  filter.type = "highpass";
+  filter.frequency.setValueAtTime(520, now);
+
+  output.gain.setValueAtTime(0.0001, now);
+  output.gain.exponentialRampToValueAtTime(0.13, now + 0.012);
+  output.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
+
+  tap.type = "sine";
+  tap.frequency.setValueAtTime(980, now);
+  tap.frequency.exponentialRampToValueAtTime(620, now + 0.07);
+  tapGain.gain.setValueAtTime(0.34, now);
+  tapGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.075);
+
+  air.type = "triangle";
+  air.frequency.setValueAtTime(1720, now);
+  air.frequency.exponentialRampToValueAtTime(1380, now + 0.1);
+  airGain.gain.setValueAtTime(0.055, now + 0.006);
+  airGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.13);
+
+  tap.connect(tapGain);
+  air.connect(airGain);
+  tapGain.connect(filter);
+  airGain.connect(filter);
+  filter.connect(output);
+  output.connect(context.destination);
+
+  tap.start(now);
+  air.start(now + 0.006);
+  tap.stop(now + 0.09);
+  air.stop(now + 0.14);
+}
+
 export function ExplorationsCanvas() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [hoverPauseEnabled, setHoverPauseEnabled] = useState(true);
@@ -60,7 +115,10 @@ export function ExplorationsCanvas() {
             setSelectedIndex(null);
             setHoverPauseEnabled(false);
           }}
-          onMouseLeave={() => setHoverPauseEnabled(true)}
+          onMouseLeave={() => {
+            setSelectedIndex(null);
+            setHoverPauseEnabled(true);
+          }}
         >
           <div
             className="absolute inset-y-0 left-0 w-[44px] sm:w-[72px] z-10 pointer-events-none"
@@ -83,14 +141,15 @@ export function ExplorationsCanvas() {
                   aria-pressed={isSelected}
                   aria-label={`Spotlight ${img.alt}`}
                   className={`exploration-item relative flex-shrink-0 appearance-none border-0 bg-transparent p-0 text-left transition-[opacity,transform,filter] duration-500 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4a72b8]/50 focus-visible:ring-offset-4 focus-visible:ring-offset-[#fafafa] ${
-                    isSelected ? "z-20" : "z-0 hover:scale-[1.05]"
+                    isSelected ? "z-20" : "z-0"
                   } ${isDimmed ? "opacity-50" : "opacity-100"}`}
                   style={{
                     width: img.w,
-                    transform: `translateY(${img.ty}px) rotate(${isSelected ? 0 : img.rot}deg) scale(${isSelected ? 1.16 : 1})`,
+                    transform: `translateY(${img.ty}px) rotate(${isSelected ? 0 : img.rot}deg) scale(${isSelected ? 1.34 : 1})`,
                   }}
                   onClick={(event) => {
                     event.stopPropagation();
+                    playExplorationFocusSound();
                     setHoverPauseEnabled(true);
                     setSelectedIndex(isSelected ? null : index);
                   }}
