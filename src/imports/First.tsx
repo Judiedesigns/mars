@@ -145,7 +145,7 @@ export default function First({ onProjectClick }: FirstProps) {
                   About
                 </p>
                 <p className="max-w-full font-['Inter',sans-serif] font-normal text-[15px] lg:text-[16px] text-[rgba(0,0,0,0.55)] leading-[1.7] break-words [overflow-wrap:anywhere]">
-                  {`I'm a product designer focused on UX, interface design, and responsive web experiences. I've worked across agency and product environments, turning requirements into clear flows, polished interfaces, and production-ready work alongside developers and cross-functional teams. I'm drawn to complex problems, simplifying systems, and interfaces that feel effortless to use.`}
+                  {`I'm a product designer focused on UX, research, and interface design. I've worked across agency and product environments, shipping production-ready work alongside developers and cross-functional teams. I'm drawn to complex problems, simplifying systems, and interfaces that feel effortless to use.`}
                 </p>
                 <p className="mt-[18px] font-['Inter',sans-serif] font-normal text-[15px] lg:text-[16px] text-[rgba(0,0,0,0.62)] leading-[1.7]">
                   Currently open to full-time roles and collaborations,{" "}
