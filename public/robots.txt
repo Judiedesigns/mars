@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
 
+Sitemap: https://florence-eze-portfolio.framer.website/sitemap.xml

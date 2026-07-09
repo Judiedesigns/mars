@@ -168,9 +168,9 @@ export default function First({ onProjectClick }: FirstProps) {
           <div className="animate-fade-in stagger-3">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-[16px]">
               <div className="sm:col-span-2">
-                <p className="font-['DM_Mono',sans-serif] font-medium text-[#1a1a1a] text-[11px] lg:text-[12px] tracking-[0.08em] uppercase mb-[16px] opacity-40">
+                <h2 className="font-['DM_Mono',sans-serif] font-medium text-[#1a1a1a] text-[11px] lg:text-[12px] tracking-[0.08em] uppercase mb-[16px] opacity-40">
                   About
-                </p>
+                </h2>
                 <p className="max-w-full font-['Inter',sans-serif] font-normal text-[15px] lg:text-[16px] text-[rgba(0,0,0,0.55)] leading-[1.7] break-words [overflow-wrap:anywhere]">
                   {`I'm a product designer focused on UX, research, and interface design. I've worked across agency and product environments, shipping product-ready work alongside developers and cross-functional teams. I'm drawn to complex problems, simplifying systems, and interfaces that feel effortless to use.`}
                 </p>
@@ -191,9 +191,9 @@ export default function First({ onProjectClick }: FirstProps) {
         {/* ─── Projects ─── */}
         <section id="projects" className="pb-[72px] lg:pb-[96px] scroll-mt-[80px] animate-fade-in stagger-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-[16px]">
-            <p className="font-['DM_Mono',sans-serif] font-medium text-[#1a1a1a] text-[11px] lg:text-[12px] tracking-[0.08em] uppercase mb-[18px] opacity-40 sm:col-span-2">
+            <h2 className="font-['DM_Mono',sans-serif] font-medium text-[#1a1a1a] text-[11px] lg:text-[12px] tracking-[0.08em] uppercase mb-[18px] opacity-40 sm:col-span-2">
               Work
-            </p>
+            </h2>
           </div>
 
           <div className="relative mb-[32px] lg:mb-[40px]">
@@ -283,9 +283,9 @@ export default function First({ onProjectClick }: FirstProps) {
         {/* ─── Writings ─── */}
         <section className="pb-[72px] lg:pb-[96px] animate-fade-in stagger-5">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-[16px]">
-            <p className="font-['DM_Mono',sans-serif] font-medium text-[#1a1a1a] text-[11px] lg:text-[12px] tracking-[0.08em] uppercase mb-[24px] lg:mb-[32px] opacity-40 sm:col-span-2">
+            <h2 className="font-['DM_Mono',sans-serif] font-medium text-[#1a1a1a] text-[11px] lg:text-[12px] tracking-[0.08em] uppercase mb-[24px] lg:mb-[32px] opacity-40 sm:col-span-2">
               Writing
-            </p>
+            </h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-[16px]">

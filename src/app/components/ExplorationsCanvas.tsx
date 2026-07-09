@@ -54,9 +54,9 @@ export function ExplorationsCanvas() {
       <div className="border-t border-[rgba(0,0,0,0.06)] pt-[44px] lg:pt-[56px]">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-[16px] mb-[24px] lg:mb-[32px]">
           <div className="sm:col-span-2">
-            <p className="font-['DM_Mono',sans-serif] font-medium text-[#1a1a1a] text-[11px] lg:text-[12px] tracking-[0.08em] uppercase opacity-40">
+            <h2 className="font-['DM_Mono',sans-serif] font-medium text-[#1a1a1a] text-[11px] lg:text-[12px] tracking-[0.08em] uppercase opacity-40">
               Explorations
-            </p>
+            </h2>
           </div>
         </div>
 
@@ -80,6 +80,8 @@ export function ExplorationsCanvas() {
                     <img
                       src={image.src}
                       alt={index < explorationImages.length ? image.alt : ""}
+                      role={index < explorationImages.length ? undefined : "presentation"}
+                      aria-hidden={index < explorationImages.length ? undefined : true}
                       className="w-full h-full object-contain"
                       draggable={false}
                     />

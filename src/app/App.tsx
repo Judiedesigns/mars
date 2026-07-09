@@ -5,9 +5,10 @@ import { ProjectModal } from './components/ProjectModal';
 import { getNextProjectId, getPrevProjectId } from './data/projects';
 
 const siteTitle = 'Florence Eze - Product Designer & Web Builder';
-const siteDescription = 'Florence Eze is a Product Designer and Web Builder based in Lagos, focused on UX strategy, interface design, responsive websites, and production-ready digital products.';
+const siteDescription = 'Florence Eze is a Product Designer and Web Builder based in Lagos, focused on UX strategy, interface design, responsive websites, and product-ready digital products.';
 const ogDescription = 'Selected portfolio work from Florence Eze, a Product Designer and Web Builder based in Lagos.';
-const ogImageUrl = '/og-image.svg';
+const siteUrl = 'https://florence-eze-portfolio.framer.website/';
+const ogImageUrl = `${siteUrl}og-image.png`;
 
 export default function App() {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
@@ -47,10 +48,22 @@ export default function App() {
       meta.content = content;
     };
 
+    const setLinkRel = (rel: string, href: string) => {
+      let link = document.querySelector(`link[rel="${rel}"]`) as HTMLLinkElement;
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = rel;
+        document.head.appendChild(link);
+      }
+      link.href = href;
+    };
+
     // Open Graph meta tags
     setMetaTag('og:title', siteTitle);
     setMetaTag('og:description', ogDescription);
     setMetaTag('og:image', ogImageUrl);
+    setMetaTag('og:url', siteUrl);
+    setMetaTag('og:site_name', 'Florence Eze Portfolio');
     setMetaTag('og:image:width', '1200');
     setMetaTag('og:image:height', '630');
     setMetaTag('og:type', 'website');
@@ -63,6 +76,31 @@ export default function App() {
 
     // Description meta tag
     setMetaName('description', siteDescription);
+    setMetaName('keywords', 'Florence Eze, product designer, UX designer, visual designer, web builder, interface design, portfolio');
+    setLinkRel('canonical', siteUrl);
+
+    const structuredData = {
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: 'Florence Eze',
+      url: siteUrl,
+      jobTitle: 'Product Designer and Web Builder',
+      sameAs: [
+        'https://www.linkedin.com/in/florence-eze',
+        'https://github.com/Judiedesigns',
+        'https://dribbble.com/janeyrexx',
+        'https://www.behance.net/florenceeze1',
+      ],
+    };
+
+    let jsonLd = document.querySelector('script[data-seo="person-json-ld"], script[type="application/ld+json"]') as HTMLScriptElement;
+    if (!jsonLd) {
+      jsonLd = document.createElement('script');
+      jsonLd.type = 'application/ld+json';
+      document.head.appendChild(jsonLd);
+    }
+    jsonLd.dataset.seo = 'person-json-ld';
+    jsonLd.textContent = JSON.stringify(structuredData);
 
     // Ensure the site is indexable (remove any noindex if present)
     const robotsMeta = document.querySelector('meta[name="robots"]') as HTMLMetaElement;
