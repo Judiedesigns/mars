@@ -11,6 +11,7 @@ const ogImageUrl = '/og-image.svg';
 
 export default function App() {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     // Set page title
@@ -72,6 +73,22 @@ export default function App() {
     setMetaName('robots', 'index, follow');
   }, []);
 
+  useEffect(() => {
+    if (document.readyState === 'complete') {
+      setIsLoaded(true);
+      return;
+    }
+
+    const finishLoading = () => setIsLoaded(true);
+    const fallback = window.setTimeout(finishLoading, 900);
+
+    window.addEventListener('load', finishLoading, { once: true });
+    return () => {
+      window.clearTimeout(fallback);
+      window.removeEventListener('load', finishLoading);
+    };
+  }, []);
+
   const handleProjectClick = (projectId: number) => {
     setSelectedProject(projectId);
   };
@@ -98,6 +115,16 @@ export default function App() {
 
   return (
     <>
+      <div
+        aria-hidden={isLoaded}
+        className={`fixed inset-0 z-[100] grid place-items-center bg-[#fafafa] transition-opacity duration-500 ease-out ${
+          isLoaded ? 'pointer-events-none opacity-0' : 'opacity-100'
+        }`}
+      >
+        <span className="font-['DM_Mono',sans-serif] text-[11px] tracking-[0.12em] uppercase text-[rgba(0,0,0,0.38)]">
+          Florence Eze
+        </span>
+      </div>
       <CustomCursor />
       <First onProjectClick={handleProjectClick} />
       {selectedProject && (

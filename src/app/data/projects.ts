@@ -4,6 +4,7 @@ import alorsCover from "../../../assets/alors/image 1134.png";
 import alorsDemo from "../../../assets/alors/alors.mp4";
 import portfolioCover from "../../../assets/mini-portfolio/cover.png";
 import portfolioDemo from "../../../assets/mini-portfolio/layout2.mp4";
+import portfolioV2Demo from "../../../assets/portfolio v.2/my video.mp4";
 import brimCover from "../../../assets/brim/cover.png";
 import brimDemo from "../../../assets/brim/brim.mp4";
 import radioCover from "../../../assets/radio/cover.png";
@@ -34,6 +35,7 @@ export type ProjectMedia = {
   type: "image" | "video";
   src: string;
   alt?: string;
+  fit?: "cover" | "contain";
 };
 
 export type Project = {
@@ -63,6 +65,28 @@ export const projects: Project[] = [
     liveLink: "https://www.behance.net/gallery/193734369/ShopEasy-Fashion-made-effortless",
   },
   {
+    id: 4,
+    title: "Brim Studios",
+    role: "Creative Direction",
+    year: "2026",
+    category: "Design",
+    description: "A studio website direction built around strong art direction, spatial composition, and polished digital presence.",
+    cover: { type: "image", src: brimCover, alt: "Brim Studios website cover" },
+    media: [{ type: "video", src: brimDemo, alt: "Brim Studios website demo" }],
+    liveLink: "https://tothebrim.studio/",
+  },
+  {
+    id: 7,
+    title: "Letters",
+    role: "Design, UX & Research",
+    year: "2024",
+    category: "Case Studies",
+    description: "A design case study exploring written communication, interface clarity, and user-centered product decisions.",
+    cover: { type: "image", src: lettersCover, alt: "Letters case study cover" },
+    media: [{ type: "video", src: lettersDemo, alt: "Letters case study demo", fit: "contain" }],
+    liveLink: "https://www.behance.net/gallery/208405475/Letters",
+  },
+  {
     id: 1,
     title: "Virtual Conference",
     role: "Framer Development",
@@ -74,17 +98,6 @@ export const projects: Project[] = [
     liveLink: "https://virtual-conference.framer.website/",
   },
   {
-    id: 7,
-    title: "Letters",
-    role: "Design, UX & Research",
-    year: "2024",
-    category: "Case Studies",
-    description: "A design case study exploring written communication, interface clarity, and user-centered product decisions.",
-    cover: { type: "image", src: lettersCover, alt: "Letters case study cover" },
-    media: [{ type: "video", src: lettersDemo, alt: "Letters case study demo" }],
-    liveLink: "https://www.behance.net/gallery/208405475/Letters",
-  },
-  {
     id: 15,
     title: "Random Notes",
     role: "AI Notes Tool",
@@ -94,17 +107,6 @@ export const projects: Project[] = [
     cover: { type: "video", src: plannerDemo, alt: "Random Notes prototype preview" },
     media: [{ type: "video", src: plannerDemo, alt: "Random Notes prototype demo" }],
     liveLink: "https://note-ss.vercel.app",
-  },
-  {
-    id: 4,
-    title: "Brim Studios",
-    role: "Creative Direction",
-    year: "2026",
-    category: "Design",
-    description: "A studio website direction built around strong art direction, spatial composition, and polished digital presence.",
-    cover: { type: "image", src: brimCover, alt: "Brim Studios website cover" },
-    media: [{ type: "video", src: brimDemo, alt: "Brim Studios website demo" }],
-    liveLink: "https://tothebrim.studio/",
   },
   {
     id: 16,
@@ -138,6 +140,17 @@ export const projects: Project[] = [
     cover: { type: "image", src: alorsCover, alt: "Alors website cover" },
     media: [{ type: "video", src: alorsDemo, alt: "Alors website demo" }],
     liveLink: "https://alors.framer.website/",
+  },
+  {
+    id: 19,
+    title: "Portfolio v.2",
+    role: "Design & Development",
+    year: "2026",
+    category: "Framer/Webflow",
+    description: "A newer portfolio direction focused on calmer presentation, clearer project hierarchy, and a more refined visual system.",
+    cover: { type: "video", src: portfolioV2Demo, alt: "Portfolio v.2 preview", fit: "contain" },
+    media: [{ type: "video", src: portfolioV2Demo, alt: "Portfolio v.2 demo", fit: "contain" }],
+    liveLink: "https://florence-eze-portfolio.framer.website/",
   },
   {
     id: 3,

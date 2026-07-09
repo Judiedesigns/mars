@@ -11,11 +11,13 @@ type ProjectModalProps = {
 };
 
 function ProjectHeroMedia({ media, title }: { media: ProjectMedia; title: string }) {
+  const objectFitClass = media.fit === "contain" ? "object-contain" : "object-cover";
+
   if (media.type === "video") {
     return (
       <video
         aria-label={media.alt ?? `${title} demo`}
-        className="absolute inset-0 object-cover size-full"
+        className={`absolute inset-0 ${objectFitClass} size-full`}
         src={media.src}
         autoPlay
         controls
@@ -29,7 +31,7 @@ function ProjectHeroMedia({ media, title }: { media: ProjectMedia; title: string
   return (
     <img
       alt={media.alt ?? title}
-      className="absolute inset-0 object-cover size-full"
+      className={`absolute inset-0 ${objectFitClass} size-full`}
       src={media.src}
     />
   );

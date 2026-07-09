@@ -6,7 +6,7 @@ import ProfilePictureShader from "../app/components/ProfilePictureShader";
 import { ExplorationsCanvas } from "../app/components/ExplorationsCanvas";
 import { projects, workFilters, type ProjectMedia } from "../app/data/projects";
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type FirstProps = {
   onProjectClick?: (projectId: number) => void;
@@ -16,17 +16,42 @@ const initialProjectCount = 6;
 const projectRevealStep = 2;
 
 function ProjectPreviewMedia({ media, title }: { media: ProjectMedia; title: string }) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+  const objectFitClass = media.fit === "contain" ? "object-contain" : "object-cover";
+
+  useEffect(() => {
+    if (media.type !== "video" || shouldLoadVideo) return;
+
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoadVideo(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "240px 0px" },
+    );
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, [media.type, shouldLoadVideo]);
+
   if (media.type === "video") {
     return (
       <video
+        ref={videoRef}
         aria-label={media.alt ?? `${title} preview`}
-        className="object-cover pointer-events-none size-full transition-transform duration-[650ms] ease-out group-hover:scale-[1.035]"
-        src={media.src}
-        autoPlay
+        className={`${objectFitClass} pointer-events-none size-full transition-transform duration-[650ms] ease-out group-hover:scale-[1.035]`}
+        src={shouldLoadVideo ? media.src : undefined}
+        autoPlay={shouldLoadVideo}
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="none"
       />
     );
   }
@@ -34,8 +59,10 @@ function ProjectPreviewMedia({ media, title }: { media: ProjectMedia; title: str
   return (
     <img
       alt={media.alt ?? title}
-      className="object-cover pointer-events-none size-full transition-transform duration-[650ms] ease-out group-hover:scale-[1.035]"
+      className={`${objectFitClass} pointer-events-none size-full transition-transform duration-[650ms] ease-out group-hover:scale-[1.035]`}
       src={media.src}
+      loading="lazy"
+      decoding="async"
     />
   );
 }
@@ -145,7 +172,7 @@ export default function First({ onProjectClick }: FirstProps) {
                   About
                 </p>
                 <p className="max-w-full font-['Inter',sans-serif] font-normal text-[15px] lg:text-[16px] text-[rgba(0,0,0,0.55)] leading-[1.7] break-words [overflow-wrap:anywhere]">
-                  {`I'm a product designer focused on UX, research, and interface design. I've worked across agency and product environments, shipping production-ready work alongside developers and cross-functional teams. I'm drawn to complex problems, simplifying systems, and interfaces that feel effortless to use.`}
+                  {`I'm a product designer focused on UX, research, and interface design. I've worked across agency and product environments, shipping product-ready work alongside developers and cross-functional teams. I'm drawn to complex problems, simplifying systems, and interfaces that feel effortless to use.`}
                 </p>
                 <p className="mt-[18px] font-['Inter',sans-serif] font-normal text-[15px] lg:text-[16px] text-[rgba(0,0,0,0.62)] leading-[1.7]">
                   Currently open to full-time roles and collaborations,{" "}
