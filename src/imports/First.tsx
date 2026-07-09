@@ -77,6 +77,8 @@ export default function First({ onProjectClick }: FirstProps) {
     : projects.filter((project) => project.category !== "AI Prototypes");
   const visibleProjects = filteredProjects.slice(0, visibleProjectCount);
   const remainingProjectCount = Math.max(filteredProjects.length - visibleProjectCount, 0);
+  const canToggleProjectCount = filteredProjects.length > initialProjectCount;
+  const allProjectsVisible = canToggleProjectCount && remainingProjectCount === 0;
 
   useEffect(() => {
     setVisibleProjectCount(initialProjectCount);
@@ -265,15 +267,22 @@ export default function First({ onProjectClick }: FirstProps) {
             </AnimatePresence>
           </div>
 
-          {remainingProjectCount > 0 && (
+          {canToggleProjectCount && (
             <div className="flex justify-center mt-[48px] lg:mt-[56px]">
               <button
                 type="button"
-                onClick={() => setVisibleProjectCount((count) => count + projectRevealStep)}
+                aria-expanded={allProjectsVisible}
+                onClick={() => {
+                  setVisibleProjectCount((count) => (
+                    allProjectsVisible
+                      ? initialProjectCount
+                      : Math.min(count + projectRevealStep, filteredProjects.length)
+                  ));
+                }}
                 className="group rounded-full border border-[rgba(0,0,0,0.18)] px-[30px] sm:px-[38px] py-[15px] sm:py-[17px] font-['Inter',sans-serif] text-[15px] sm:text-[17px] font-medium tracking-[-0.03em] text-[#1a1a1a] transition-[background-color,border-color,color,box-shadow,transform] duration-300 hover:border-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-[#fafafa] hover:shadow-[0_14px_30px_rgba(0,0,0,0.08)] active:scale-[0.98]"
               >
                 <span className="inline-block transition-transform duration-300 group-hover:translate-y-[-1px]">
-                  See More Projects ({remainingProjectCount})
+                  {allProjectsVisible ? "See Less" : `See More Projects (${remainingProjectCount})`}
                 </span>
               </button>
             </div>
