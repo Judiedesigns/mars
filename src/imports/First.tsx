@@ -1,5 +1,8 @@
 import imgImage100 from "../imports/img2.png";
 import imgImage99 from "../imports/img3.png";
+import imgAiDesignCover from "../imports/ai-design-cover.png";
+import imgVisualHierarchyCover from "../imports/visual-hierarchy-cover.png";
+import imgColorVariablesCover from "../imports/color-variables-cover.png";
 import ArrowUpRight from "./ArrowUpRight-28-2166";
 import ArrowRight from "./ArrowRight";
 import ProfilePictureShader from "../app/components/ProfilePictureShader";
@@ -294,13 +297,44 @@ export default function First({ onProjectClick }: FirstProps) {
             <div className="flex flex-col gap-[2px] sm:col-span-2">
             {/* Article 1 */}
             <a
+              href="https://medium.com/@juddblck2/how-i-design-with-ai-as-a-designer-06a783cb885a"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-[14px] sm:gap-[16px] py-[14px] sm:py-[16px] rounded-[8px] px-[4px] -mx-[4px] hover:bg-[rgba(0,0,0,0.03)] transition-[background-color,transform] duration-[250ms] group"
+            >
+              <div className="h-[48px] sm:h-[52px] w-[68px] sm:w-[76px] shrink-0 rounded-[4px] overflow-hidden">
+                <img alt="How I Design With AI as a Designer article cover" className="object-cover size-full" src={imgAiDesignCover} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-['Inter',sans-serif] font-medium text-[14px] sm:text-[15px] text-[#1a1a1a] tracking-[-0.02em] leading-[1.3] mb-[3px] truncate transition-transform duration-300 group-hover:translate-x-[2px]">
+                  How I Design With AI as a Designer
+                </p>
+                <p className="font-['Inter',sans-serif] font-normal text-[13px] text-[rgba(0,0,0,0.35)] tracking-[-0.01em] leading-[1.4] truncate">
+                  How AI fits into my design process
+                </p>
+              </div>
+              <div className="size-[20px] shrink-0 relative opacity-0 lg:group-hover:opacity-100 transition-opacity duration-200">
+                <div className="absolute inset-0 group-hover:opacity-0 transition-opacity">
+                  <ArrowUpRight />
+                </div>
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <ArrowRight />
+                </div>
+              </div>
+            </a>
+
+            {/* Subtle separator */}
+            <div className="h-px bg-[rgba(0,0,0,0.05)] mx-[4px]" />
+
+            {/* Article 2 */}
+            <a
               href="https://medium.com/@juddblck2/visual-design-principles-for-web-design-b43c3fe23268"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-[14px] sm:gap-[16px] py-[14px] sm:py-[16px] rounded-[8px] px-[4px] -mx-[4px] hover:bg-[rgba(0,0,0,0.03)] transition-[background-color,transform] duration-[250ms] group"
             >
               <div className="h-[48px] sm:h-[52px] w-[68px] sm:w-[76px] shrink-0 rounded-[4px] overflow-hidden">
-                <img alt="Visual Hierarchy" className="object-cover size-full" src={imgImage100} />
+                <img alt="Visual Hierarchy article cover" className="object-cover size-full" src={imgVisualHierarchyCover} />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-['Inter',sans-serif] font-medium text-[14px] sm:text-[15px] text-[#1a1a1a] tracking-[-0.02em] leading-[1.3] mb-[3px] truncate transition-transform duration-300 group-hover:translate-x-[2px]">
@@ -323,7 +357,7 @@ export default function First({ onProjectClick }: FirstProps) {
             {/* Subtle separator */}
             <div className="h-px bg-[rgba(0,0,0,0.05)] mx-[4px]" />
 
-            {/* Article 2 */}
+            {/* Article 3 */}
             <a
               href="https://medium.com/@juddblck2/what-are-variables-ab89fb4f43ba"
               target="_blank"
@@ -331,7 +365,7 @@ export default function First({ onProjectClick }: FirstProps) {
               className="flex items-center gap-[14px] sm:gap-[16px] py-[14px] sm:py-[16px] rounded-[8px] px-[4px] -mx-[4px] hover:bg-[rgba(0,0,0,0.03)] transition-[background-color,transform] duration-[250ms] group"
             >
               <div className="h-[48px] sm:h-[52px] w-[68px] sm:w-[76px] shrink-0 rounded-[4px] overflow-hidden">
-                <img alt="Figma Color Variables" className="object-cover size-full" src={imgImage99} />
+                <img alt="Color Variables in Figma article cover" className="object-cover size-full" src={imgColorVariablesCover} />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-['Inter',sans-serif] font-medium text-[14px] sm:text-[15px] text-[#1a1a1a] tracking-[-0.02em] leading-[1.3] mb-[3px] truncate transition-transform duration-300 group-hover:translate-x-[2px]">
