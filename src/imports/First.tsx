@@ -236,18 +236,12 @@ export default function First({ onProjectClick }: FirstProps) {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-[16px] gap-y-[40px] sm:gap-y-[48px]">
-            <AnimatePresence mode="popLayout">
-              {visibleProjects.map((proj) => (
-                <motion.div
-                  layout
-                  key={proj.id}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 6 }}
-                  transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                  onClick={() => onProjectClick?.(proj.id)}
-                  className="flex flex-col items-start project-card cursor-pointer group"
-                >
+            {visibleProjects.map((proj) => (
+              <div
+                key={proj.id}
+                onClick={() => onProjectClick?.(proj.id)}
+                className="flex flex-col items-start project-card cursor-pointer group"
+              >
                   {/* Thumbnail with background fill and padding */}
                   <div className="bg-[#F2F2F2] w-full p-[12px] rounded-[8px] mb-[16px] sm:mb-[18px] transition-[background-color,box-shadow,transform] duration-[450ms] ease-out group-hover:bg-[#eeeeee] group-hover:shadow-[0_16px_36px_rgba(0,0,0,0.055)]">
                     <div className="bg-[#efefef] w-full aspect-[3/2] overflow-hidden rounded-[6px]">
@@ -262,9 +256,8 @@ export default function First({ onProjectClick }: FirstProps) {
                   <p className="font-['Inter',sans-serif] font-normal text-[13px] text-[rgba(0,0,0,0.35)] tracking-[-0.01em] leading-[1.4] transition-colors duration-300 group-hover:text-[rgba(0,0,0,0.48)]">
                     {proj.role} · {proj.year}
                   </p>
-                </motion.div>
-              ))}
-            </AnimatePresence>
+              </div>
+            ))}
           </div>
 
           {canToggleProjectCount && (

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import First from '../imports/First';
 import { CustomCursor } from './components/CustomCursor';
 import { ProjectModal } from './components/ProjectModal';
+import { ShopEasyCaseStudy } from './components/ShopEasyCaseStudy';
 import { getNextProjectId, getPrevProjectId } from './data/projects';
 
 const siteTitle = 'Florence Eze - Product Designer & Web Builder';
@@ -13,6 +14,7 @@ const ogImageUrl = `${siteUrl}og-image.png`;
 export default function App() {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [currentPath, setCurrentPath] = useState(() => window.location.pathname);
 
   useEffect(() => {
     // Set page title
@@ -112,6 +114,16 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    const handlePopState = () => {
+      setCurrentPath(window.location.pathname);
+      setSelectedProject(null);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  useEffect(() => {
     if (document.readyState === 'complete') {
       setIsLoaded(true);
       return;
@@ -128,7 +140,23 @@ export default function App() {
   }, []);
 
   const handleProjectClick = (projectId: number) => {
+    if (projectId === 6) {
+      window.history.pushState({}, '', '/work/shop-easy');
+      setCurrentPath('/work/shop-easy');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      return;
+    }
+
     setSelectedProject(projectId);
+  };
+
+  const handleBackToWork = () => {
+    window.history.pushState({}, '', '/');
+    setCurrentPath('/');
+    setSelectedProject(null);
+    window.setTimeout(() => {
+      document.getElementById('projects')?.scrollIntoView({ block: 'start' });
+    }, 0);
   };
 
   const handleCloseModal = () => {
@@ -151,6 +179,24 @@ export default function App() {
     setSelectedProject(projectId);
   };
 
+  useEffect(() => {
+    if (currentPath !== '/work/shop-easy') return;
+
+    document.title = 'ShopEasy Case Study - Florence Eze';
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        handleBackToWork();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.title = siteTitle;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [currentPath]);
+
   return (
     <>
       <div
@@ -164,7 +210,14 @@ export default function App() {
         </span>
       </div>
       <CustomCursor />
-      <First onProjectClick={handleProjectClick} />
+      {currentPath === '/work/shop-easy' ? (
+        <ShopEasyCaseStudy
+          onBack={handleBackToWork}
+          onOpenLetters={() => setSelectedProject(7)}
+        />
+      ) : (
+        <First onProjectClick={handleProjectClick} />
+      )}
       {selectedProject && (
         <ProjectModal
           projectId={selectedProject}

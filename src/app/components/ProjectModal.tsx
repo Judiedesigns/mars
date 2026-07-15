@@ -119,7 +119,7 @@ export function ProjectModal({ projectId, onClose, onNext, onPrev, onJumpTo }: P
         {/* Desktop side arrows — always visible, flanking the modal */}
         <button
           onClick={handlePrev}
-          className="hidden lg:flex absolute left-[24px] xl:left-[40px] top-1/2 -translate-y-1/2 z-10 size-[52px] rounded-full bg-[rgba(255,255,255,0.08)] hover:bg-[rgba(255,255,255,0.15)] border border-[rgba(255,255,255,0.12)] hover:border-[rgba(255,255,255,0.25)] items-center justify-center cursor-pointer transition-all duration-200 group"
+          className="hidden lg:flex absolute left-[24px] xl:left-[40px] top-1/2 -translate-y-1/2 z-10 size-[52px] rounded-full bg-[rgba(255,255,255,0.08)] hover:bg-[rgba(255,255,255,0.15)] border border-[rgba(255,255,255,0.12)] hover:border-[rgba(255,255,255,0.25)] items-center justify-center cursor-pointer transition-[background-color,border-color,transform] duration-200 ease-out active:scale-[0.96] group"
         >
           <svg className="size-[20px] transition-transform duration-200 group-hover:-translate-x-[2px]" fill="none" viewBox="0 0 20 20">
             <path d={svgPaths.p1d04f480} fill="rgba(255,255,255,0.8)" />
@@ -128,7 +128,7 @@ export function ProjectModal({ projectId, onClose, onNext, onPrev, onJumpTo }: P
 
         <button
           onClick={handleNext}
-          className="hidden lg:flex absolute right-[24px] xl:right-[40px] top-1/2 -translate-y-1/2 z-10 size-[52px] rounded-full bg-[rgba(255,255,255,0.08)] hover:bg-[rgba(255,255,255,0.15)] border border-[rgba(255,255,255,0.12)] hover:border-[rgba(255,255,255,0.25)] items-center justify-center cursor-pointer transition-all duration-200 group"
+          className="hidden lg:flex absolute right-[24px] xl:right-[40px] top-1/2 -translate-y-1/2 z-10 size-[52px] rounded-full bg-[rgba(255,255,255,0.08)] hover:bg-[rgba(255,255,255,0.15)] border border-[rgba(255,255,255,0.12)] hover:border-[rgba(255,255,255,0.25)] items-center justify-center cursor-pointer transition-[background-color,border-color,transform] duration-200 ease-out active:scale-[0.96] group"
         >
           <svg className="size-[20px] transition-transform duration-200 group-hover:translate-x-[2px]" fill="none" viewBox="0 0 24 24">
             <path d={svgPaths.p24860100} fill="rgba(255,255,255,0.8)" />
@@ -146,7 +146,7 @@ export function ProjectModal({ projectId, onClose, onNext, onPrev, onJumpTo }: P
               </span>
               <button
                 onClick={(e) => { e.stopPropagation(); handleClose(); }}
-                className="size-[32px] rounded-full bg-[rgba(255,255,255,0.1)] hover:bg-[rgba(255,255,255,0.18)] flex items-center justify-center cursor-pointer transition-all duration-200"
+                className="size-[32px] rounded-full bg-[rgba(255,255,255,0.1)] hover:bg-[rgba(255,255,255,0.18)] flex items-center justify-center cursor-pointer transition-[background-color,transform] duration-150 ease-out active:scale-[0.94]"
               >
                 <svg className="size-[16px]" fill="none" viewBox="0 0 24 24">
                   <path d={svgPaths.p5ff8500} fill="rgba(255,255,255,0.7)" />
@@ -206,7 +206,7 @@ export function ProjectModal({ projectId, onClose, onNext, onPrev, onJumpTo }: P
                 <div className="flex items-center justify-between gap-[12px]">
                   <button
                     onClick={handlePrev}
-                    className="group flex items-center gap-[8px] sm:gap-[10px] cursor-pointer transition-all duration-200 active:scale-95 min-w-0"
+                    className="group flex items-center gap-[8px] sm:gap-[10px] cursor-pointer transition-transform duration-150 ease-out active:scale-[0.97] min-w-0"
                   >
                     <div className="size-[36px] sm:size-[40px] rounded-full bg-[rgba(255,255,255,0.1)] flex items-center justify-center shrink-0">
                       <svg className="size-[16px] sm:size-[18px]" fill="none" viewBox="0 0 20 20">
@@ -220,7 +220,7 @@ export function ProjectModal({ projectId, onClose, onNext, onPrev, onJumpTo }: P
 
                   <button
                     onClick={handleNext}
-                    className="group flex items-center gap-[8px] sm:gap-[10px] cursor-pointer transition-all duration-200 active:scale-95 min-w-0"
+                    className="group flex items-center gap-[8px] sm:gap-[10px] cursor-pointer transition-transform duration-150 ease-out active:scale-[0.97] min-w-0"
                   >
                     <span className="font-['Inter',sans-serif] text-[12px] sm:text-[13px] text-[rgba(255,255,255,0.6)] tracking-[-0.01em] truncate">
                       {nextProject.title}
