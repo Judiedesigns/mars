@@ -60,7 +60,7 @@ export function ExplorationsCanvas() {
           </div>
         </div>
 
-        <div className="relative -mx-[24px] md:-mx-[32px] lg:mx-0 overflow-hidden">
+        <div className="exploration-ticker-viewport relative -mx-[24px] md:-mx-[32px] lg:mx-0 overflow-hidden">
           <div
             role="list"
             aria-label="Exploration archive"
@@ -75,7 +75,7 @@ export function ExplorationsCanvas() {
                 className="flex-shrink-0"
                 style={{ width: "70vw", maxWidth: "500px" }}
               >
-                <div className="bg-[#F2F2F2] w-full p-[12px] rounded-[12px] h-[260px] sm:h-[300px] lg:h-[340px] transition-transform duration-500 ease-out hover:scale-[1.01]">
+                <div className="exploration-card bg-[#F2F2F2] w-full p-[12px] rounded-[12px] h-[260px] sm:h-[300px] lg:h-[340px]">
                   <div className="bg-[#efefef] w-full h-full overflow-hidden rounded-[8px]">
                     <img
                       src={image.src}
@@ -101,14 +101,28 @@ export function ExplorationsCanvas() {
           .ticker-animate {
             animation: ticker 40s linear infinite;
             animation-play-state: paused;
+            backface-visibility: hidden;
+            transform: translate3d(0, 0, 0);
+            will-change: transform;
           }
 
           .ticker-animate.is-running {
             animation-play-state: running;
           }
 
-          .ticker-animate.is-running:hover {
+          .exploration-ticker-viewport:hover .ticker-animate.is-running {
             animation-play-state: paused;
+          }
+
+          .exploration-card {
+            backface-visibility: hidden;
+            transform: translate3d(0, 0, 0) scale(1);
+            transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1);
+            will-change: transform;
+          }
+
+          .exploration-card:hover {
+            transform: translate3d(0, 0, 0) scale(1.01);
           }
         `}</style>
       </div>

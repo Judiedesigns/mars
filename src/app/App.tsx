@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import First from '../imports/First';
 import { CustomCursor } from './components/CustomCursor';
 import { ProjectModal } from './components/ProjectModal';
+import { CaterShopCaseStudy } from './components/CaterShopCaseStudy';
 import { ShopEasyCaseStudy } from './components/ShopEasyCaseStudy';
 import { getNextProjectId, getPrevProjectId } from './data/projects';
 
@@ -147,6 +148,13 @@ export default function App() {
       return;
     }
 
+    if (projectId === 18) {
+      window.history.pushState({}, '', '/work/cater-shop');
+      setCurrentPath('/work/cater-shop');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      return;
+    }
+
     setSelectedProject(projectId);
   };
 
@@ -180,9 +188,11 @@ export default function App() {
   };
 
   useEffect(() => {
-    if (currentPath !== '/work/shop-easy') return;
+    if (currentPath !== '/work/shop-easy' && currentPath !== '/work/cater-shop') return;
 
-    document.title = 'ShopEasy Case Study - Florence Eze';
+    document.title = currentPath === '/work/cater-shop'
+      ? 'Cater Shop Case Study - Florence Eze'
+      : 'ShopEasy Case Study - Florence Eze';
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -215,6 +225,8 @@ export default function App() {
           onBack={handleBackToWork}
           onOpenLetters={() => setSelectedProject(7)}
         />
+      ) : currentPath === '/work/cater-shop' ? (
+        <CaterShopCaseStudy onBack={handleBackToWork} />
       ) : (
         <First onProjectClick={handleProjectClick} />
       )}
