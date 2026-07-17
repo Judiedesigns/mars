@@ -1,4 +1,4 @@
-import lettersVideoPreview from "../../../assets/case-studies/letters/video.png";
+import lettersVideo from "../../../assets/case-studies/letters/letters.mp4";
 import lettersImageOne from "../../../assets/case-studies/letters/img1.png";
 import lettersImageTwo from "../../../assets/case-studies/letters/img2.png";
 import lettersImageThree from "../../../assets/case-studies/letters/img3.png";
@@ -18,28 +18,40 @@ const meta = [
   { label: "Industry", value: "Social networking" },
 ];
 
-const visuals = [
+type CaseStudyVisual = {
+  type: "image" | "video";
+  src: string;
+  alt: string;
+};
+
+const visuals: CaseStudyVisual[] = [
   {
-    src: lettersVideoPreview,
+    type: "video",
+    src: lettersVideo,
     alt: "Letters writing and splash screen mobile interface",
   },
   {
+    type: "image",
     src: lettersImageOne,
     alt: "Letters AI-assisted writing mobile interface",
   },
   {
+    type: "image",
     src: lettersImageTwo,
     alt: "Letters social feed and letter detail mobile screens",
   },
   {
+    type: "image",
     src: lettersImageThree,
     alt: "Letters photo upload mobile interface",
   },
   {
+    type: "image",
     src: lettersImageFour,
     alt: "Letters writing assistant and voice input mobile screens",
   },
   {
+    type: "image",
     src: lettersImageFive,
     alt: "Letters writing template selection mobile screens",
   },
@@ -54,6 +66,22 @@ function CaseStudyImage({ src, alt }: { src: string; alt: string }) {
         className="block h-auto w-full"
         loading="lazy"
         decoding="async"
+      />
+    </figure>
+  );
+}
+
+function CaseStudyVideo({ src, alt }: { src: string; alt: string }) {
+  return (
+    <figure className="w-full overflow-hidden bg-[#f3f3f3]">
+      <video
+        aria-label={alt}
+        className="block h-auto w-full"
+        src={src}
+        controls
+        muted
+        playsInline
+        preload="metadata"
       />
     </figure>
   );
@@ -137,7 +165,11 @@ export function LettersCaseStudy({ onBack, onOpenNextProject }: LettersCaseStudy
 
         <section className="flex flex-col gap-[18px]" aria-label="Letters visuals">
           {visuals.map((visual) => (
-            <CaseStudyImage key={visual.src} src={visual.src} alt={visual.alt} />
+            visual.type === "video" ? (
+              <CaseStudyVideo key={visual.src} src={visual.src} alt={visual.alt} />
+            ) : (
+              <CaseStudyImage key={visual.src} src={visual.src} alt={visual.alt} />
+            )
           ))}
         </section>
 
