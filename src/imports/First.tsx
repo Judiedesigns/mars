@@ -8,6 +8,7 @@ import { ExplorationsCanvas } from "../app/components/ExplorationsCanvas";
 import { projects, workFilters, type ProjectMedia } from "../app/data/projects";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
+import flowerMark from "../../assets/image-121.png";
 
 type FirstProps = {
   onProjectClick?: (projectId: number) => void;
@@ -144,13 +145,20 @@ export default function First({ onProjectClick }: FirstProps) {
         {/* ─── Navigation ─── */}
         <nav className="flex items-center justify-between py-[24px] lg:py-[32px] animate-fade-in-down">
 
-          <p className="font-['DM_Mono',sans-serif] text-[15px] lg:text-[16px] text-[#1a1a1a] tracking-[-0.02em]">
-            Florence Eze
+          <p className="flex items-center gap-[4px] font-['DM_Mono',sans-serif] text-[15px] lg:text-[16px] text-[#1a1a1a] tracking-[-0.02em]">
+            <span>Florence</span>
+            <img
+              src={flowerMark}
+              alt=""
+              aria-hidden="true"
+              className="h-[25px] w-[25px] translate-y-[1px] object-contain lg:h-[27px] lg:w-[27px]"
+              decoding="async"
+            />
           </p>
           <a
             href="#contact"
             onClick={handleScrollToContact}
-            className="font-['DM_Mono',sans-serif] text-[14px] lg:text-[15px] text-[rgba(0,0,0,0.5)] tracking-[-0.01em] rainbow-hover cursor-pointer p-[4px] hover:text-[#1a1a1a] transition-colors duration-300"
+            className="font-['DM_Mono',sans-serif] text-[14px] lg:text-[15px] text-[rgba(0,0,0,0.72)] tracking-[-0.01em] rainbow-hover cursor-pointer p-[4px] hover:text-[#1a1a1a] transition-colors duration-300"
           >
             Contact
           </a>
@@ -282,7 +290,9 @@ export default function First({ onProjectClick }: FirstProps) {
                   setVisibleProjectCount((count) => (
                     allProjectsVisible
                       ? initialProjectCount
-                      : Math.min(count + projectRevealStep, filteredProjects.length)
+                      : remainingProjectCount <= 3
+                        ? filteredProjects.length
+                        : Math.min(count + projectRevealStep, filteredProjects.length)
                   ));
                 }}
                 className="group rounded-full border border-[rgba(0,0,0,0.18)] px-[30px] sm:px-[38px] py-[15px] sm:py-[17px] font-['Inter',sans-serif] text-[15px] sm:text-[17px] font-medium tracking-[-0.03em] text-[#1a1a1a] transition-[background-color,border-color,color,box-shadow,transform] duration-300 hover:border-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-[#fafafa] hover:shadow-[0_14px_30px_rgba(0,0,0,0.08)] active:scale-[0.98]"

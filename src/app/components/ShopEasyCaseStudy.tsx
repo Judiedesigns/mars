@@ -3,9 +3,8 @@ import shopEasyBrand from "../../assets/case-studies/shop-easy/brand.png";
 import shopEasyScreens from "../../assets/case-studies/shop-easy/screens.png";
 import shopEasyOnboarding from "../../assets/case-studies/shop-easy/onboarding.png";
 import shopEasyPrototypePreview from "../../assets/case-studies/shop-easy/prototype-preview.png";
-import lettersPhoneOne from "../../assets/case-studies/shop-easy/letters-iphone-1.png";
-import lettersPhoneTwo from "../../assets/case-studies/shop-easy/letters-iphone-2.png";
-import { ArrowLeft } from "lucide-react";
+import nextCaseMark from "../../../assets/image-21.svg";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 
 type ShopEasyCaseStudyProps = {
   onBack: () => void;
@@ -161,26 +160,40 @@ export function ShopEasyCaseStudy({ onBack, onOpenLetters }: ShopEasyCaseStudyPr
           <button
             type="button"
             onClick={onOpenLetters}
-            className="group grid w-full text-left transition-transform duration-150 ease-out active:scale-[0.985]"
+            className="group grid w-full border-t border-[rgba(34,34,34,0.08)] pt-[18px] text-left transition-transform duration-150 ease-out active:scale-[0.99]"
           >
-            <div className="relative h-[280px] overflow-hidden rounded-[4px] bg-[#f3f3f3] transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.015] sm:h-[320px]">
-              <img
-                src={lettersPhoneOne}
-                alt="Letters mobile writing interface"
-                className="absolute bottom-[-14px] left-[20%] h-[78%] w-auto transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-y-[-4px] sm:left-[24%]"
-                loading="lazy"
-                decoding="async"
-              />
-              <img
-                src={lettersPhoneTwo}
-                alt="Letters mobile conversation interface"
-                className="absolute bottom-[-12px] right-[18%] h-[88%] w-auto transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-y-[-7px] sm:right-[22%]"
-                loading="lazy"
-                decoding="async"
-              />
-              <span className="absolute left-[18px] top-[18px] font-['DM_Mono',sans-serif] text-[13px] uppercase leading-none tracking-[0.017em] text-[rgba(0,0,0,0.48)] transition-colors duration-200 group-hover:text-[rgba(0,0,0,0.62)] sm:text-[14px]">
-                Next project
+            <div className="flex items-start justify-between gap-[20px]">
+              <span className="font-['DM_Mono',sans-serif] text-[12px] uppercase leading-none tracking-[0.017em] text-[rgba(0,0,0,0.4)] transition-colors duration-200 group-hover:text-[rgba(0,0,0,0.58)]">
+                Up next
               </span>
+              <img
+                src={nextCaseMark}
+                alt=""
+                aria-hidden="true"
+                className="mt-[-12px] h-[54px] w-[54px] object-contain opacity-90 transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:rotate-[-6deg] group-hover:scale-[1.04] sm:h-[68px] sm:w-[68px]"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+
+            <div className="mt-[30px] grid gap-[22px] sm:grid-cols-[minmax(0,0.95fr)_minmax(220px,1fr)] sm:gap-[42px]">
+              <h2
+                id="next-case-study"
+                className="font-['Inter',sans-serif] text-[44px] font-normal leading-[0.92] tracking-[-0.055em] text-black transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-[2px] sm:text-[58px]"
+              >
+                Letters
+              </h2>
+
+              <div className="flex flex-col items-start gap-[20px] sm:pt-[4px]">
+                <p className="font-['Inter',sans-serif] text-[14px] font-normal leading-[1.55] tracking-[-0.01em] text-[rgba(0,0,0,0.72)]">
+                  A social platform designed to bring intention back to online communication through slower,
+                  more expressive writing.
+                </p>
+                <span className="inline-flex items-center gap-[7px] border-b border-[rgba(0,0,0,0.34)] pb-[3px] font-['Inter',sans-serif] text-[14px] font-normal leading-none tracking-[-0.01em] text-[#1a1a1a] transition-[border-color,gap] duration-200 group-hover:gap-[10px] group-hover:border-[#1a1a1a]">
+                  View case study
+                  <ArrowUpRight aria-hidden="true" className="size-[14px] stroke-[1.8]" />
+                </span>
+              </div>
             </div>
           </button>
         </section>
