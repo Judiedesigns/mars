@@ -1,4 +1,5 @@
 import lettersVideo from "../../../assets/case-studies/letters/letters.mp4";
+import lettersVideoPoster from "../../../assets/case-studies/letters/video.png";
 import lettersImageOne from "../../../assets/case-studies/letters/img1.png";
 import lettersImageTwo from "../../../assets/case-studies/letters/img2.png";
 import lettersImageThree from "../../../assets/case-studies/letters/img3.png";
@@ -71,15 +72,18 @@ function CaseStudyImage({ src, alt }: { src: string; alt: string }) {
   );
 }
 
-function CaseStudyVideo({ src, alt }: { src: string; alt: string }) {
+function CaseStudyVideo({ src, alt, poster }: { src: string; alt: string; poster: string }) {
   return (
     <figure className="w-full overflow-hidden bg-[#f3f3f3]">
       <video
         aria-label={alt}
         className="block h-auto w-full"
         src={src}
+        poster={poster}
+        autoPlay
         controls
         muted
+        loop
         playsInline
         preload="metadata"
       />
@@ -166,7 +170,7 @@ export function LettersCaseStudy({ onBack, onOpenNextProject }: LettersCaseStudy
         <section className="flex flex-col gap-[18px]" aria-label="Letters visuals">
           {visuals.map((visual) => (
             visual.type === "video" ? (
-              <CaseStudyVideo key={visual.src} src={visual.src} alt={visual.alt} />
+              <CaseStudyVideo key={visual.src} src={visual.src} alt={visual.alt} poster={lettersVideoPoster} />
             ) : (
               <CaseStudyImage key={visual.src} src={visual.src} alt={visual.alt} />
             )
