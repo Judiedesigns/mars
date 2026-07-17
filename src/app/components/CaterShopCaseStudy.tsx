@@ -3,10 +3,12 @@ import caterShopImageOne from "../../../assets/case-studies/catershop/img-1.png"
 import caterShopImageTwo from "../../../assets/case-studies/catershop/img-2.png";
 import caterShopImageThree from "../../../assets/case-studies/catershop/img-3.png";
 import caterShopVideoPreview from "../../../assets/case-studies/catershop/video.png";
+import brimCover from "../../../assets/brim/cover.png";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 
 type CaterShopCaseStudyProps = {
   onBack: () => void;
+  onOpenNextProject?: () => void;
 };
 
 const meta = [
@@ -16,7 +18,7 @@ const meta = [
   { label: "Industry", value: "E commerce" },
 ];
 
-export function CaterShopCaseStudy({ onBack }: CaterShopCaseStudyProps) {
+export function CaterShopCaseStudy({ onBack, onOpenNextProject }: CaterShopCaseStudyProps) {
   return (
     <main className="min-h-screen bg-white px-[20px] pb-[64px] pt-[16px] text-[#2e2e2e] sm:px-[24px]">
       <header className="sticky top-0 z-20 mx-auto flex h-[64px] w-full max-w-[855px] items-start justify-between bg-white/90 pt-[16px] backdrop-blur-md">
@@ -34,9 +36,6 @@ export function CaterShopCaseStudy({ onBack }: CaterShopCaseStudyProps) {
             work
           </span>
         </button>
-        <p className="font-['DM_Mono',sans-serif] text-[13px] leading-[18px] tracking-[0.02em] text-[#5d5d5d]">
-          02 / 03
-        </p>
       </header>
 
       <div className="mx-auto mt-[20px] flex w-full max-w-[640px] flex-col gap-[48px]">
@@ -193,6 +192,30 @@ export function CaterShopCaseStudy({ onBack }: CaterShopCaseStudyProps) {
               complete tasks with greater confidence and independence.
             </p>
           </div>
+        </section>
+
+        <section className="pt-[14px]" aria-labelledby="next-project">
+          <button
+            type="button"
+            onClick={onOpenNextProject}
+            className="group grid w-full text-left transition-transform duration-150 ease-out active:scale-[0.985]"
+          >
+            <div className="relative h-[280px] overflow-hidden rounded-[4px] bg-[#f3f3f3] transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.015] sm:h-[320px]">
+              <img
+                src={brimCover}
+                alt="Brim Studios website preview"
+                className="size-full object-cover transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.04]"
+                loading="lazy"
+                decoding="async"
+              />
+              <span
+                id="next-project"
+                className="absolute left-[18px] bottom-[18px] font-['DM_Mono',sans-serif] text-[13px] uppercase leading-none tracking-[0.017em] text-white drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)] transition-colors duration-200 sm:text-[14px]"
+              >
+                Next project
+              </span>
+            </div>
+          </button>
         </section>
 
         <footer className="flex flex-col items-center justify-center gap-[24px] pt-[8px]">

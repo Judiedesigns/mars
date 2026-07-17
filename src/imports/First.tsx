@@ -1,5 +1,3 @@
-import imgImage100 from "../imports/img2.png";
-import imgImage99 from "../imports/img3.png";
 import imgAiDesignCover from "../imports/ai-design-cover.png";
 import imgVisualHierarchyCover from "../imports/visual-hierarchy-cover.png";
 import imgColorVariablesCover from "../imports/color-variables-cover.png";
@@ -133,7 +131,7 @@ export default function First({ onProjectClick }: FirstProps) {
 
   return (
     <div className="bg-[#fafafa] min-h-screen overflow-x-hidden" data-name="first">
-      <div className="max-w-[660px] w-full mx-auto px-[20px] sm:px-[24px] md:px-[32px] lg:px-[0]">
+      <div className="max-w-[660px] w-full min-w-0 mx-auto px-[20px] sm:px-[24px] md:px-[32px] lg:px-[0]">
 
         {/* ─── Navigation ─── */}
         <nav className="flex items-center justify-between py-[24px] lg:py-[32px] animate-fade-in-down">

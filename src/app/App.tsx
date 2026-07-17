@@ -3,8 +3,9 @@ import First from '../imports/First';
 import { CustomCursor } from './components/CustomCursor';
 import { ProjectModal } from './components/ProjectModal';
 import { CaterShopCaseStudy } from './components/CaterShopCaseStudy';
+import { LettersCaseStudy } from './components/LettersCaseStudy';
 import { ShopEasyCaseStudy } from './components/ShopEasyCaseStudy';
-import { getNextProjectId, getPrevProjectId } from './data/projects';
+import { getNextModalProjectId, getPrevModalProjectId } from './data/projects';
 
 const siteTitle = 'Florence Eze - Product Designer & Web Builder';
 const siteDescription = 'Florence Eze is a Product Designer and Web Builder based in Lagos, focused on UX strategy, interface design, responsive websites, and product-ready digital products.';
@@ -155,6 +156,13 @@ export default function App() {
       return;
     }
 
+    if (projectId === 7) {
+      window.history.pushState({}, '', '/work/letters');
+      setCurrentPath('/work/letters');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      return;
+    }
+
     setSelectedProject(projectId);
   };
 
@@ -173,13 +181,13 @@ export default function App() {
 
   const handleNextProject = () => {
     if (selectedProject) {
-      setSelectedProject(getNextProjectId(selectedProject));
+      setSelectedProject(getNextModalProjectId(selectedProject));
     }
   };
 
   const handlePrevProject = () => {
     if (selectedProject) {
-      setSelectedProject(getPrevProjectId(selectedProject));
+      setSelectedProject(getPrevModalProjectId(selectedProject));
     }
   };
 
@@ -188,11 +196,13 @@ export default function App() {
   };
 
   useEffect(() => {
-    if (currentPath !== '/work/shop-easy' && currentPath !== '/work/cater-shop') return;
+    if (currentPath !== '/work/shop-easy' && currentPath !== '/work/cater-shop' && currentPath !== '/work/letters') return;
 
     document.title = currentPath === '/work/cater-shop'
       ? 'Cater Shop Case Study - Florence Eze'
-      : 'ShopEasy Case Study - Florence Eze';
+      : currentPath === '/work/letters'
+        ? 'Letters Case Study - Florence Eze'
+        : 'ShopEasy Case Study - Florence Eze';
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -223,10 +233,18 @@ export default function App() {
       {currentPath === '/work/shop-easy' ? (
         <ShopEasyCaseStudy
           onBack={handleBackToWork}
-          onOpenLetters={() => setSelectedProject(7)}
+          onOpenLetters={() => handleProjectClick(7)}
+        />
+      ) : currentPath === '/work/letters' ? (
+        <LettersCaseStudy
+          onBack={handleBackToWork}
+          onOpenNextProject={() => handleProjectClick(18)}
         />
       ) : currentPath === '/work/cater-shop' ? (
-        <CaterShopCaseStudy onBack={handleBackToWork} />
+        <CaterShopCaseStudy
+          onBack={handleBackToWork}
+          onOpenNextProject={() => setSelectedProject(4)}
+        />
       ) : (
         <First onProjectClick={handleProjectClick} />
       )}

@@ -120,6 +120,12 @@
 }
 
 @layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
   * {
     @apply border-border outline-ring/50;
   }
@@ -136,6 +142,14 @@
   html {
     font-size: var(--font-size);
     scroll-behavior: smooth;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  body,
+  #root {
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   h1 {

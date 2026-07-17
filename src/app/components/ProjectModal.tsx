@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import svgPaths from '../../imports/svg-cq181jvxo1';
-import { projects, type ProjectMedia } from '../data/projects';
+import { modalProjects, projects, type ProjectMedia } from '../data/projects';
 
 type ProjectModalProps = {
   projectId: number;
@@ -41,12 +41,12 @@ const modalAccent = "#3a5fa0";
 
 export function ProjectModal({ projectId, onClose, onNext, onPrev, onJumpTo }: ProjectModalProps) {
   const project = projects.find(p => p.id === projectId);
-  const currentIndex = projects.findIndex(p => p.id === projectId);
+  const currentIndex = modalProjects.findIndex(p => p.id === projectId);
   const [isClosing, setIsClosing] = useState(false);
   const [isChanging, setIsChanging] = useState(false);
 
-  const prevProject = projects[currentIndex === 0 ? projects.length - 1 : currentIndex - 1];
-  const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentIndex + 1];
+  const prevProject = modalProjects[currentIndex === 0 ? modalProjects.length - 1 : currentIndex - 1];
+  const nextProject = modalProjects[currentIndex === modalProjects.length - 1 ? 0 : currentIndex + 1];
 
   const handleClose = () => {
     setIsClosing(true);
@@ -83,10 +83,10 @@ export function ProjectModal({ projectId, onClose, onNext, onPrev, onJumpTo }: P
       if (e.key === 'ArrowRight') handleNext();
       if (e.key === 'ArrowLeft') handlePrev();
 
-      // Number keys 1-9 jump to the first nine projects.
+      // Number keys 1-9 jump through modal-only projects.
       const numKey = parseInt(e.key);
-      if (numKey >= 1 && numKey <= Math.min(projects.length, 9) && onJumpTo) {
-        const targetProject = projects[numKey - 1];
+      if (numKey >= 1 && numKey <= Math.min(modalProjects.length, 9) && onJumpTo) {
+        const targetProject = modalProjects[numKey - 1];
         if (!targetProject || isChanging || targetProject.id === projectId) return;
         setIsChanging(true);
         setTimeout(() => {
@@ -142,7 +142,7 @@ export function ProjectModal({ projectId, onClose, onNext, onPrev, onJumpTo }: P
             {/* Top Bar — close + counter */}
             <div className="flex items-center justify-between px-[16px] sm:px-[24px] lg:px-[40px] pt-[16px] sm:pt-[20px] pb-[10px] sm:pb-[12px] shrink-0">
               <span className="font-['DM_Mono',sans-serif] text-[11px] sm:text-[12px] text-[rgba(255,255,255,0.4)] tracking-[0.08em] uppercase">
-                {String(currentIndex + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
+                {String(currentIndex + 1).padStart(2, '0')} / {String(modalProjects.length).padStart(2, '0')}
               </span>
               <button
                 onClick={(e) => { e.stopPropagation(); handleClose(); }}

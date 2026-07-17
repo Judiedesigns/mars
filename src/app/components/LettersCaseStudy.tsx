@@ -1,34 +1,53 @@
-import shopEasyHero from "../../assets/case-studies/shop-easy/hero.gif";
-import shopEasyBrand from "../../assets/case-studies/shop-easy/brand.png";
-import shopEasyScreens from "../../assets/case-studies/shop-easy/screens.png";
-import shopEasyOnboarding from "../../assets/case-studies/shop-easy/onboarding.png";
-import shopEasyPrototypePreview from "../../assets/case-studies/shop-easy/prototype-preview.png";
-import lettersPhoneOne from "../../assets/case-studies/shop-easy/letters-iphone-1.png";
-import lettersPhoneTwo from "../../assets/case-studies/shop-easy/letters-iphone-2.png";
+import lettersVideoPreview from "../../../assets/case-studies/letters/video.png";
+import lettersImageOne from "../../../assets/case-studies/letters/img1.png";
+import lettersImageTwo from "../../../assets/case-studies/letters/img2.png";
+import lettersImageThree from "../../../assets/case-studies/letters/img3.png";
+import lettersImageFour from "../../../assets/case-studies/letters/img4.png";
+import lettersImageFive from "../../../assets/case-studies/letters/img5.png";
+import caterShopCover from "../../../assets/cater-shop/cover.png";
 import { ArrowLeft } from "lucide-react";
 
-type ShopEasyCaseStudyProps = {
+type LettersCaseStudyProps = {
   onBack: () => void;
-  onOpenLetters?: () => void;
+  onOpenNextProject?: () => void;
 };
 
 const meta = [
-  { label: "My role", value: "User research, wireframes, UI design" },
+  { label: "My role", value: "User research, wireframing, UI design, prototyping" },
   { label: "Year", value: "2024" },
-  { label: "Industry", value: "E commerce" },
+  { label: "Industry", value: "Social networking" },
 ];
 
-function CaseStudyImage({
-  src,
-  alt,
-  className = "",
-}: {
-  src: string;
-  alt: string;
-  className?: string;
-}) {
+const visuals = [
+  {
+    src: lettersVideoPreview,
+    alt: "Letters writing and splash screen mobile interface",
+  },
+  {
+    src: lettersImageOne,
+    alt: "Letters AI-assisted writing mobile interface",
+  },
+  {
+    src: lettersImageTwo,
+    alt: "Letters social feed and letter detail mobile screens",
+  },
+  {
+    src: lettersImageThree,
+    alt: "Letters photo upload mobile interface",
+  },
+  {
+    src: lettersImageFour,
+    alt: "Letters writing assistant and voice input mobile screens",
+  },
+  {
+    src: lettersImageFive,
+    alt: "Letters writing template selection mobile screens",
+  },
+];
+
+function CaseStudyImage({ src, alt }: { src: string; alt: string }) {
   return (
-    <figure className={`w-full overflow-hidden bg-white ${className}`}>
+    <figure className="w-full overflow-hidden bg-[#f3f3f3]">
       <img
         src={src}
         alt={alt}
@@ -40,7 +59,7 @@ function CaseStudyImage({
   );
 }
 
-export function ShopEasyCaseStudy({ onBack, onOpenLetters }: ShopEasyCaseStudyProps) {
+export function LettersCaseStudy({ onBack, onOpenNextProject }: LettersCaseStudyProps) {
   return (
     <main className="min-h-screen bg-white px-[20px] pb-[64px] pt-[16px] text-[#2e2e2e] sm:px-[24px]">
       <header className="sticky top-0 z-20 mx-auto flex h-[64px] w-full max-w-[855px] items-start justify-between bg-white/90 pt-[16px] backdrop-blur-md">
@@ -61,13 +80,13 @@ export function ShopEasyCaseStudy({ onBack, onOpenLetters }: ShopEasyCaseStudyPr
       </header>
 
       <div className="mx-auto mt-[20px] flex w-full max-w-[640px] flex-col gap-[48px]">
-        <section className="flex flex-col gap-[22px]" aria-labelledby="shop-easy-title">
+        <section className="flex flex-col gap-[22px]" aria-labelledby="letters-title">
           <div className="flex flex-col gap-[4px]">
             <h1
-              id="shop-easy-title"
+              id="letters-title"
               className="font-['Inter',sans-serif] text-[28px] font-normal leading-[1] tracking-[-0.03em] text-black sm:text-[32px]"
             >
-              ShopEasy
+              Letters
             </h1>
             <p className="font-['DM_Mono',sans-serif] text-[14px] uppercase leading-[21px] tracking-[-0.011em] text-[#5d5d5d]">
               UX Designer
@@ -81,19 +100,19 @@ export function ShopEasyCaseStudy({ onBack, onOpenLetters }: ShopEasyCaseStudyPr
               </p>
               <div className="space-y-[18px] font-['Inter',sans-serif] text-[14px] leading-[1.55] tracking-[-0.01em] text-[rgba(0,0,0,0.72)]">
                 <p>
-                  ShopEasy is a mobile e-commerce experience designed to make online shopping simpler, faster,
-                  and more personalized.
+                  Letters is a social platform designed to bring intention back to online communication through
+                  beautifully crafted long-form writing. Inspired by the personal nature of handwritten letters,
+                  the platform encourages users to share thoughtful stories and reflections.
                 </p>
                 <p>
-                  The product focuses on helping people discover relevant products, browse with ease, and complete
-                  purchases with minimal friction. The project began with understanding how people interact with
-                  existing e-commerce platforms and where those experiences often fall short.
+                  The project explored how social media could move beyond short-form updates by creating a space
+                  where people can express themselves with greater depth and authenticity. Every post is written as
+                  a letter addressed to someone, making each interaction feel more personal and meaningful.
                 </p>
                 <p>
-                  Through user interviews and competitive analysis, I explored common shopping behaviors, pain
-                  points, and the features users value most. Using these insights, I brainstormed solutions,
-                  sketched early concepts, and translated the strongest ideas into wireframes before refining
-                  them into high-fidelity designs.
+                  To support the writing experience, I designed AI-assisted features that help users refine their
+                  ideas with suggestions for tone, structure, and clarity while preserving their unique voice. Each
+                  profile serves as a curated collection of letters, presented in a journal-like layout.
                 </p>
               </div>
             </div>
@@ -116,69 +135,30 @@ export function ShopEasyCaseStudy({ onBack, onOpenLetters }: ShopEasyCaseStudyPr
           </div>
         </section>
 
-        <section className="flex flex-col gap-[18px]" aria-label="ShopEasy visuals">
-          <CaseStudyImage
-            src={shopEasyHero}
-            alt="ShopEasy fashion shopping mobile screens"
-            className="bg-white"
-          />
-
-          <CaseStudyImage
-            src={shopEasyBrand}
-            alt="ShopEasy clothing brand identity and mobile screens"
-          />
-
-          <CaseStudyImage
-            src={shopEasyScreens}
-            alt="ShopEasy product and account interface screens"
-          />
-
-          <CaseStudyImage
-            src={shopEasyOnboarding}
-            alt="ShopEasy onboarding and login screens"
-            className="mb-[8px]"
-          />
-
-          <div className="mb-[18px] pt-[4px]">
-            <p className="font-['DM_Mono',sans-serif] text-[12px] uppercase leading-[1.2] tracking-[0.017em] text-[rgba(0,0,0,0.4)]">
-              Conclusion
-            </p>
-            <p className="mt-[4px] font-['Inter',sans-serif] text-[14px] leading-[1.55] tracking-[-0.01em] text-[rgba(0,0,0,0.72)]">
-              Using these insights, I brainstormed solutions, sketched early concepts, and translated the strongest
-              ideas into wireframes before refining them into high-fidelity designs. The experience evolved through
-              prototyping, usability testing, and several rounds of iteration.
-            </p>
-          </div>
-
-          <CaseStudyImage
-            src={shopEasyPrototypePreview}
-            alt="ShopEasy search and sale mobile prototype screens"
-            className="mb-[8px] bg-[#f9fafb]"
-          />
+        <section className="flex flex-col gap-[18px]" aria-label="Letters visuals">
+          {visuals.map((visual) => (
+            <CaseStudyImage key={visual.src} src={visual.src} alt={visual.alt} />
+          ))}
         </section>
 
-        <section className="pt-[14px]" aria-labelledby="next-case-study">
+        <section className="pt-[14px]" aria-labelledby="next-project">
           <button
             type="button"
-            onClick={onOpenLetters}
+            onClick={onOpenNextProject}
             className="group grid w-full text-left transition-transform duration-150 ease-out active:scale-[0.985]"
           >
             <div className="relative h-[280px] overflow-hidden rounded-[4px] bg-[#f3f3f3] transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.015] sm:h-[320px]">
               <img
-                src={lettersPhoneOne}
-                alt="Letters mobile writing interface"
-                className="absolute bottom-[-14px] left-[20%] h-[78%] w-auto transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-y-[-4px] sm:left-[24%]"
+                src={caterShopCover}
+                alt="Cater Shop website preview"
+                className="size-full object-cover transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.04]"
                 loading="lazy"
                 decoding="async"
               />
-              <img
-                src={lettersPhoneTwo}
-                alt="Letters mobile conversation interface"
-                className="absolute bottom-[-12px] right-[18%] h-[88%] w-auto transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-y-[-7px] sm:right-[22%]"
-                loading="lazy"
-                decoding="async"
-              />
-              <span className="absolute left-[18px] top-[18px] font-['DM_Mono',sans-serif] text-[13px] uppercase leading-none tracking-[0.017em] text-[rgba(0,0,0,0.48)] transition-colors duration-200 group-hover:text-[rgba(0,0,0,0.62)] sm:text-[14px]">
+              <span
+                id="next-project"
+                className="absolute left-[18px] bottom-[18px] font-['DM_Mono',sans-serif] text-[13px] uppercase leading-none tracking-[0.017em] text-white drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)] transition-colors duration-200 sm:text-[14px]"
+              >
                 Next project
               </span>
             </div>

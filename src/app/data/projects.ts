@@ -264,6 +264,9 @@ export const projects: Project[] = [
 ];
 
 export const projectIds = projects.map((project) => project.id);
+export const internalCaseStudyProjectIds = [6, 7, 18];
+export const modalProjects = projects.filter((project) => !internalCaseStudyProjectIds.includes(project.id));
+export const modalProjectIds = modalProjects.map((project) => project.id);
 
 export function getNextProjectId(currentId: number) {
   const currentIndex = projects.findIndex((project) => project.id === currentId);
@@ -275,4 +278,16 @@ export function getPrevProjectId(currentId: number) {
   const currentIndex = projects.findIndex((project) => project.id === currentId);
   if (currentIndex === -1) return projects[0]?.id ?? currentId;
   return projects[(currentIndex - 1 + projects.length) % projects.length].id;
+}
+
+export function getNextModalProjectId(currentId: number) {
+  const currentIndex = modalProjects.findIndex((project) => project.id === currentId);
+  if (currentIndex === -1) return modalProjects[0]?.id ?? currentId;
+  return modalProjects[(currentIndex + 1) % modalProjects.length].id;
+}
+
+export function getPrevModalProjectId(currentId: number) {
+  const currentIndex = modalProjects.findIndex((project) => project.id === currentId);
+  if (currentIndex === -1) return modalProjects[0]?.id ?? currentId;
+  return modalProjects[(currentIndex - 1 + modalProjects.length) % modalProjects.length].id;
 }
