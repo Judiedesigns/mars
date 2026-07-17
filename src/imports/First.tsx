@@ -16,7 +16,15 @@ type FirstProps = {
 const initialProjectCount = 6;
 const projectRevealStep = 2;
 
-function ProjectPreviewMedia({ media, title }: { media: ProjectMedia; title: string }) {
+function ProjectPreviewMedia({
+  media,
+  title,
+  loading = "lazy",
+}: {
+  media: ProjectMedia;
+  title: string;
+  loading?: "eager" | "lazy";
+}) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
   const objectFitClass = media.fit === "contain" ? "object-contain" : "object-cover";
@@ -62,7 +70,7 @@ function ProjectPreviewMedia({ media, title }: { media: ProjectMedia; title: str
       alt={media.alt ?? title}
       className={`${objectFitClass} pointer-events-none size-full transition-transform duration-[650ms] ease-out group-hover:scale-[1.035]`}
       src={media.src}
-      loading="lazy"
+      loading={loading}
       decoding="async"
     />
   );
@@ -237,7 +245,7 @@ export default function First({ onProjectClick }: FirstProps) {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-[16px] gap-y-[40px] sm:gap-y-[48px]">
-            {visibleProjects.map((proj) => (
+            {visibleProjects.map((proj, index) => (
               <div
                 key={proj.id}
                 onClick={() => onProjectClick?.(proj.id)}
@@ -246,7 +254,11 @@ export default function First({ onProjectClick }: FirstProps) {
                   {/* Thumbnail with background fill and padding */}
                   <div className="bg-[#F2F2F2] w-full p-[12px] rounded-[8px] mb-[16px] sm:mb-[18px] transition-[background-color,box-shadow,transform] duration-[450ms] ease-out group-hover:bg-[#eeeeee] group-hover:shadow-[0_16px_36px_rgba(0,0,0,0.055)]">
                     <div className="bg-[#efefef] w-full aspect-[3/2] overflow-hidden rounded-[6px]">
-                      <ProjectPreviewMedia media={proj.cover} title={proj.title} />
+                      <ProjectPreviewMedia
+                        media={proj.cover}
+                        title={proj.title}
+                        loading={index < initialProjectCount ? "eager" : "lazy"}
+                      />
                     </div>
                   </div>
 
