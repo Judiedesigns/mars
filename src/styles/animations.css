@@ -145,6 +145,10 @@
   transform: translateX(0) translateY(0);
 }
 
+.footer-social-link::after {
+  content: none;
+}
+
 .work-filter-scroll {
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;

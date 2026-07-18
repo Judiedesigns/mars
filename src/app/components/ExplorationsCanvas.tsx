@@ -78,11 +78,13 @@ export function ExplorationsCanvas() {
                 <div className="exploration-card bg-[#F2F2F2] w-full p-[12px] rounded-[12px] h-[260px] sm:h-[300px] lg:h-[340px]">
                   <div className="bg-[#efefef] w-full h-full overflow-hidden rounded-[8px]">
                     <img
-                      src={image.src}
+                      src={tickerStarted ? image.src : undefined}
                       alt={index < explorationImages.length ? image.alt : ""}
                       role={index < explorationImages.length ? undefined : "presentation"}
                       aria-hidden={index < explorationImages.length ? undefined : true}
                       className="w-full h-full object-contain"
+                      loading="lazy"
+                      decoding="async"
                       draggable={false}
                     />
                   </div>

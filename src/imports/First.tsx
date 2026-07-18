@@ -1,6 +1,6 @@
-import imgAiDesignCover from "../imports/ai-design-cover.png";
-import imgVisualHierarchyCover from "../imports/visual-hierarchy-cover.png";
-import imgColorVariablesCover from "../imports/color-variables-cover.png";
+import imgAiDesignCover from "../../assets/optimized/ai-design-cover.jpg";
+import imgVisualHierarchyCover from "../../assets/optimized/visual-hierarchy-cover.jpg";
+import imgColorVariablesCover from "../../assets/optimized/color-variables-cover.jpg";
 import ArrowUpRight from "./ArrowUpRight-28-2166";
 import ArrowRight from "./ArrowRight";
 import ProfilePictureShader from "../app/components/ProfilePictureShader";
@@ -9,6 +9,7 @@ import { projects, workFilters, type ProjectMedia } from "../app/data/projects";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import flowerMark from "../../assets/image-121.png";
+import { ArrowUpRight as ArrowUpRightIcon } from "lucide-react";
 
 type FirstProps = {
   onProjectClick?: (projectId: number) => void;
@@ -28,7 +29,7 @@ function ProjectPreviewMedia({
 }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
-  const objectFitClass = media.fit === "contain" ? "object-contain" : "object-cover";
+  const objectFitClass = media.fit === "contain" ? "object-contain" : "object-contain sm:object-cover";
 
   useEffect(() => {
     if (media.type !== "video" || shouldLoadVideo) return;
@@ -43,7 +44,7 @@ function ProjectPreviewMedia({
           observer.disconnect();
         }
       },
-      { rootMargin: "240px 0px" },
+      { rootMargin: "120px 0px" },
     );
 
     observer.observe(video);
@@ -260,12 +261,12 @@ export default function First({ onProjectClick }: FirstProps) {
                 className="flex flex-col items-start project-card cursor-pointer group"
               >
                   {/* Thumbnail with background fill and padding */}
-                  <div className="bg-[#F2F2F2] w-full p-[12px] rounded-[8px] mb-[16px] sm:mb-[18px] transition-[background-color,box-shadow,transform] duration-[450ms] ease-out group-hover:bg-[#eeeeee] group-hover:shadow-[0_16px_36px_rgba(0,0,0,0.055)]">
-                    <div className="bg-[#efefef] w-full aspect-[3/2] overflow-hidden rounded-[6px]">
+                  <div className="bg-[#F2F2F2] w-full px-[12px] py-[8px] rounded-[8px] mb-[16px] sm:mb-[18px] transition-[background-color,box-shadow,transform] duration-[450ms] ease-out group-hover:bg-[#eeeeee] group-hover:shadow-[0_16px_36px_rgba(0,0,0,0.055)]">
+                    <div className="bg-[#efefef] w-full aspect-[16/9] overflow-hidden rounded-[6px] sm:aspect-[3/2]">
                       <ProjectPreviewMedia
                         media={proj.cover}
                         title={proj.title}
-                        loading={index < initialProjectCount ? "eager" : "lazy"}
+                        loading={index === 0 ? "eager" : "lazy"}
                       />
                     </div>
                   </div>
@@ -323,7 +324,7 @@ export default function First({ onProjectClick }: FirstProps) {
               className="flex items-center gap-[14px] sm:gap-[16px] py-[14px] sm:py-[16px] rounded-[8px] px-[4px] -mx-[4px] hover:bg-[rgba(0,0,0,0.03)] transition-[background-color,transform] duration-[250ms] group"
             >
               <div className="h-[48px] sm:h-[52px] w-[68px] sm:w-[76px] shrink-0 rounded-[4px] overflow-hidden">
-                <img alt="How I Design With AI as a Designer article cover" className="object-cover size-full" src={imgAiDesignCover} />
+                <img alt="How I Design With AI as a Designer article cover" className="object-cover size-full" src={imgAiDesignCover} loading="lazy" decoding="async" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-['Inter',sans-serif] font-medium text-[14px] sm:text-[15px] text-[#1a1a1a] tracking-[-0.02em] leading-[1.3] mb-[3px] truncate transition-transform duration-300 group-hover:translate-x-[2px]">
@@ -354,7 +355,7 @@ export default function First({ onProjectClick }: FirstProps) {
               className="flex items-center gap-[14px] sm:gap-[16px] py-[14px] sm:py-[16px] rounded-[8px] px-[4px] -mx-[4px] hover:bg-[rgba(0,0,0,0.03)] transition-[background-color,transform] duration-[250ms] group"
             >
               <div className="h-[48px] sm:h-[52px] w-[68px] sm:w-[76px] shrink-0 rounded-[4px] overflow-hidden">
-                <img alt="Visual Hierarchy article cover" className="object-cover size-full" src={imgVisualHierarchyCover} />
+                <img alt="Visual Hierarchy article cover" className="object-cover size-full" src={imgVisualHierarchyCover} loading="lazy" decoding="async" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-['Inter',sans-serif] font-medium text-[14px] sm:text-[15px] text-[#1a1a1a] tracking-[-0.02em] leading-[1.3] mb-[3px] truncate transition-transform duration-300 group-hover:translate-x-[2px]">
@@ -385,7 +386,7 @@ export default function First({ onProjectClick }: FirstProps) {
               className="flex items-center gap-[14px] sm:gap-[16px] py-[14px] sm:py-[16px] rounded-[8px] px-[4px] -mx-[4px] hover:bg-[rgba(0,0,0,0.03)] transition-[background-color,transform] duration-[250ms] group"
             >
               <div className="h-[48px] sm:h-[52px] w-[68px] sm:w-[76px] shrink-0 rounded-[4px] overflow-hidden">
-                <img alt="Color Variables in Figma article cover" className="object-cover size-full" src={imgColorVariablesCover} />
+                <img alt="Color Variables in Figma article cover" className="object-cover size-full" src={imgColorVariablesCover} loading="lazy" decoding="async" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-['Inter',sans-serif] font-medium text-[14px] sm:text-[15px] text-[#1a1a1a] tracking-[-0.02em] leading-[1.3] mb-[3px] truncate transition-transform duration-300 group-hover:translate-x-[2px]">
@@ -478,50 +479,55 @@ export default function First({ onProjectClick }: FirstProps) {
               <p className="font-['DM_Mono',sans-serif] text-[11px] lg:text-[12px] tracking-[0.08em] uppercase text-[rgba(0,0,0,0.3)] sm:mr-[24px]">
                 Elsewhere
               </p>
-              <div className="flex flex-wrap items-center gap-x-[10px] gap-y-[8px]">
+              <div className="flex w-full flex-col items-stretch border-t border-[rgba(0,0,0,0.06)] sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-[10px] sm:gap-y-[8px] sm:border-t-0">
                 <a
                   href="https://drive.google.com/file/d/16Ks4iwFGGpb4rLKmwYSJe02dyxFDNkQQ/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-['Inter',sans-serif] text-[14px] lg:text-[15px] text-[#1a1a1a] tracking-[-0.01em] social-link rainbow-hover cursor-pointer"
+                  className="footer-social-link border-b border-[rgba(0,0,0,0.06)] py-[18px] font-['Inter',sans-serif] text-[14px] lg:text-[15px] text-[#1a1a1a] tracking-[-0.01em] social-link rainbow-hover cursor-pointer sm:border-b-0 sm:py-0"
                 >
-                  Resume
+                  <span>Resume</span>
+                  <ArrowUpRightIcon aria-hidden="true" className="size-[13px] stroke-[1.8]" />
                 </a>
-                <span className="text-[rgba(0,0,0,0.2)] text-[8px]">●</span>
+                <span className="hidden text-[rgba(0,0,0,0.2)] text-[8px] sm:inline">●</span>
                 <a
                   href="https://www.linkedin.com/in/florence-eze"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-['Inter',sans-serif] text-[14px] lg:text-[15px] text-[#1a1a1a] tracking-[-0.01em] social-link rainbow-hover cursor-pointer"
+                  className="footer-social-link border-b border-[rgba(0,0,0,0.06)] py-[18px] font-['Inter',sans-serif] text-[14px] lg:text-[15px] text-[#1a1a1a] tracking-[-0.01em] social-link rainbow-hover cursor-pointer sm:border-b-0 sm:py-0"
                 >
-                  LinkedIn
+                  <span>LinkedIn</span>
+                  <ArrowUpRightIcon aria-hidden="true" className="size-[13px] stroke-[1.8]" />
                 </a>
-                <span className="text-[rgba(0,0,0,0.2)] text-[8px]">●</span>
+                <span className="hidden text-[rgba(0,0,0,0.2)] text-[8px] sm:inline">●</span>
                 <a
                   href="https://github.com/Judiedesigns"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-['Inter',sans-serif] text-[14px] lg:text-[15px] text-[#1a1a1a] tracking-[-0.01em] social-link rainbow-hover cursor-pointer"
+                  className="footer-social-link border-b border-[rgba(0,0,0,0.06)] py-[18px] font-['Inter',sans-serif] text-[14px] lg:text-[15px] text-[#1a1a1a] tracking-[-0.01em] social-link rainbow-hover cursor-pointer sm:border-b-0 sm:py-0"
                 >
-                  GitHub
+                  <span>GitHub</span>
+                  <ArrowUpRightIcon aria-hidden="true" className="size-[13px] stroke-[1.8]" />
                 </a>
-                <span className="text-[rgba(0,0,0,0.2)] text-[8px]">●</span>
+                <span className="hidden text-[rgba(0,0,0,0.2)] text-[8px] sm:inline">●</span>
                 <a
                   href="https://dribbble.com/janeyrexx"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-['Inter',sans-serif] text-[14px] lg:text-[15px] text-[#1a1a1a] tracking-[-0.01em] social-link rainbow-hover cursor-pointer"
+                  className="footer-social-link border-b border-[rgba(0,0,0,0.06)] py-[18px] font-['Inter',sans-serif] text-[14px] lg:text-[15px] text-[#1a1a1a] tracking-[-0.01em] social-link rainbow-hover cursor-pointer sm:border-b-0 sm:py-0"
                 >
-                  Dribbble
+                  <span>Dribbble</span>
+                  <ArrowUpRightIcon aria-hidden="true" className="size-[13px] stroke-[1.8]" />
                 </a>
-                <span className="text-[rgba(0,0,0,0.2)] text-[8px]">●</span>
+                <span className="hidden text-[rgba(0,0,0,0.2)] text-[8px] sm:inline">●</span>
                 <a
                   href="https://www.behance.net/florenceeze1"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-['Inter',sans-serif] text-[14px] lg:text-[15px] text-[#1a1a1a] tracking-[-0.01em] social-link rainbow-hover cursor-pointer"
+                  className="footer-social-link border-b border-[rgba(0,0,0,0.06)] py-[18px] font-['Inter',sans-serif] text-[14px] lg:text-[15px] text-[#1a1a1a] tracking-[-0.01em] social-link rainbow-hover cursor-pointer sm:border-b-0 sm:py-0"
                 >
-                  Behance
+                  <span>Behance</span>
+                  <ArrowUpRightIcon aria-hidden="true" className="size-[13px] stroke-[1.8]" />
                 </a>
               </div>
             </div>
