@@ -6,7 +6,7 @@ import ArrowRight from "./ArrowRight";
 import ProfilePictureShader from "../app/components/ProfilePictureShader";
 import { ExplorationsCanvas } from "../app/components/ExplorationsCanvas";
 import { projects, workFilters, type ProjectMedia } from "../app/data/projects";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import flowerMark from "../../assets/image-121.png";
 import { ArrowUpRight as ArrowUpRightIcon } from "lucide-react";
@@ -72,6 +72,10 @@ function ProjectPreviewMedia({
       alt={media.alt ?? title}
       className={`${objectFitClass} pointer-events-none size-full transition-transform duration-[650ms] ease-out group-hover:scale-[1.035]`}
       src={media.src}
+      onError={(event) => {
+        if (!media.fallbackSrc || event.currentTarget.src === media.fallbackSrc) return;
+        event.currentTarget.src = media.fallbackSrc;
+      }}
       loading={loading}
       decoding="async"
     />
@@ -83,6 +87,7 @@ export default function First({ onProjectClick }: FirstProps) {
   const [activeFilter, setActiveFilter] = useState<(typeof workFilters)[number]>("Selected Work");
   const [visibleProjectCount, setVisibleProjectCount] = useState(initialProjectCount);
   const [siteNoteOpen, setSiteNoteOpen] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
   const filteredProjects = activeFilter === "Play"
     ? projects.filter((project) => project.category === "AI Prototypes")
     : projects.filter((project) => project.category !== "AI Prototypes");
@@ -253,13 +258,28 @@ export default function First({ onProjectClick }: FirstProps) {
             <div className="pointer-events-none absolute inset-y-0 right-0 w-[34px] bg-gradient-to-l from-[#fafafa] to-transparent" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-[16px] gap-y-[40px] sm:gap-y-[48px]">
-            {visibleProjects.map((proj, index) => (
-              <div
-                key={proj.id}
-                onClick={() => onProjectClick?.(proj.id)}
-                className="flex flex-col items-start project-card cursor-pointer group"
-              >
+          <motion.div
+            layout
+            className="grid grid-cols-1 sm:grid-cols-2 gap-x-[16px] gap-y-[40px] sm:gap-y-[48px]"
+            transition={{ layout: { duration: prefersReducedMotion ? 0 : 0.34, ease: [0.22, 1, 0.36, 1] } }}
+          >
+            <AnimatePresence mode="popLayout" initial={false}>
+              {visibleProjects.map((proj, index) => (
+                <motion.div
+                  key={proj.id}
+                  layout
+                  initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.985 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -10, scale: 0.985 }}
+                  transition={{
+                    opacity: { duration: prefersReducedMotion ? 0.12 : 0.22, ease: "easeOut" },
+                    scale: { duration: prefersReducedMotion ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] },
+                    y: { duration: prefersReducedMotion ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] },
+                    layout: { duration: prefersReducedMotion ? 0 : 0.34, ease: [0.22, 1, 0.36, 1] },
+                  }}
+                  onClick={() => onProjectClick?.(proj.id)}
+                  className="flex flex-col items-start project-card cursor-pointer group"
+                >
                   {/* Thumbnail with background fill and padding */}
                   <div className="bg-[#F2F2F2] w-full px-[12px] py-[8px] rounded-[8px] mb-[16px] sm:mb-[18px] transition-[background-color,box-shadow,transform] duration-[450ms] ease-out group-hover:bg-[#eeeeee] group-hover:shadow-[0_16px_36px_rgba(0,0,0,0.055)]">
                     <div className="bg-[#efefef] w-full aspect-[16/9] overflow-hidden rounded-[6px] sm:aspect-[3/2]">
@@ -278,12 +298,13 @@ export default function First({ onProjectClick }: FirstProps) {
                   <p className="font-['Inter',sans-serif] font-normal text-[13px] text-[rgba(0,0,0,0.35)] tracking-[-0.01em] leading-[1.4] transition-colors duration-300 group-hover:text-[rgba(0,0,0,0.48)]">
                     {proj.role} · {proj.year}
                   </p>
-              </div>
-            ))}
-          </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
 
           {canToggleProjectCount && (
-            <div className="flex justify-center mt-[48px] lg:mt-[56px]">
+            <motion.div layout className="flex justify-center mt-[48px] lg:mt-[56px]">
               <button
                 type="button"
                 aria-expanded={allProjectsVisible}
@@ -302,7 +323,7 @@ export default function First({ onProjectClick }: FirstProps) {
                   {allProjectsVisible ? "See Less" : `See More Projects (${remainingProjectCount})`}
                 </span>
               </button>
-            </div>
+            </motion.div>
           )}
         </section>
 

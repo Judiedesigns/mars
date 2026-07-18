@@ -1,22 +1,31 @@
 import virtualCover from "../../../assets/optimized/virtual-cover.jpg";
+import virtualCoverFallback from "../../../assets/virtual/virtual-img.png";
 import virtualDemo from "../../../assets/virtual/virtual.mp4";
 import alorsCover from "../../../assets/optimized/alors-cover.jpg";
+import alorsCoverFallback from "../../../assets/alors/image 1134.png";
 import alorsDemo from "../../../assets/alors/alors.mp4";
 import portfolioCover from "../../../assets/optimized/portfolio-cover.jpg";
+import portfolioCoverFallback from "../../../assets/mini-portfolio/cover.png";
 import portfolioDemo from "../../../assets/mini-portfolio/layout2.mp4";
 import portfolioV2Demo from "../../../assets/portfolio v.2/my video.mp4";
 import brimCover from "../../../assets/optimized/brim-cover.jpg";
+import brimCoverFallback from "../../../assets/brim/cover.png";
 import brimDemo from "../../../assets/brim/brim.mp4";
 import radioCover from "../../../assets/radio/cover.png";
 import radioDemo from "../../../assets/radio/framer.mp4";
 import shopEasyCover from "../../../assets/optimized/shop-easy-cover.jpg";
+import shopEasyCoverFallback from "../../../assets/ShopEasy/cover.png";
 import shopEasyDemo from "../../../assets/ShopEasy/video.mp4";
 import lettersCover from "../../../assets/optimized/letters-cover.jpg";
+import lettersCoverFallback from "../../../assets/letters/COVER.png";
 import lettersDemo from "../../../assets/letters/Letters (stage 8).mp4";
 import garageCover from "../../../assets/optimized/garage-cover.jpg";
+import garageCoverFallback from "../../../assets/garagw/35.png";
 import bistroCover from "../../../assets/optimized/bistro-cover.jpg";
+import bistroCoverFallback from "../../../assets/bistro-dev/cover.png";
 import bistroDemo from "../../../assets/bistro-dev/bistro.mp4";
 import candiCover from "../../../assets/optimized/candi-cover.jpg";
+import candiCoverFallback from "../../../assets/candi/cover.png";
 import candiDemo from "../../../assets/candi/candi.mp4";
 import energyDemo from "../../../assets/energy/movie.mp4";
 import nigerianLiteratureDemo from "../../../assets/tools/Nigerian-literature.mp4";
@@ -25,8 +34,10 @@ import photoWallDemo from "../../../assets/tools/photo-wall.mp4";
 import plannerDemo from "../../../assets/tools/planner.mp4";
 import colorsDemo from "../../../assets/tools/colors.mp4";
 import mapinduziCover from "../../../assets/optimized/mapinduzi-cover.jpg";
+import mapinduziCoverFallback from "../../../assets/mapinduzi/image 1135.png";
 import mapinduziDemo from "../../../assets/mapinduzi/mapinduzi.mp4";
 import caterShopCover from "../../../assets/optimized/cater-shop-cover.jpg";
+import caterShopCoverFallback from "../../../assets/cater-shop/cover.png";
 import caterShopDemo from "../../../assets/cater-shop/PMa.mp4";
 
 export type ProjectCategory = "Case Studies" | "Design" | "Framer/Webflow" | "AI Prototypes";
@@ -34,6 +45,7 @@ export type ProjectCategory = "Case Studies" | "Design" | "Framer/Webflow" | "AI
 export type ProjectMedia = {
   type: "image" | "video";
   src: string;
+  fallbackSrc?: string;
   alt?: string;
   fit?: "cover" | "contain";
 };
@@ -60,7 +72,7 @@ export const projects: Project[] = [
     year: "2024",
     category: "Case Studies",
     description: "A fashion ecommerce case study focused on clearer discovery, smoother browsing, and easier purchase decisions.",
-    cover: { type: "image", src: shopEasyCover, alt: "Shop Easy case study cover" },
+    cover: { type: "image", src: shopEasyCover, fallbackSrc: shopEasyCoverFallback, alt: "Shop Easy case study cover" },
     media: [{ type: "video", src: shopEasyDemo, alt: "Shop Easy case study demo" }],
     liveLink: "https://www.behance.net/gallery/193734369/ShopEasy-Fashion-made-effortless",
   },
@@ -71,7 +83,7 @@ export const projects: Project[] = [
     year: "2026",
     category: "Design",
     description: "A studio website direction built around strong art direction, spatial composition, and polished digital presence.",
-    cover: { type: "image", src: brimCover, alt: "Brim Studios website cover" },
+    cover: { type: "image", src: brimCover, fallbackSrc: brimCoverFallback, alt: "Brim Studios website cover" },
     media: [{ type: "video", src: brimDemo, alt: "Brim Studios website demo" }],
     liveLink: "https://tothebrim.studio/",
   },
@@ -82,7 +94,7 @@ export const projects: Project[] = [
     year: "2024",
     category: "Case Studies",
     description: "A design case study exploring written communication, interface clarity, and user-centered product decisions.",
-    cover: { type: "image", src: lettersCover, alt: "Letters case study cover" },
+    cover: { type: "image", src: lettersCover, fallbackSrc: lettersCoverFallback, alt: "Letters case study cover" },
     media: [{ type: "video", src: lettersDemo, alt: "Letters case study demo", fit: "contain" }],
     liveLink: "https://www.behance.net/gallery/208405475/Letters",
   },
@@ -93,7 +105,7 @@ export const projects: Project[] = [
     year: "2025",
     category: "Framer/Webflow",
     description: "A Framer-built virtual conference site with structured event content and responsive marketing pages.",
-    cover: { type: "image", src: virtualCover, alt: "Virtual website cover" },
+    cover: { type: "image", src: virtualCover, fallbackSrc: virtualCoverFallback, alt: "Virtual website cover" },
     media: [{ type: "video", src: virtualDemo, alt: "Virtual website demo" }],
     liveLink: "https://virtual-conference.framer.website/",
   },
@@ -126,7 +138,7 @@ export const projects: Project[] = [
     year: "2024",
     category: "AI Prototypes",
     description: "An accessible web design and AI-assisted build for browsing catering options with clearer decision paths.",
-    cover: { type: "image", src: caterShopCover, alt: "Cater Shop website cover" },
+    cover: { type: "image", src: caterShopCover, fallbackSrc: caterShopCoverFallback, alt: "Cater Shop website cover" },
     media: [{ type: "video", src: caterShopDemo, alt: "Cater Shop website demo" }],
     liveLink: "https://retina-mute-33834276.figma.site",
   },
@@ -137,7 +149,7 @@ export const projects: Project[] = [
     year: "2026",
     category: "Design",
     description: "A visual website direction for a lifestyle brand, focused on tone, layout, and launch-ready storytelling.",
-    cover: { type: "image", src: alorsCover, alt: "Alors website cover" },
+    cover: { type: "image", src: alorsCover, fallbackSrc: alorsCoverFallback, alt: "Alors website cover" },
     media: [{ type: "video", src: alorsDemo, alt: "Alors website demo" }],
     liveLink: "https://alors.framer.website/",
   },
@@ -159,7 +171,7 @@ export const projects: Project[] = [
     year: "2025",
     category: "Framer/Webflow",
     description: "A previous personal portfolio exploring visual structure, project presentation, and responsive Framer delivery.",
-    cover: { type: "image", src: portfolioCover, alt: "Portfolio v.1 cover" },
+    cover: { type: "image", src: portfolioCover, fallbackSrc: portfolioCoverFallback, alt: "Portfolio v.1 cover" },
     media: [{ type: "video", src: portfolioDemo, alt: "Portfolio v.1 demo" }],
     liveLink: "https://florence-eze-portfolio.framer.website/",
   },
@@ -181,7 +193,7 @@ export const projects: Project[] = [
     year: "2024",
     category: "Case Studies",
     description: "An ecommerce website case study for browsing, comparing, and choosing automotive products more confidently.",
-    cover: { type: "image", src: garageCover, alt: "The Garage case study cover" },
+    cover: { type: "image", src: garageCover, fallbackSrc: garageCoverFallback, alt: "The Garage case study cover" },
     liveLink: "https://www.behance.net/gallery/208239553/The-Garage-An-Ecommerce-website",
   },
   {
@@ -191,7 +203,7 @@ export const projects: Project[] = [
     year: "2025",
     category: "Framer/Webflow",
     description: "A restaurant website built in Webflow with menu storytelling, service details, and responsive page structure.",
-    cover: { type: "image", src: bistroCover, alt: "Bistro website cover" },
+    cover: { type: "image", src: bistroCover, fallbackSrc: bistroCoverFallback, alt: "Bistro website cover" },
     media: [{ type: "video", src: bistroDemo, alt: "Bistro website demo" }],
     liveLink: "https://bistroblisskitchen.webflow.io",
   },
@@ -202,7 +214,7 @@ export const projects: Project[] = [
     year: "2026",
     category: "Framer/Webflow",
     description: "A Framer website with bold product presentation, structured sections, and launch-ready responsive pages.",
-    cover: { type: "image", src: candiCover, alt: "Candi website cover" },
+    cover: { type: "image", src: candiCover, fallbackSrc: candiCoverFallback, alt: "Candi website cover" },
     media: [{ type: "video", src: candiDemo, alt: "Candi website demo" }],
     liveLink: "https://candii-web.framer.website",
   },
@@ -257,7 +269,7 @@ export const projects: Project[] = [
     year: "2026",
     category: "Design",
     description: "A creative website direction centered on bold visual language, campaign storytelling, and digital presence.",
-    cover: { type: "image", src: mapinduziCover, alt: "Mapinduzi website cover" },
+    cover: { type: "image", src: mapinduziCover, fallbackSrc: mapinduziCoverFallback, alt: "Mapinduzi website cover" },
     media: [{ type: "video", src: mapinduziDemo, alt: "Mapinduzi website demo" }],
     liveLink: "https://cotdigtest35.host/",
   },
