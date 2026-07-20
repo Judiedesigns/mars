@@ -438,6 +438,7 @@ export default function First({ onProjectClick }: FirstProps) {
         <section className="pb-[48px] lg:pb-[56px] animate-fade-in stagger-6">
           <button
             type="button"
+            data-native-cursor="pointer"
             aria-expanded={siteNoteOpen}
             onClick={() => setSiteNoteOpen((open) => !open)}
             className="group flex w-full items-center gap-[10px] py-[4px] text-left"
@@ -477,6 +478,7 @@ export default function First({ onProjectClick }: FirstProps) {
               </p>
               <button
                 type="button"
+                data-native-cursor="pointer"
                 className="group inline-flex flex-wrap items-center gap-x-[10px] gap-y-[8px] font-['Inter',sans-serif] font-normal text-[15px] lg:text-[16px] text-[#1a1a1a] tracking-[-0.01em] cursor-pointer transition-[color,transform] duration-300 active:scale-[0.98]"
                 onClick={handleCopyEmail}
                 aria-label="Copy email address"
