@@ -29,7 +29,7 @@ function ProjectPreviewMedia({
 }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
-  const objectFitClass = media.fit === "contain" ? "object-contain" : "object-contain sm:object-cover";
+  const objectFitClass = media.fit === "contain" ? "object-contain" : "object-cover";
 
   useEffect(() => {
     if (media.type !== "video" || shouldLoadVideo) return;
@@ -282,7 +282,7 @@ export default function First({ onProjectClick }: FirstProps) {
                 >
                   {/* Thumbnail with background fill and padding */}
                   <div className="bg-[#F2F2F2] w-full px-[12px] py-[8px] rounded-[8px] mb-[16px] sm:mb-[18px] transition-[background-color,box-shadow,transform] duration-[450ms] ease-out group-hover:bg-[#eeeeee] group-hover:shadow-[0_16px_36px_rgba(0,0,0,0.055)]">
-                    <div className="bg-[#efefef] w-full aspect-[16/9] overflow-hidden rounded-[6px] sm:aspect-[3/2]">
+                    <div className="bg-[#efefef] w-full h-[221px] overflow-hidden rounded-[6px] sm:h-auto sm:aspect-[3/2]">
                       <ProjectPreviewMedia
                         media={proj.cover}
                         title={proj.title}
