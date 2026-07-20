@@ -268,6 +268,11 @@ export function CaseStudySheet({
           transition: isDragging ? "none" : `transform ${isEntering ? 460 : 360}ms cubic-bezier(0.22, 1, 0.36, 1)`,
         }}
       >
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 z-10 h-[112px] bg-white sm:hidden"
+        />
+
         <button
           type="button"
           data-native-cursor="drag"
@@ -279,15 +284,15 @@ export function CaseStudySheet({
           }}
           onPointerUp={(event) => finishDrag(event.pointerId, event.currentTarget)}
           onPointerCancel={(event) => finishDrag(event.pointerId, event.currentTarget)}
-          className="group mx-auto flex w-full touch-none cursor-grab items-start justify-center pb-[8px] pt-[11px] active:cursor-grabbing"
+          className="group relative z-20 mx-auto flex w-full touch-none cursor-grab items-start justify-center pb-[8px] pt-[11px] active:cursor-grabbing"
           aria-label="Back to work"
         >
           <span className="h-[4px] w-[38px] rounded-full bg-[#d0d7d7] transition-[width,background-color,transform] duration-200 ease-out group-hover:w-[42px] group-hover:bg-[#aeb7b7] group-active:w-[42px] group-active:scale-x-[0.92] group-active:bg-[#8f9a9a]" />
         </button>
 
         <header
-          className={`absolute left-[20px] top-[82px] z-20 flex items-start justify-between transition-opacity duration-200 ease-out sm:left-[42px] lg:left-[54px] ${
-            isBackLinkMuted ? "opacity-20" : "opacity-100"
+          className={`absolute left-[20px] top-[56px] z-20 flex items-start justify-between transition-opacity duration-200 ease-out sm:left-[42px] sm:top-[82px] lg:left-[54px] ${
+            isBackLinkMuted ? "opacity-100 sm:opacity-20" : "opacity-100"
           }`}
         >
           <button
