@@ -234,6 +234,7 @@ export default function First({ onProjectClick }: FirstProps) {
                   <button
                     key={filter}
                     type="button"
+                    data-native-cursor="pointer"
                     role="tab"
                     aria-selected={isActive}
                     onClick={() => setActiveFilter(filter)}
