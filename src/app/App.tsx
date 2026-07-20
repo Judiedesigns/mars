@@ -2,10 +2,14 @@ import { useState, useEffect } from 'react';
 import First from '../imports/First';
 import { CustomCursor } from './components/CustomCursor';
 import { ProjectModal } from './components/ProjectModal';
+import { AlorsCaseStudy } from './components/AlorsCaseStudy';
 import { BrimStudiosCaseStudy } from './components/BrimStudiosCaseStudy';
 import { CaterShopCaseStudy } from './components/CaterShopCaseStudy';
 import { LettersCaseStudy } from './components/LettersCaseStudy';
+import { PortfolioV1CaseStudy } from './components/PortfolioV1CaseStudy';
+import { PortfolioV2CaseStudy } from './components/PortfolioV2CaseStudy';
 import { ShopEasyCaseStudy } from './components/ShopEasyCaseStudy';
+import { VirtualConferenceCaseStudy } from './components/VirtualConferenceCaseStudy';
 import { getNextModalProjectId, getPrevModalProjectId } from './data/projects';
 
 const siteTitle = 'Florence Eze - Product Designer & Web Builder';
@@ -24,7 +28,11 @@ export default function App() {
     currentPath === '/work/shop-easy' ||
     currentPath === '/work/cater-shop' ||
     currentPath === '/work/letters' ||
-    currentPath === '/work/brim-studios';
+    currentPath === '/work/brim-studios' ||
+    currentPath === '/work/portfolio-v1' ||
+    currentPath === '/work/portfolio-v2' ||
+    currentPath === '/work/alors' ||
+    currentPath === '/work/virtual-conference';
 
   useEffect(() => {
     // Set page title
@@ -185,6 +193,34 @@ export default function App() {
       return;
     }
 
+    if (projectId === 3) {
+      window.history.pushState({}, '', '/work/portfolio-v1');
+      setCurrentPath('/work/portfolio-v1');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      return;
+    }
+
+    if (projectId === 19) {
+      window.history.pushState({}, '', '/work/portfolio-v2');
+      setCurrentPath('/work/portfolio-v2');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      return;
+    }
+
+    if (projectId === 1) {
+      window.history.pushState({}, '', '/work/virtual-conference');
+      setCurrentPath('/work/virtual-conference');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      return;
+    }
+
+    if (projectId === 2) {
+      window.history.pushState({}, '', '/work/alors');
+      setCurrentPath('/work/alors');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      return;
+    }
+
     if (projectId === 7) {
       window.history.pushState({}, '', '/work/letters');
       setCurrentPath('/work/letters');
@@ -222,6 +258,12 @@ export default function App() {
   };
 
   const handleJumpToProject = (projectId: number) => {
+    if ([6, 4, 7, 18, 2, 3, 19, 1].includes(projectId)) {
+      setSelectedProject(null);
+      handleProjectClick(projectId);
+      return;
+    }
+
     setSelectedProject(projectId);
   };
 
@@ -248,6 +290,14 @@ export default function App() {
 
     document.title = currentPath === '/work/brim-studios'
       ? 'Brim Studios Case Study - Florence Eze'
+      : currentPath === '/work/alors'
+      ? 'Alors Case Study - Florence Eze'
+      : currentPath === '/work/portfolio-v2'
+      ? 'Portfolio v.2 Case Study - Florence Eze'
+      : currentPath === '/work/virtual-conference'
+      ? 'Virtual Conference Case Study - Florence Eze'
+      : currentPath === '/work/portfolio-v1'
+      ? 'Portfolio v.1 Case Study - Florence Eze'
       : currentPath === '/work/cater-shop'
       ? 'Cater Shop Case Study - Florence Eze'
       : currentPath === '/work/letters'
@@ -312,6 +362,42 @@ export default function App() {
           <BrimStudiosCaseStudy
             onBack={handleBackToWork}
             onOpenNextProject={() => setSelectedProject(1)}
+            hasWorkBackdrop
+            onDragProgressChange={setCaseStudyDragProgress}
+          />
+        )
+      ) : currentPath === '/work/portfolio-v1' ? (
+        renderCaseStudyShell(
+          <PortfolioV1CaseStudy
+            onBack={handleBackToWork}
+            onOpenNextProject={() => setSelectedProject(5)}
+            hasWorkBackdrop
+            onDragProgressChange={setCaseStudyDragProgress}
+          />
+        )
+      ) : currentPath === '/work/portfolio-v2' ? (
+        renderCaseStudyShell(
+          <PortfolioV2CaseStudy
+            onBack={handleBackToWork}
+            onOpenNextProject={() => setSelectedProject(5)}
+            hasWorkBackdrop
+            onDragProgressChange={setCaseStudyDragProgress}
+          />
+        )
+      ) : currentPath === '/work/virtual-conference' ? (
+        renderCaseStudyShell(
+          <VirtualConferenceCaseStudy
+            onBack={handleBackToWork}
+            onOpenNextProject={() => setSelectedProject(15)}
+            hasWorkBackdrop
+            onDragProgressChange={setCaseStudyDragProgress}
+          />
+        )
+      ) : currentPath === '/work/alors' ? (
+        renderCaseStudyShell(
+          <AlorsCaseStudy
+            onBack={handleBackToWork}
+            onOpenNextProject={() => handleProjectClick(3)}
             hasWorkBackdrop
             onDragProgressChange={setCaseStudyDragProgress}
           />

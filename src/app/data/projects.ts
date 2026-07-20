@@ -276,7 +276,7 @@ export const projects: Project[] = [
 ];
 
 export const projectIds = projects.map((project) => project.id);
-export const internalCaseStudyProjectIds = [6, 7, 18];
+export const internalCaseStudyProjectIds = [6, 4, 7, 18, 2, 3, 19, 1];
 export const modalProjects = projects.filter((project) => !internalCaseStudyProjectIds.includes(project.id));
 export const modalProjectIds = modalProjects.map((project) => project.id);
 
