@@ -502,11 +502,11 @@ export default function First({ onProjectClick }: FirstProps) {
             </div>
 
             {/* Social */}
-            <div className="flex flex-col sm:flex-row gap-[12px] sm:gap-[0px] sm:items-center">
-              <p className="font-['DM_Mono',sans-serif] text-[11px] lg:text-[12px] tracking-[0.08em] uppercase text-[rgba(0,0,0,0.3)] sm:mr-[24px]">
+            <div className="flex flex-col gap-[14px]">
+              <p className="font-['DM_Mono',sans-serif] text-[11px] lg:text-[12px] tracking-[0.08em] uppercase text-[rgba(0,0,0,0.3)]">
                 Elsewhere
               </p>
-              <div className="flex w-full flex-col items-stretch border-t border-[rgba(0,0,0,0.06)] sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-[10px] sm:gap-y-[8px] sm:border-t-0">
+              <div className="flex w-full flex-col items-stretch border-t border-[rgba(0,0,0,0.06)] sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-[24px] sm:gap-y-[10px] sm:border-t-0">
                 <a
                   href="https://drive.google.com/file/d/16Ks4iwFGGpb4rLKmwYSJe02dyxFDNkQQ/view?usp=sharing"
                   target="_blank"
@@ -516,7 +516,6 @@ export default function First({ onProjectClick }: FirstProps) {
                   <span>Resume</span>
                   <ArrowUpRightIcon aria-hidden="true" className="size-[13px] stroke-[1.8]" />
                 </a>
-                <span className="hidden text-[rgba(0,0,0,0.2)] text-[8px] sm:inline">●</span>
                 <a
                   href="https://www.linkedin.com/in/florence-eze"
                   target="_blank"
@@ -526,7 +525,6 @@ export default function First({ onProjectClick }: FirstProps) {
                   <span>LinkedIn</span>
                   <ArrowUpRightIcon aria-hidden="true" className="size-[13px] stroke-[1.8]" />
                 </a>
-                <span className="hidden text-[rgba(0,0,0,0.2)] text-[8px] sm:inline">●</span>
                 <a
                   href="https://github.com/Judiedesigns"
                   target="_blank"
@@ -536,7 +534,6 @@ export default function First({ onProjectClick }: FirstProps) {
                   <span>GitHub</span>
                   <ArrowUpRightIcon aria-hidden="true" className="size-[13px] stroke-[1.8]" />
                 </a>
-                <span className="hidden text-[rgba(0,0,0,0.2)] text-[8px] sm:inline">●</span>
                 <a
                   href="https://dribbble.com/janeyrexx"
                   target="_blank"
@@ -546,7 +543,6 @@ export default function First({ onProjectClick }: FirstProps) {
                   <span>Dribbble</span>
                   <ArrowUpRightIcon aria-hidden="true" className="size-[13px] stroke-[1.8]" />
                 </a>
-                <span className="hidden text-[rgba(0,0,0,0.2)] text-[8px] sm:inline">●</span>
                 <a
                   href="https://www.behance.net/florenceeze1"
                   target="_blank"

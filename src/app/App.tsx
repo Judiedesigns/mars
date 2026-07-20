@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import First from '../imports/First';
 import { CustomCursor } from './components/CustomCursor';
 import { ProjectModal } from './components/ProjectModal';
+import { BrimStudiosCaseStudy } from './components/BrimStudiosCaseStudy';
 import { CaterShopCaseStudy } from './components/CaterShopCaseStudy';
 import { LettersCaseStudy } from './components/LettersCaseStudy';
 import { ShopEasyCaseStudy } from './components/ShopEasyCaseStudy';
@@ -17,8 +18,13 @@ export default function App() {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentPath, setCurrentPath] = useState(() => window.location.pathname);
-  const [lettersDragProgress, setLettersDragProgress] = useState(0);
-  const [lettersBackdropOpen, setLettersBackdropOpen] = useState(false);
+  const [caseStudyDragProgress, setCaseStudyDragProgress] = useState(0);
+  const [caseStudyBackdropOpen, setCaseStudyBackdropOpen] = useState(false);
+  const isCaseStudyPath =
+    currentPath === '/work/shop-easy' ||
+    currentPath === '/work/cater-shop' ||
+    currentPath === '/work/letters' ||
+    currentPath === '/work/brim-studios';
 
   useEffect(() => {
     // Set page title
@@ -144,18 +150,18 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (currentPath !== '/work/letters') {
-      setLettersBackdropOpen(false);
+    if (!isCaseStudyPath) {
+      setCaseStudyBackdropOpen(false);
       return;
     }
 
-    setLettersBackdropOpen(false);
+    setCaseStudyBackdropOpen(false);
     const frame = window.requestAnimationFrame(() => {
-      setLettersBackdropOpen(true);
+      setCaseStudyBackdropOpen(true);
     });
 
     return () => window.cancelAnimationFrame(frame);
-  }, [currentPath]);
+  }, [isCaseStudyPath]);
 
   const handleProjectClick = (projectId: number) => {
     if (projectId === 6) {
@@ -172,6 +178,13 @@ export default function App() {
       return;
     }
 
+    if (projectId === 4) {
+      window.history.pushState({}, '', '/work/brim-studios');
+      setCurrentPath('/work/brim-studios');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      return;
+    }
+
     if (projectId === 7) {
       window.history.pushState({}, '', '/work/letters');
       setCurrentPath('/work/letters');
@@ -183,7 +196,7 @@ export default function App() {
   };
 
   const handleBackToWork = () => {
-    setLettersDragProgress(0);
+    setCaseStudyDragProgress(0);
     window.history.pushState({}, '', '/');
     setCurrentPath('/');
     setSelectedProject(null);
@@ -212,10 +225,30 @@ export default function App() {
     setSelectedProject(projectId);
   };
 
-  useEffect(() => {
-    if (currentPath !== '/work/shop-easy' && currentPath !== '/work/cater-shop' && currentPath !== '/work/letters') return;
+  const renderCaseStudyShell = (children: React.ReactNode) => (
+    <div className="relative min-h-screen bg-[#1b1b1b]">
+      <div aria-hidden="true" className="fixed inset-0 z-0 overflow-hidden bg-[#fafafa]">
+        <div className="pointer-events-none -translate-y-[520px] opacity-70">
+          <First onProjectClick={handleProjectClick} />
+        </div>
+        <div
+          className="absolute inset-0 bg-[#111111] will-change-[opacity]"
+          style={{
+            opacity: (caseStudyBackdropOpen ? 0.68 : 0) - caseStudyDragProgress * 0.18,
+            transition: caseStudyDragProgress === 0 ? 'opacity 420ms cubic-bezier(0.22, 1, 0.36, 1)' : 'none',
+          }}
+        />
+      </div>
+      {children}
+    </div>
+  );
 
-    document.title = currentPath === '/work/cater-shop'
+  useEffect(() => {
+    if (!isCaseStudyPath) return;
+
+    document.title = currentPath === '/work/brim-studios'
+      ? 'Brim Studios Case Study - Florence Eze'
+      : currentPath === '/work/cater-shop'
       ? 'Cater Shop Case Study - Florence Eze'
       : currentPath === '/work/letters'
         ? 'Letters Case Study - Florence Eze'
@@ -232,7 +265,7 @@ export default function App() {
       document.title = siteTitle;
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [currentPath]);
+  }, [currentPath, isCaseStudyPath]);
 
   return (
     <>
@@ -248,36 +281,41 @@ export default function App() {
       </div>
       <CustomCursor />
       {currentPath === '/work/shop-easy' ? (
-        <ShopEasyCaseStudy
-          onBack={handleBackToWork}
-          onOpenLetters={() => handleProjectClick(7)}
-        />
+        renderCaseStudyShell(
+          <ShopEasyCaseStudy
+            onBack={handleBackToWork}
+            onOpenLetters={() => handleProjectClick(7)}
+            hasWorkBackdrop
+            onDragProgressChange={setCaseStudyDragProgress}
+          />
+        )
       ) : currentPath === '/work/letters' ? (
-        <div className="relative min-h-screen bg-[#1b1b1b]">
-          <div aria-hidden="true" className="fixed inset-0 z-0 overflow-hidden bg-[#fafafa]">
-            <div className="pointer-events-none -translate-y-[520px] opacity-70">
-              <First onProjectClick={handleProjectClick} />
-            </div>
-            <div
-              className="absolute inset-0 bg-[#111111] will-change-[opacity]"
-              style={{
-                opacity: (lettersBackdropOpen ? 0.68 : 0) - lettersDragProgress * 0.18,
-                transition: lettersDragProgress === 0 ? 'opacity 420ms cubic-bezier(0.22, 1, 0.36, 1)' : 'none',
-              }}
-            />
-          </div>
+        renderCaseStudyShell(
           <LettersCaseStudy
             onBack={handleBackToWork}
             onOpenNextProject={() => handleProjectClick(18)}
             hasWorkBackdrop
-            onDragProgressChange={setLettersDragProgress}
+            onDragProgressChange={setCaseStudyDragProgress}
           />
-        </div>
+        )
       ) : currentPath === '/work/cater-shop' ? (
-        <CaterShopCaseStudy
-          onBack={handleBackToWork}
-          onOpenNextProject={() => setSelectedProject(4)}
-        />
+        renderCaseStudyShell(
+          <CaterShopCaseStudy
+            onBack={handleBackToWork}
+            onOpenNextProject={() => handleProjectClick(4)}
+            hasWorkBackdrop
+            onDragProgressChange={setCaseStudyDragProgress}
+          />
+        )
+      ) : currentPath === '/work/brim-studios' ? (
+        renderCaseStudyShell(
+          <BrimStudiosCaseStudy
+            onBack={handleBackToWork}
+            onOpenNextProject={() => setSelectedProject(1)}
+            hasWorkBackdrop
+            onDragProgressChange={setCaseStudyDragProgress}
+          />
+        )
       ) : (
         <First onProjectClick={handleProjectClick} />
       )}
