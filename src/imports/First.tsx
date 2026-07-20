@@ -475,10 +475,14 @@ export default function First({ onProjectClick }: FirstProps) {
               </p>
               <button
                 type="button"
-                className="group relative inline-flex items-center gap-[10px] font-['Inter',sans-serif] font-normal text-[15px] lg:text-[16px] text-[#1a1a1a] tracking-[-0.01em] cursor-pointer transition-[color,transform] duration-300 active:scale-[0.98]"
+                className="group inline-flex flex-wrap items-center gap-x-[10px] gap-y-[8px] font-['Inter',sans-serif] font-normal text-[15px] lg:text-[16px] text-[#1a1a1a] tracking-[-0.01em] cursor-pointer transition-[color,transform] duration-300 active:scale-[0.98]"
                 onClick={handleCopyEmail}
+                aria-label="Copy email address"
               >
                 <span className="hover-underline">florencekey22@gmail.com</span>
+                <span className="pointer-events-none inline-flex w-[50px] justify-center rounded-full bg-[rgba(0,0,0,0.05)] px-[8px] py-[4px] text-[11px] leading-none text-[rgba(0,0,0,0.45)] transition-[background-color,color,transform] duration-200 group-hover:translate-x-[2px] group-hover:bg-[rgba(0,0,0,0.08)] group-hover:text-[rgba(0,0,0,0.66)] group-focus-visible:translate-x-[2px] group-focus-visible:bg-[rgba(0,0,0,0.08)] group-focus-visible:text-[rgba(0,0,0,0.66)]">
+                  {emailCopied ? "Copied" : "Copy"}
+                </span>
                 <AnimatePresence>
                   {emailCopied && (
                     <motion.span
@@ -486,7 +490,7 @@ export default function First({ onProjectClick }: FirstProps) {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -4, scale: 0.96 }}
                       transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                      className="rounded-full bg-[rgba(0,0,0,0.06)] px-[8px] py-[3px] text-[11px] text-[rgba(0,0,0,0.55)]"
+                      className="sr-only"
                     >
                       Copied
                     </motion.span>
