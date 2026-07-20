@@ -72,17 +72,16 @@ export function ExplorationsCanvas() {
                 key={`${image.alt}-${index}`}
                 role="listitem"
                 aria-hidden={index >= explorationImages.length}
-                className="flex-shrink-0"
-                style={{ width: "70vw", maxWidth: "500px" }}
+                className="w-[82vw] max-w-[320px] flex-shrink-0 sm:w-[70vw] sm:max-w-[500px]"
               >
-                <div className="exploration-card bg-[#F2F2F2] w-full p-[12px] rounded-[12px] h-[260px] sm:h-[300px] lg:h-[340px]">
-                  <div className="bg-[#efefef] w-full h-full overflow-hidden rounded-[8px]">
+                <div className="exploration-card bg-[#F2F2F2] w-full p-[12px] rounded-[8px] h-[208px] sm:h-[300px] sm:rounded-[12px] lg:h-[340px]">
+                  <div className="bg-[#efefef] w-full h-full overflow-hidden rounded-[4px] sm:rounded-[8px]">
                     <img
                       src={tickerStarted ? image.src : undefined}
                       alt={index < explorationImages.length ? image.alt : ""}
                       role={index < explorationImages.length ? undefined : "presentation"}
                       aria-hidden={index < explorationImages.length ? undefined : true}
-                      className="w-full h-full object-contain"
+                      className="w-full h-full object-cover sm:object-contain"
                       loading="lazy"
                       decoding="async"
                       draggable={false}
