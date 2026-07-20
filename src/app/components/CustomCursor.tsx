@@ -7,6 +7,8 @@ export function CustomCursor() {
   const [isVisible, setIsVisible] = useState(false);
   const [isHoveringProject, setIsHoveringProject] = useState(false);
   const [isOverModal, setIsOverModal] = useState(false);
+  const [isOverLink, setIsOverLink] = useState(false);
+  const [isOverNativeCursor, setIsOverNativeCursor] = useState(false);
   const lastScrollY = useRef(0);
   const scrollThreshold = 100; // Change color every 100px scrolled
 
@@ -22,6 +24,12 @@ export function CustomCursor() {
       const projectCard = target.closest('.project-card');
       setIsHoveringProject(!!projectCard);
 
+      const link = target.closest('a, [role="link"], .social-link, .footer-social-link');
+      setIsOverLink(!!link);
+
+      const nativeCursorTarget = target.closest('[data-native-cursor]');
+      setIsOverNativeCursor(!!nativeCursorTarget);
+
       // Check if hovering over the modal
       const modal = target.closest('.project-modal');
       setIsOverModal(!!modal);
@@ -31,6 +39,8 @@ export function CustomCursor() {
       setIsVisible(false);
       setIsHoveringProject(false);
       setIsOverModal(false);
+      setIsOverLink(false);
+      setIsOverNativeCursor(false);
     };
 
     const handleScroll = () => {
@@ -64,7 +74,7 @@ export function CustomCursor() {
         left: `${position.x}px`,
         top: `${position.y}px`,
         backgroundColor: currentColor,
-        opacity: isVisible ? 1 : 0,
+        opacity: isVisible && !isOverLink && !isOverNativeCursor ? 1 : 0,
       }}
     >
       <div className="cursor-content">

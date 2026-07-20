@@ -281,7 +281,9 @@ export default function First({ onProjectClick }: FirstProps) {
                   className="flex flex-col items-start project-card cursor-pointer group"
                 >
                   {/* Thumbnail with background fill and padding */}
-                  <div className="bg-[#F2F2F2] w-full px-[12px] py-[8px] rounded-[8px] mb-[16px] sm:mb-[18px] transition-[background-color,box-shadow,transform] duration-[450ms] ease-out group-hover:bg-[#eeeeee] group-hover:shadow-[0_16px_36px_rgba(0,0,0,0.055)]">
+                  <div
+                    className="bg-[#F2F2F2] w-full px-[12px] py-[8px] rounded-[8px] mb-[16px] sm:mb-[18px] transition-[background-color,box-shadow,transform] duration-[450ms] ease-out group-hover:bg-[#eeeeee] group-hover:shadow-[0_16px_36px_rgba(0,0,0,0.055)]"
+                  >
                     <div className="bg-[#efefef] w-full h-[221px] overflow-hidden rounded-[6px] sm:h-auto sm:aspect-[3/2]">
                       <ProjectPreviewMedia
                         media={proj.cover}

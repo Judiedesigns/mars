@@ -17,6 +17,8 @@ export default function App() {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentPath, setCurrentPath] = useState(() => window.location.pathname);
+  const [lettersDragProgress, setLettersDragProgress] = useState(0);
+  const [lettersBackdropOpen, setLettersBackdropOpen] = useState(false);
 
   useEffect(() => {
     // Set page title
@@ -141,6 +143,20 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    if (currentPath !== '/work/letters') {
+      setLettersBackdropOpen(false);
+      return;
+    }
+
+    setLettersBackdropOpen(false);
+    const frame = window.requestAnimationFrame(() => {
+      setLettersBackdropOpen(true);
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [currentPath]);
+
   const handleProjectClick = (projectId: number) => {
     if (projectId === 6) {
       window.history.pushState({}, '', '/work/shop-easy');
@@ -167,6 +183,7 @@ export default function App() {
   };
 
   const handleBackToWork = () => {
+    setLettersDragProgress(0);
     window.history.pushState({}, '', '/');
     setCurrentPath('/');
     setSelectedProject(null);
@@ -236,10 +253,26 @@ export default function App() {
           onOpenLetters={() => handleProjectClick(7)}
         />
       ) : currentPath === '/work/letters' ? (
-        <LettersCaseStudy
-          onBack={handleBackToWork}
-          onOpenNextProject={() => handleProjectClick(18)}
-        />
+        <div className="relative min-h-screen bg-[#1b1b1b]">
+          <div aria-hidden="true" className="fixed inset-0 z-0 overflow-hidden bg-[#fafafa]">
+            <div className="pointer-events-none -translate-y-[520px] opacity-70">
+              <First onProjectClick={handleProjectClick} />
+            </div>
+            <div
+              className="absolute inset-0 bg-[#111111] will-change-[opacity]"
+              style={{
+                opacity: (lettersBackdropOpen ? 0.68 : 0) - lettersDragProgress * 0.18,
+                transition: lettersDragProgress === 0 ? 'opacity 420ms cubic-bezier(0.22, 1, 0.36, 1)' : 'none',
+              }}
+            />
+          </div>
+          <LettersCaseStudy
+            onBack={handleBackToWork}
+            onOpenNextProject={() => handleProjectClick(18)}
+            hasWorkBackdrop
+            onDragProgressChange={setLettersDragProgress}
+          />
+        </div>
       ) : currentPath === '/work/cater-shop' ? (
         <CaterShopCaseStudy
           onBack={handleBackToWork}

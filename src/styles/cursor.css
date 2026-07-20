@@ -3,6 +3,25 @@
   cursor: none !important;
 }
 
+a,
+a *,
+[role='link'],
+[role='link'] *,
+[data-native-cursor='pointer'],
+[data-native-cursor='pointer'] * {
+  cursor: pointer !important;
+}
+
+[data-native-cursor='drag'],
+[data-native-cursor='drag'] * {
+  cursor: grab !important;
+}
+
+[data-native-cursor='drag']:active,
+[data-native-cursor='drag']:active * {
+  cursor: grabbing !important;
+}
+
 /* Hide custom cursor on touch devices and show default cursor */
 @media (hover: none) and (pointer: coarse) {
   * {
