@@ -51,7 +51,6 @@ function ShowcaseMedia({ visual, priority = false }: { visual: CaseStudyVisual; 
           src={visual.src}
           poster={visual.poster}
           autoPlay
-          controls
           muted
           loop
           playsInline
@@ -297,6 +296,7 @@ export function CaseStudySheet({
         >
           <button
             type="button"
+            data-native-cursor="pointer"
             onClick={onBack}
             className="group flex items-center gap-[9px] text-left transition-transform duration-150 ease-out active:scale-[0.97]"
             aria-label="Back to work"
@@ -305,7 +305,7 @@ export function CaseStudySheet({
               aria-hidden="true"
               className="size-[16px] stroke-[1.8] text-[#5d5d5d] transition-colors duration-200 group-hover:text-[#1a1a1a]"
             />
-            <span className="font-['Inter',sans-serif] text-[13px] font-normal lowercase tracking-[0.026em] text-[#5d5d5d] transition-colors duration-200 group-hover:text-[#1a1a1a] sm:text-[14px]">
+            <span className="rainbow-hover font-['Inter',sans-serif] text-[13px] font-normal lowercase tracking-[0.026em] text-[#5d5d5d] transition-colors duration-200 group-hover:text-[#1a1a1a] sm:text-[14px]">
               work
             </span>
           </button>
@@ -335,6 +335,7 @@ export function CaseStudySheet({
                 <div className="flex items-start gap-[4px] pt-[14px]">
                   <button
                     type="button"
+                    data-native-cursor="pointer"
                     onClick={() => scrollShowcase("previous")}
                     disabled={!showcaseScrollState.canScrollPrevious}
                     className="grid h-[21px] w-[25px] place-items-center rounded-[6px] border border-[rgba(130,139,140,0.1)] bg-white/70 text-[rgba(0,0,0,0.42)] transition-[border-color,color,opacity,transform] duration-150 ease-out hover:border-[rgba(0,0,0,0.16)] hover:text-[#1a1a1a] active:scale-[0.96] disabled:cursor-default disabled:opacity-35 disabled:hover:border-[rgba(130,139,140,0.1)] disabled:hover:text-[rgba(0,0,0,0.42)] disabled:active:scale-100"
@@ -344,6 +345,7 @@ export function CaseStudySheet({
                   </button>
                   <button
                     type="button"
+                    data-native-cursor="pointer"
                     onClick={() => scrollShowcase("next")}
                     disabled={!showcaseScrollState.canScrollNext}
                     className="grid h-[21px] w-[25px] place-items-center rounded-[6px] border border-[rgba(130,139,140,0.1)] bg-white/70 text-[rgba(0,0,0,0.56)] transition-[border-color,color,opacity,transform] duration-150 ease-out hover:border-[rgba(0,0,0,0.16)] hover:text-[#1a1a1a] active:scale-[0.96] disabled:cursor-default disabled:opacity-35 disabled:hover:border-[rgba(130,139,140,0.1)] disabled:hover:text-[rgba(0,0,0,0.56)] disabled:active:scale-100"
@@ -397,7 +399,8 @@ export function CaseStudySheet({
                               href={detail.href}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="underline decoration-[rgba(130,139,140,0.45)] decoration-[1px] underline-offset-[3px] transition-colors duration-200 hover:text-[#3c4142] hover:decoration-[#3c4142]"
+                              data-native-cursor="pointer"
+                              className="rainbow-hover cursor-pointer underline decoration-[rgba(130,139,140,0.45)] decoration-[1px] underline-offset-[3px] transition-colors duration-200 hover:decoration-[#3c4142]"
                             >
                               {detail.value}
                             </a>

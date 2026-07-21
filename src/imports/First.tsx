@@ -13,6 +13,8 @@ import { ArrowUpRight as ArrowUpRightIcon } from "lucide-react";
 
 type FirstProps = {
   onProjectClick?: (projectId: number) => void;
+  initialActiveFilter?: (typeof workFilters)[number];
+  onFilterChange?: (filter: (typeof workFilters)[number]) => void;
 };
 
 const initialProjectCount = 6;
@@ -82,9 +84,9 @@ function ProjectPreviewMedia({
   );
 }
 
-export default function First({ onProjectClick }: FirstProps) {
+export default function First({ onProjectClick, initialActiveFilter = "Selected Work", onFilterChange }: FirstProps) {
   const [emailCopied, setEmailCopied] = useState(false);
-  const [activeFilter, setActiveFilter] = useState<(typeof workFilters)[number]>("Selected Work");
+  const [activeFilter, setActiveFilter] = useState<(typeof workFilters)[number]>(initialActiveFilter);
   const [visibleProjectCount, setVisibleProjectCount] = useState(initialProjectCount);
   const [siteNoteOpen, setSiteNoteOpen] = useState(false);
   const prefersReducedMotion = useReducedMotion();
@@ -99,6 +101,15 @@ export default function First({ onProjectClick }: FirstProps) {
   useEffect(() => {
     setVisibleProjectCount(initialProjectCount);
   }, [activeFilter]);
+
+  useEffect(() => {
+    setActiveFilter(initialActiveFilter);
+  }, [initialActiveFilter]);
+
+  const updateActiveFilter = (filter: (typeof workFilters)[number]) => {
+    setActiveFilter(filter);
+    onFilterChange?.(filter);
+  };
 
   const handleScrollToContact = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -237,7 +248,7 @@ export default function First({ onProjectClick }: FirstProps) {
                     data-native-cursor="pointer"
                     role="tab"
                     aria-selected={isActive}
-                    onClick={() => setActiveFilter(filter)}
+                    onClick={() => updateActiveFilter(filter)}
                     className={`relative shrink-0 snap-start font-['Inter',sans-serif] text-[13px] lg:text-[14px] tracking-[-0.01em] px-[11px] lg:px-[13px] py-[6px] rounded-full transition-colors duration-200 whitespace-nowrap ${
                       isActive
                         ? "text-[#1a1a1a]"

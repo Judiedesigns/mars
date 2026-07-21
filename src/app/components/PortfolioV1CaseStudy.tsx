@@ -33,7 +33,9 @@ const visuals: CaseStudyVisual[] = [
 ];
 
 const paragraphs = [
-  "This portfolio marked my first experience designing and developing a website in Framer. Built as a personal project, it became an opportunity to learn the platform while creating a digital home for my work.",
+  "Portfolio v.1 started as a personal learning project and became my first full experience designing and developing a website in Framer.",
+  "The goal was to create a simple digital home for my work while learning how to structure pages, handle responsive layouts, and translate portfolio content into a working website.",
+  "Looking back, the project helped me understand the gap between making a page look designed and making it feel usable, organized, and ready to share.",
 ];
 
 const details: CaseStudyDetail[] = [
@@ -53,7 +55,7 @@ export function PortfolioV1CaseStudy({
       title="Portfolio v.1"
       role="Design & Development"
       year="2025"
-      intro="A first personal portfolio built in Framer while learning the platform."
+      intro="A first personal portfolio built in Framer while learning how to design and ship a working website."
       paragraphs={paragraphs}
       details={details}
       visuals={visuals}

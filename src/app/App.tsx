@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import First from '../imports/First';
 import { CustomCursor } from './components/CustomCursor';
-import { ProjectModal } from './components/ProjectModal';
 import { AlorsCaseStudy } from './components/AlorsCaseStudy';
 import { BrimStudiosCaseStudy } from './components/BrimStudiosCaseStudy';
 import { CaterShopCaseStudy } from './components/CaterShopCaseStudy';
@@ -9,8 +8,18 @@ import { LettersCaseStudy } from './components/LettersCaseStudy';
 import { PortfolioV1CaseStudy } from './components/PortfolioV1CaseStudy';
 import { PortfolioV2CaseStudy } from './components/PortfolioV2CaseStudy';
 import { ShopEasyCaseStudy } from './components/ShopEasyCaseStudy';
+import { StandardProjectCaseStudy } from './components/StandardProjectCaseStudy';
 import { VirtualConferenceCaseStudy } from './components/VirtualConferenceCaseStudy';
-import { getNextModalProjectId, getPrevModalProjectId } from './data/projects';
+import {
+  getNextProjectId,
+  getProjectById,
+  getProjectByRoute,
+  getWorkFilterForProject,
+  projectIdByRoute,
+  projectRoutes,
+  projects,
+  workFilters,
+} from './data/projects';
 
 const siteTitle = 'Florence Eze - Product Designer & Web Builder';
 const siteDescription = 'Florence Eze is a Product Designer and Web Builder based in Lagos, focused on UX strategy, interface design, responsive websites, and product-ready digital products.';
@@ -19,20 +28,11 @@ const siteUrl = 'https://florence-eze-portfolio.framer.website/';
 const ogImageUrl = `${siteUrl}og-image.png`;
 
 export default function App() {
-  const [selectedProject, setSelectedProject] = useState<number | null>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
   const [currentPath, setCurrentPath] = useState(() => window.location.pathname);
   const [caseStudyDragProgress, setCaseStudyDragProgress] = useState(0);
   const [caseStudyBackdropOpen, setCaseStudyBackdropOpen] = useState(false);
-  const isCaseStudyPath =
-    currentPath === '/work/shop-easy' ||
-    currentPath === '/work/cater-shop' ||
-    currentPath === '/work/letters' ||
-    currentPath === '/work/brim-studios' ||
-    currentPath === '/work/portfolio-v1' ||
-    currentPath === '/work/portfolio-v2' ||
-    currentPath === '/work/alors' ||
-    currentPath === '/work/virtual-conference';
+  const [lastWorkFilter, setLastWorkFilter] = useState<(typeof workFilters)[number]>("Selected Work");
+  const isCaseStudyPath = currentPath in projectIdByRoute;
 
   useEffect(() => {
     // Set page title
@@ -134,27 +134,10 @@ export default function App() {
   useEffect(() => {
     const handlePopState = () => {
       setCurrentPath(window.location.pathname);
-      setSelectedProject(null);
     };
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
-
-  useEffect(() => {
-    if (document.readyState === 'complete') {
-      setIsLoaded(true);
-      return;
-    }
-
-    const finishLoading = () => setIsLoaded(true);
-    const fallback = window.setTimeout(finishLoading, 900);
-
-    window.addEventListener('load', finishLoading, { once: true });
-    return () => {
-      window.clearTimeout(fallback);
-      window.removeEventListener('load', finishLoading);
-    };
   }, []);
 
   useEffect(() => {
@@ -172,106 +155,30 @@ export default function App() {
   }, [isCaseStudyPath]);
 
   const handleProjectClick = (projectId: number) => {
-    if (projectId === 6) {
-      window.history.pushState({}, '', '/work/shop-easy');
-      setCurrentPath('/work/shop-easy');
-      window.scrollTo({ top: 0, behavior: 'instant' });
-      return;
-    }
+    const route = projectRoutes[projectId];
 
-    if (projectId === 18) {
-      window.history.pushState({}, '', '/work/cater-shop');
-      setCurrentPath('/work/cater-shop');
-      window.scrollTo({ top: 0, behavior: 'instant' });
-      return;
-    }
+    if (!route) return;
 
-    if (projectId === 4) {
-      window.history.pushState({}, '', '/work/brim-studios');
-      setCurrentPath('/work/brim-studios');
-      window.scrollTo({ top: 0, behavior: 'instant' });
-      return;
-    }
-
-    if (projectId === 3) {
-      window.history.pushState({}, '', '/work/portfolio-v1');
-      setCurrentPath('/work/portfolio-v1');
-      window.scrollTo({ top: 0, behavior: 'instant' });
-      return;
-    }
-
-    if (projectId === 19) {
-      window.history.pushState({}, '', '/work/portfolio-v2');
-      setCurrentPath('/work/portfolio-v2');
-      window.scrollTo({ top: 0, behavior: 'instant' });
-      return;
-    }
-
-    if (projectId === 1) {
-      window.history.pushState({}, '', '/work/virtual-conference');
-      setCurrentPath('/work/virtual-conference');
-      window.scrollTo({ top: 0, behavior: 'instant' });
-      return;
-    }
-
-    if (projectId === 2) {
-      window.history.pushState({}, '', '/work/alors');
-      setCurrentPath('/work/alors');
-      window.scrollTo({ top: 0, behavior: 'instant' });
-      return;
-    }
-
-    if (projectId === 7) {
-      window.history.pushState({}, '', '/work/letters');
-      setCurrentPath('/work/letters');
-      window.scrollTo({ top: 0, behavior: 'instant' });
-      return;
-    }
-
-    setSelectedProject(projectId);
+    setLastWorkFilter(getWorkFilterForProject(projectId));
+    window.history.pushState({}, '', route);
+    setCurrentPath(route);
+    window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   const handleBackToWork = () => {
     setCaseStudyDragProgress(0);
     window.history.pushState({}, '', '/');
     setCurrentPath('/');
-    setSelectedProject(null);
     window.setTimeout(() => {
       document.getElementById('projects')?.scrollIntoView({ block: 'start' });
     }, 0);
   };
 
-  const handleCloseModal = () => {
-    setSelectedProject(null);
-  };
-
-  const handleNextProject = () => {
-    if (selectedProject) {
-      setSelectedProject(getNextModalProjectId(selectedProject));
-    }
-  };
-
-  const handlePrevProject = () => {
-    if (selectedProject) {
-      setSelectedProject(getPrevModalProjectId(selectedProject));
-    }
-  };
-
-  const handleJumpToProject = (projectId: number) => {
-    if ([6, 4, 7, 18, 2, 3, 19, 1].includes(projectId)) {
-      setSelectedProject(null);
-      handleProjectClick(projectId);
-      return;
-    }
-
-    setSelectedProject(projectId);
-  };
-
   const renderCaseStudyShell = (children: React.ReactNode) => (
     <div className="relative min-h-screen bg-[#1b1b1b]">
       <div aria-hidden="true" className="fixed inset-0 z-0 overflow-hidden bg-[#fafafa]">
-        <div className="pointer-events-none -translate-y-[520px] opacity-70">
-          <First onProjectClick={handleProjectClick} />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-[178px] bg-[#1b1b1b]">
+          <div className="mx-auto mt-[17px] h-[126px] w-[92vw] max-w-[1354px] rounded-t-[22px] bg-[#8a8a8a] opacity-75" />
         </div>
         <div
           className="absolute inset-0 bg-[#111111] will-change-[opacity]"
@@ -285,24 +192,19 @@ export default function App() {
     </div>
   );
 
+  const currentProjectId = projectIdByRoute[currentPath];
+
+  useEffect(() => {
+    if (!currentProjectId) return;
+
+    setLastWorkFilter(getWorkFilterForProject(currentProjectId));
+  }, [currentProjectId]);
+
   useEffect(() => {
     if (!isCaseStudyPath) return;
 
-    document.title = currentPath === '/work/brim-studios'
-      ? 'Brim Studios Case Study - Florence Eze'
-      : currentPath === '/work/alors'
-      ? 'Alors Case Study - Florence Eze'
-      : currentPath === '/work/portfolio-v2'
-      ? 'Portfolio v.2 Case Study - Florence Eze'
-      : currentPath === '/work/virtual-conference'
-      ? 'Virtual Conference Case Study - Florence Eze'
-      : currentPath === '/work/portfolio-v1'
-      ? 'Portfolio v.1 Case Study - Florence Eze'
-      : currentPath === '/work/cater-shop'
-      ? 'Cater Shop Case Study - Florence Eze'
-      : currentPath === '/work/letters'
-        ? 'Letters Case Study - Florence Eze'
-        : 'ShopEasy Case Study - Florence Eze';
+    const activeProject = getProjectByRoute(currentPath);
+    document.title = `${activeProject?.title ?? 'Project'} Case Study - Florence Eze`;
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -317,103 +219,108 @@ export default function App() {
     };
   }, [currentPath, isCaseStudyPath]);
 
-  return (
-    <>
-      <div
-        aria-hidden={isLoaded}
-        className={`fixed inset-0 z-[100] grid place-items-center bg-[#fafafa] transition-opacity duration-500 ease-out ${
-          isLoaded ? 'pointer-events-none opacity-0' : 'opacity-100'
-        }`}
-      >
-        <span className="font-['DM_Mono',sans-serif] text-[11px] tracking-[0.12em] uppercase text-[rgba(0,0,0,0.38)]">
-          Florence Eze
-        </span>
-      </div>
-      <CustomCursor />
-      {currentPath === '/work/shop-easy' ? (
-        renderCaseStudyShell(
+  const sharedCaseStudyProps = {
+    hasWorkBackdrop: true,
+    onDragProgressChange: setCaseStudyDragProgress,
+  };
+
+  const renderStandardCaseStudy = (projectId: number) => {
+    const nextProjectId = getNextProjectId(projectId);
+
+    return renderCaseStudyShell(
+      <StandardProjectCaseStudy
+        projectId={projectId}
+        onBack={handleBackToWork}
+        onOpenNextProject={() => handleProjectClick(nextProjectId)}
+        nextProjectLabel={getProjectById(nextProjectId)?.title}
+        {...sharedCaseStudyProps}
+      />
+    );
+  };
+
+  const renderActiveRoute = () => {
+    switch (currentPath) {
+      case '/work/shop-easy':
+        return renderCaseStudyShell(
           <ShopEasyCaseStudy
             onBack={handleBackToWork}
             onOpenLetters={() => handleProjectClick(7)}
-            hasWorkBackdrop
-            onDragProgressChange={setCaseStudyDragProgress}
+            {...sharedCaseStudyProps}
           />
-        )
-      ) : currentPath === '/work/letters' ? (
-        renderCaseStudyShell(
+        );
+      case '/work/letters':
+        return renderCaseStudyShell(
           <LettersCaseStudy
             onBack={handleBackToWork}
             onOpenNextProject={() => handleProjectClick(18)}
-            hasWorkBackdrop
-            onDragProgressChange={setCaseStudyDragProgress}
+            {...sharedCaseStudyProps}
           />
-        )
-      ) : currentPath === '/work/cater-shop' ? (
-        renderCaseStudyShell(
+        );
+      case '/work/cater-shop':
+        return renderCaseStudyShell(
           <CaterShopCaseStudy
             onBack={handleBackToWork}
             onOpenNextProject={() => handleProjectClick(4)}
-            hasWorkBackdrop
-            onDragProgressChange={setCaseStudyDragProgress}
+            {...sharedCaseStudyProps}
           />
-        )
-      ) : currentPath === '/work/brim-studios' ? (
-        renderCaseStudyShell(
+        );
+      case '/work/brim-studios':
+        return renderCaseStudyShell(
           <BrimStudiosCaseStudy
             onBack={handleBackToWork}
-            onOpenNextProject={() => setSelectedProject(1)}
-            hasWorkBackdrop
-            onDragProgressChange={setCaseStudyDragProgress}
+            onOpenNextProject={() => handleProjectClick(1)}
+            {...sharedCaseStudyProps}
           />
-        )
-      ) : currentPath === '/work/portfolio-v1' ? (
-        renderCaseStudyShell(
+        );
+      case '/work/portfolio-v1':
+        return renderCaseStudyShell(
           <PortfolioV1CaseStudy
             onBack={handleBackToWork}
-            onOpenNextProject={() => setSelectedProject(5)}
-            hasWorkBackdrop
-            onDragProgressChange={setCaseStudyDragProgress}
+            onOpenNextProject={() => handleProjectClick(5)}
+            {...sharedCaseStudyProps}
           />
-        )
-      ) : currentPath === '/work/portfolio-v2' ? (
-        renderCaseStudyShell(
+        );
+      case '/work/portfolio-v2':
+        return renderCaseStudyShell(
           <PortfolioV2CaseStudy
             onBack={handleBackToWork}
-            onOpenNextProject={() => setSelectedProject(5)}
-            hasWorkBackdrop
-            onDragProgressChange={setCaseStudyDragProgress}
+            onOpenNextProject={() => handleProjectClick(3)}
+            {...sharedCaseStudyProps}
           />
-        )
-      ) : currentPath === '/work/virtual-conference' ? (
-        renderCaseStudyShell(
+        );
+      case '/work/virtual-conference':
+        return renderCaseStudyShell(
           <VirtualConferenceCaseStudy
             onBack={handleBackToWork}
-            onOpenNextProject={() => setSelectedProject(15)}
-            hasWorkBackdrop
-            onDragProgressChange={setCaseStudyDragProgress}
+            onOpenNextProject={() => handleProjectClick(15)}
+            {...sharedCaseStudyProps}
           />
-        )
-      ) : currentPath === '/work/alors' ? (
-        renderCaseStudyShell(
+        );
+      case '/work/alors':
+        return renderCaseStudyShell(
           <AlorsCaseStudy
             onBack={handleBackToWork}
             onOpenNextProject={() => handleProjectClick(3)}
-            hasWorkBackdrop
-            onDragProgressChange={setCaseStudyDragProgress}
+            {...sharedCaseStudyProps}
           />
-        )
-      ) : (
-        <First onProjectClick={handleProjectClick} />
-      )}
-      {selectedProject && (
-        <ProjectModal
-          projectId={selectedProject}
-          onClose={handleCloseModal}
-          onNext={handleNextProject}
-          onPrev={handlePrevProject}
-          onJumpTo={handleJumpToProject}
-        />
-      )}
+        );
+      default:
+        return currentProjectId ? (
+          renderStandardCaseStudy(currentProjectId)
+        ) : (
+          <First
+            onProjectClick={handleProjectClick}
+            initialActiveFilter={lastWorkFilter}
+            onFilterChange={setLastWorkFilter}
+          />
+        );
+    }
+  };
+
+  return (
+    <>
+      <CustomCursor />
+      {renderActiveRoute()}
     </>
   );
 }

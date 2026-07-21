@@ -7,13 +7,14 @@ import alorsDemo from "../../../assets/alors/alors.mp4";
 import portfolioCover from "../../../assets/optimized/portfolio-cover.jpg";
 import portfolioCoverFallback from "../../../assets/mini-portfolio/cover.png";
 import portfolioDemo from "../../../assets/mini-portfolio/layout2.mp4";
+import portfolioV2Cover from "../../../assets/portfolio v.2/cover.png";
 import portfolioV2Demo from "../../../assets/portfolio v.2/my video.mp4";
 import brimCover from "../../../assets/optimized/brim-cover.jpg";
 import brimCoverFallback from "../../../assets/brim/cover.png";
 import brimDemo from "../../../assets/brim/brim.mp4";
 import radioCover from "../../../assets/radio/cover.png";
 import radioDemo from "../../../assets/radio/framer.mp4";
-import shopEasyCover from "../../../assets/optimized/shop-easy-cover.jpg";
+import shopEasyCover from "../../../assets/ShopEasy/img5.png";
 import shopEasyCoverFallback from "../../../assets/ShopEasy/cover.png";
 import shopEasyDemo from "../../../assets/ShopEasy/video.mp4";
 import lettersCover from "../../../assets/optimized/letters-cover.jpg";
@@ -72,7 +73,7 @@ export const projects: Project[] = [
     year: "2024",
     category: "Case Studies",
     description: "A fashion ecommerce case study focused on clearer discovery, smoother browsing, and easier purchase decisions.",
-    cover: { type: "image", src: shopEasyCover, fallbackSrc: shopEasyCoverFallback, alt: "Shop Easy case study cover" },
+    cover: { type: "image", src: shopEasyCover, fallbackSrc: shopEasyCoverFallback, alt: "Shop Easy case study cover", fit: "contain" },
     media: [{ type: "video", src: shopEasyDemo, alt: "Shop Easy case study demo" }],
     liveLink: "https://www.behance.net/gallery/193734369/ShopEasy-Fashion-made-effortless",
   },
@@ -160,7 +161,7 @@ export const projects: Project[] = [
     year: "2026",
     category: "Framer/Webflow",
     description: "A newer portfolio direction focused on calmer presentation, clearer project hierarchy, and a more refined visual system.",
-    cover: { type: "video", src: portfolioV2Demo, alt: "Portfolio v.2 preview", fit: "contain" },
+    cover: { type: "image", src: portfolioV2Cover, alt: "Portfolio v.2 preview", fit: "contain" },
     media: [{ type: "video", src: portfolioV2Demo, alt: "Portfolio v.2 demo", fit: "contain" }],
     liveLink: "https://florence-eze-portfolio.framer.website/",
   },
@@ -276,9 +277,45 @@ export const projects: Project[] = [
 ];
 
 export const projectIds = projects.map((project) => project.id);
-export const internalCaseStudyProjectIds = [6, 4, 7, 18, 2, 3, 19, 1];
-export const modalProjects = projects.filter((project) => !internalCaseStudyProjectIds.includes(project.id));
-export const modalProjectIds = modalProjects.map((project) => project.id);
+
+export const projectRoutes: Record<number, string> = {
+  6: "/work/shop-easy",
+  4: "/work/brim-studios",
+  7: "/work/letters",
+  1: "/work/virtual-conference",
+  15: "/work/random-notes",
+  16: "/work/paletta",
+  18: "/work/cater-shop",
+  2: "/work/alors",
+  19: "/work/portfolio-v2",
+  3: "/work/portfolio-v1",
+  5: "/work/radio",
+  8: "/work/the-garage",
+  9: "/work/bistro",
+  10: "/work/candi",
+  11: "/work/energy",
+  12: "/work/nigerian-literature",
+  13: "/work/vibe-coded-projects",
+  14: "/work/photo-wall",
+  17: "/work/mapinduzi",
+};
+
+export const projectIdByRoute = Object.fromEntries(
+  Object.entries(projectRoutes).map(([projectId, route]) => [route, Number(projectId)]),
+) as Record<string, number>;
+
+export function getProjectById(projectId: number) {
+  return projects.find((project) => project.id === projectId);
+}
+
+export function getProjectByRoute(path: string) {
+  const projectId = projectIdByRoute[path];
+  return projectId ? getProjectById(projectId) : undefined;
+}
+
+export function getWorkFilterForProject(projectId: number): (typeof workFilters)[number] {
+  return getProjectById(projectId)?.category === "AI Prototypes" ? "Play" : "Selected Work";
+}
 
 export function getNextProjectId(currentId: number) {
   const currentIndex = projects.findIndex((project) => project.id === currentId);
@@ -290,16 +327,4 @@ export function getPrevProjectId(currentId: number) {
   const currentIndex = projects.findIndex((project) => project.id === currentId);
   if (currentIndex === -1) return projects[0]?.id ?? currentId;
   return projects[(currentIndex - 1 + projects.length) % projects.length].id;
-}
-
-export function getNextModalProjectId(currentId: number) {
-  const currentIndex = modalProjects.findIndex((project) => project.id === currentId);
-  if (currentIndex === -1) return modalProjects[0]?.id ?? currentId;
-  return modalProjects[(currentIndex + 1) % modalProjects.length].id;
-}
-
-export function getPrevModalProjectId(currentId: number) {
-  const currentIndex = modalProjects.findIndex((project) => project.id === currentId);
-  if (currentIndex === -1) return modalProjects[0]?.id ?? currentId;
-  return modalProjects[(currentIndex - 1 + modalProjects.length) % modalProjects.length].id;
 }

@@ -77,7 +77,7 @@ export function ExplorationsCanvas() {
                 <div className="exploration-card bg-[#F2F2F2] w-full p-[12px] rounded-[8px] h-[208px] sm:h-[300px] sm:rounded-[12px] lg:h-[340px]">
                   <div className="bg-[#efefef] w-full h-full overflow-hidden rounded-[4px] sm:rounded-[8px]">
                     <img
-                      src={tickerStarted ? image.src : undefined}
+                      src={image.src}
                       alt={index < explorationImages.length ? image.alt : ""}
                       role={index < explorationImages.length ? undefined : "presentation"}
                       aria-hidden={index < explorationImages.length ? undefined : true}

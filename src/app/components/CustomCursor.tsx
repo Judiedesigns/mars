@@ -1,46 +1,48 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import svgPaths from '../../imports/svg-73q1axz7qe';
 
 export function CustomCursor() {
-  const [position, setPosition] = useState({ x: -100, y: -100 });
-  const [colorIndex, setColorIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-  const [isHoveringProject, setIsHoveringProject] = useState(false);
-  const [isOverModal, setIsOverModal] = useState(false);
-  const [isOverLink, setIsOverLink] = useState(false);
-  const [isOverNativeCursor, setIsOverNativeCursor] = useState(false);
+  const cursorRef = useRef<HTMLDivElement | null>(null);
   const lastScrollY = useRef(0);
+  const colorIndex = useRef(0);
+  const frameRef = useRef<number | null>(null);
+  const latestPosition = useRef({ x: -100, y: -100 });
   const scrollThreshold = 100; // Change color every 100px scrolled
 
   const colors = ['#648CD6', '#E8394B', '#3369CC'];
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
-      if (!isVisible) setIsVisible(true);
+    const cursor = cursorRef.current;
+    if (!cursor) return;
 
-      // Check if hovering over a project card
+    const setCursorVisibility = (isVisible: boolean) => {
+      cursor.style.opacity = isVisible ? '1' : '0';
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      latestPosition.current = { x: e.clientX, y: e.clientY };
+
       const target = e.target as HTMLElement;
       const projectCard = target.closest('.project-card');
-      setIsHoveringProject(!!projectCard);
-
       const link = target.closest('a, [role="link"], .social-link, .footer-social-link');
-      setIsOverLink(!!link);
-
       const nativeCursorTarget = target.closest('[data-native-cursor]');
-      setIsOverNativeCursor(!!nativeCursorTarget);
+      const shouldShowCustomCursor = !link && !nativeCursorTarget;
 
-      // Check if hovering over the modal
-      const modal = target.closest('.project-modal');
-      setIsOverModal(!!modal);
+      cursor.classList.toggle('project-hover', !!projectCard);
+      setCursorVisibility(shouldShowCustomCursor);
+
+      if (frameRef.current !== null) return;
+
+      frameRef.current = window.requestAnimationFrame(() => {
+        frameRef.current = null;
+        const { x, y } = latestPosition.current;
+        cursor.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+      });
     };
 
     const handleMouseLeave = () => {
-      setIsVisible(false);
-      setIsHoveringProject(false);
-      setIsOverModal(false);
-      setIsOverLink(false);
-      setIsOverNativeCursor(false);
+      setCursorVisibility(false);
+      cursor.classList.remove('project-hover');
     };
 
     const handleScroll = () => {
@@ -48,34 +50,30 @@ export function CustomCursor() {
       const scrollDiff = Math.abs(currentScrollY - lastScrollY.current);
       
       if (scrollDiff >= scrollThreshold) {
-        setColorIndex((prev) => (prev + 1) % colors.length);
+        colorIndex.current = (colorIndex.current + 1) % colors.length;
+        cursor.style.backgroundColor = colors[colorIndex.current];
         lastScrollY.current = currentScrollY;
       }
     };
 
+    cursor.style.backgroundColor = colors[colorIndex.current];
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseleave', handleMouseLeave);
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
+      if (frameRef.current !== null) window.cancelAnimationFrame(frameRef.current);
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [isVisible]);
-
-  // Use white color when over modal, otherwise use the scroll-based color
-  const currentColor = isOverModal ? '#FFFFFF' : colors[colorIndex];
+  }, []);
 
   return (
     <div
-      className={`custom-cursor ${isHoveringProject ? 'project-hover' : ''}`}
-      style={{
-        left: `${position.x}px`,
-        top: `${position.y}px`,
-        backgroundColor: currentColor,
-        opacity: isVisible && !isOverLink && !isOverNativeCursor ? 1 : 0,
-      }}
+      ref={cursorRef}
+      className="custom-cursor"
+      style={{ opacity: 0 }}
     >
       <div className="cursor-content">
         <div className="cursor-text">View</div>
