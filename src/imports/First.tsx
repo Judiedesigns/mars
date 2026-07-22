@@ -543,7 +543,7 @@ export default function First({ onProjectClick, initialActiveFilter = "Selected 
               </p>
               <div className="flex w-full flex-col items-stretch border-t border-[rgba(0,0,0,0.06)] sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-[24px] sm:gap-y-[10px] sm:border-t-0">
                 <a
-                  href="https://drive.google.com/file/d/16Ks4iwFGGpb4rLKmwYSJe02dyxFDNkQQ/view?usp=sharing"
+                  href="https://drive.google.com/file/d/1ALm4pXpgs55wi5nZnqqgGBXjgRSJ2dDM/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="footer-social-link border-b border-[rgba(0,0,0,0.06)] py-[18px] font-['Inter',sans-serif] text-[14px] lg:text-[15px] text-[#1a1a1a] tracking-[-0.01em] social-link rainbow-hover cursor-pointer sm:border-b-0 sm:py-0"
