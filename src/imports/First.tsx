@@ -31,7 +31,13 @@ function ProjectPreviewMedia({
 }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const objectFitClass = media.fit === "contain" ? "object-contain" : "object-cover";
+
+  useEffect(() => {
+    setIsLoaded(false);
+    setShouldLoadVideo(media.type !== "video");
+  }, [media.src, media.type]);
 
   useEffect(() => {
     if (media.type !== "video" || shouldLoadVideo) return;
@@ -55,32 +61,47 @@ function ProjectPreviewMedia({
 
   if (media.type === "video") {
     return (
-      <video
-        ref={videoRef}
-        aria-label={media.alt ?? `${title} preview`}
-        className={`${objectFitClass} pointer-events-none size-full transition-transform duration-[650ms] ease-out group-hover:scale-[1.035]`}
-        src={shouldLoadVideo ? media.src : undefined}
-        autoPlay={shouldLoadVideo}
-        muted
-        loop
-        playsInline
-        preload="none"
-      />
+      <div className="relative size-full overflow-hidden bg-[#edf0f0]">
+        <div
+          aria-hidden="true"
+          className={`absolute inset-0 bg-[linear-gradient(110deg,#ecefef_8%,#f7f8f8_18%,#ecefef_33%)] bg-[length:200%_100%] transition-opacity duration-300 ${isLoaded ? "opacity-0" : "opacity-100 animate-[shimmer_1.35s_linear_infinite]"}`}
+        />
+        <video
+          ref={videoRef}
+          aria-label={media.alt ?? `${title} preview`}
+          className={`${objectFitClass} pointer-events-none relative size-full transition-[opacity,transform] duration-[650ms] ease-out group-hover:scale-[1.035] ${isLoaded ? "opacity-100" : "opacity-0"}`}
+          src={shouldLoadVideo ? media.src : undefined}
+          autoPlay={shouldLoadVideo}
+          muted
+          loop
+          playsInline
+          preload="none"
+          onLoadedData={() => setIsLoaded(true)}
+        />
+      </div>
     );
   }
 
   return (
-    <img
-      alt={media.alt ?? title}
-      className={`${objectFitClass} pointer-events-none size-full transition-transform duration-[650ms] ease-out group-hover:scale-[1.035]`}
-      src={media.src}
-      onError={(event) => {
-        if (!media.fallbackSrc || event.currentTarget.src === media.fallbackSrc) return;
-        event.currentTarget.src = media.fallbackSrc;
-      }}
-      loading={loading}
-      decoding="async"
-    />
+    <div className="relative size-full overflow-hidden bg-[#edf0f0]">
+      <div
+        aria-hidden="true"
+        className={`absolute inset-0 bg-[linear-gradient(110deg,#ecefef_8%,#f7f8f8_18%,#ecefef_33%)] bg-[length:200%_100%] transition-opacity duration-300 ${isLoaded ? "opacity-0" : "opacity-100 animate-[shimmer_1.35s_linear_infinite]"}`}
+      />
+      <img
+        alt={media.alt ?? title}
+        className={`${objectFitClass} pointer-events-none relative size-full transition-[opacity,transform] duration-[650ms] ease-out group-hover:scale-[1.035] ${isLoaded ? "opacity-100" : "opacity-0"}`}
+        src={media.src}
+        onLoad={() => setIsLoaded(true)}
+        onError={(event) => {
+          if (!media.fallbackSrc || event.currentTarget.src === media.fallbackSrc) return;
+          event.currentTarget.src = media.fallbackSrc;
+        }}
+        loading={loading}
+        decoding="async"
+        fetchPriority={loading === "eager" ? "high" : "auto"}
+      />
+    </div>
   );
 }
 

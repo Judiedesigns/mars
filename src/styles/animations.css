@@ -41,6 +41,15 @@
   }
 }
 
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
 .animate-fade-in {
   animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   opacity: 0;

@@ -35,34 +35,79 @@ type CaseStudySheetProps = {
 const closeDragDistance = 420;
 const closeThreshold = 96;
 const initialSheetEnterOffset = 92;
+const maxReadableLiveLinkLength = 28;
+
+function getDetailDisplayValue(detail: CaseStudyDetail) {
+  if (detail.href && detail.label.toLowerCase() === "live link" && detail.value.length > maxReadableLiveLinkLength) {
+    return "Open link";
+  }
+
+  return detail.value;
+}
 
 function ShowcaseMedia({ visual, priority = false }: { visual: CaseStudyVisual; priority?: boolean }) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(priority || visual.type !== "video");
+  const [isLoaded, setIsLoaded] = useState(false);
   const isCover = visual.fit === "cover";
   const mediaClassName = `block size-full ${
     isCover ? "rounded-[11px] object-cover" : "rounded-[10px] object-contain"
-  } transition-transform duration-[650ms] ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.025]`;
+  } transition-[opacity,transform] duration-[650ms] ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.025] ${isLoaded ? "opacity-100" : "opacity-0"}`;
+
+  useEffect(() => {
+    setIsLoaded(false);
+    setShouldLoadVideo(priority || visual.type !== "video");
+  }, [priority, visual.src, visual.type]);
+
+  useEffect(() => {
+    if (visual.type !== "video" || shouldLoadVideo) return;
+
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoadVideo(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "160px 0px" },
+    );
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, [shouldLoadVideo, visual.type]);
 
   return (
     <figure className={`group relative h-[calc((100vw-40px)*0.68)] max-h-[340px] min-h-[232px] w-[calc(100vw-40px)] max-w-[488px] shrink-0 overflow-hidden rounded-[11px] border border-[rgba(154,164,165,0.07)] bg-[#eef1f1] sm:h-[340px] sm:w-[488px] ${isCover ? "" : "p-[1px]"}`}>
+      <div
+        aria-hidden="true"
+        className={`absolute inset-0 bg-[linear-gradient(110deg,#ecefef_8%,#f8f9f9_18%,#ecefef_33%)] bg-[length:200%_100%] transition-opacity duration-300 ${isLoaded ? "opacity-0" : "opacity-100 animate-[shimmer_1.35s_linear_infinite]"}`}
+      />
       {visual.type === "video" ? (
         <video
+          ref={videoRef}
           aria-label={visual.alt}
-          className={mediaClassName}
-          src={visual.src}
+          className={`${mediaClassName} relative`}
+          src={shouldLoadVideo ? visual.src : undefined}
           poster={visual.poster}
-          autoPlay
+          autoPlay={shouldLoadVideo}
           muted
           loop
           playsInline
-          preload="metadata"
+          preload={priority ? "metadata" : "none"}
+          onLoadedData={() => setIsLoaded(true)}
         />
       ) : (
         <img
           src={visual.src}
           alt={visual.alt}
-          className={mediaClassName}
+          className={`${mediaClassName} relative`}
+          onLoad={() => setIsLoaded(true)}
           loading={priority ? "eager" : "lazy"}
           decoding="async"
+          fetchPriority={priority ? "high" : "auto"}
         />
       )}
     </figure>
@@ -402,7 +447,7 @@ export function CaseStudySheet({
                               data-native-cursor="pointer"
                               className="rainbow-hover cursor-pointer underline decoration-[rgba(130,139,140,0.45)] decoration-[1px] underline-offset-[3px] transition-colors duration-200 hover:decoration-[#3c4142]"
                             >
-                              {detail.value}
+                              {getDetailDisplayValue(detail)}
                             </a>
                           ) : (
                             detail.value

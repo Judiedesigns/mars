@@ -162,10 +162,17 @@ function toCaseStudyVisual(media: ProjectMedia, projectId: number): CaseStudyVis
   };
 }
 
+const genericLiveLinkHosts = new Set(["cotdigtest35.host"]);
+const maxReadableLiveLinkLength = 28;
+
 function formatLiveLink(url: string) {
-  return url
+  const readableUrl = url
     .replace(/^https?:\/\//, "")
     .replace(/\/$/, "");
+
+  return readableUrl.length > maxReadableLiveLinkLength || genericLiveLinkHosts.has(readableUrl)
+    ? "Open link"
+    : readableUrl;
 }
 
 export function StandardProjectCaseStudy({

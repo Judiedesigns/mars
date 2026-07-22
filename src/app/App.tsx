@@ -24,7 +24,7 @@ import {
 const siteTitle = 'Florence Eze - Product Designer & Web Builder';
 const siteDescription = 'Florence Eze is a Product Designer and Web Builder based in Lagos, focused on UX strategy, interface design, responsive websites, and product-ready digital products.';
 const ogDescription = 'Selected portfolio work from Florence Eze, a Product Designer and Web Builder based in Lagos.';
-const siteUrl = 'https://florence-eze-portfolio.framer.website/';
+const siteUrl = 'https://florenceeze.com/';
 const ogImageUrl = `${siteUrl}og-image.png`;
 
 export default function App() {
